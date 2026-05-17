@@ -1,0 +1,91 @@
+import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json()
+    const { action, userId, battleId, matchId, prediction, amount, title, description } = body
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE!
+    )
+
+    if (action === 'create') {
+      // Crear batalla
+      const { data: battle, error } = await supabase
+        .from('battles')
+        .insert({
+          title,
+          description,
+          created_by: userId,
+          match_id: matchId,
+          bet_amount: amount,
+          pot_total: amount,
+          current_participants: 1,
+          status: 'open',
+          battle_type: 'match',
+        })
+        .select()
+        .single()
+
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+      // Agregar al creador como participante
+      await supabase.from('battle_participants').insert({
+        battle_id: battle.id,
+        user_id: userId,
+        prediction,
+        amount_placed: amount,
+      })
+
+      return NextResponse.json({ success: true, battle })
+    }
+
+    if (action === 'join') {
+      // Verificar que la batalla existe y está abierta
+      const { data: battle } = await supabase
+        .from('battles')
+        .select('*')
+        .eq('id', battleId)
+        .single()
+
+      if (!battle) return NextResponse.json({ error: 'Batalla no encontrada' }, { status: 404 })
+      if (battle.status !== 'open') return NextResponse.json({ error: 'La batalla ya no está abierta' }, { status: 400 })
+      if (battle.created_by === userId) return NextResponse.json({ error: 'No podés unirte a tu propia batalla' }, { status: 400 })
+
+      // Verificar que no esté ya participando
+      const { data: existing } = await supabase
+        .from('battle_participants')
+        .select('id')
+        .eq('battle_id', battleId)
+        .eq('user_id', userId)
+        .single()
+
+      if (existing) return NextResponse.json({ error: 'Ya estás en esta batalla' }, { status: 400 })
+
+      // Agregar participante
+      await supabase.from('battle_participants').insert({
+        battle_id: battleId,
+        user_id: userId,
+        prediction,
+        amount_placed: amount,
+      })
+
+      // Actualizar pozo y participantes
+      await supabase.from('battles').update({
+        pot_total: battle.pot_total + amount,
+        current_participants: battle.current_participants + 1,
+        status: 'active',
+      }).eq('id', battleId)
+
+      return NextResponse.json({ success: true })
+    }
+
+    return NextResponse.json({ error: 'Acción no válida' }, { status: 400 })
+
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: 'Error interno' }, { status: 500 })
+  }
+}

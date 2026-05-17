@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+:root {
+  --gold: #FFD700;
+  --purple: #7C3AED;
+  --green: #22C55E;
+  --base: #0D0D0D;
+  --surface: #1A1A2E;
+  --border: #2A2A4A;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--base);
+  color: #F0F0F0;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-flash {
+  animation: flash 1.5s ease-in-out infinite;
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-run {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 20s linear infinite;
+  will-change: transform;
+}
+
+.ticker-run-fast {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 12s linear infinite;
+  will-change: transform;
+}
