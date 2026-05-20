@@ -7,8 +7,8 @@ export async function POST(req: Request) {
     const { action, paymentId, userId, amount, matchId, title, description, prizeAmount, bonusPoints } = body
 
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE!
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zjlaabrqfjtvbtbvoaic.supabase.co',
+      process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY || 'sb_secret_91nbyjNN23_30hYuUXeyNQ_60A4zdiF'
     )
 
     if (action === 'approve_payment') {

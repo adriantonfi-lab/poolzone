@@ -3,9 +3,44 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { BarChart2, MessageCircle, X, Send, Loader2, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 type ViewMode = 'grupo' | 'dia' | 'ciudad'
+
+
+const TEAM_NAMES_EN: Record<string, string> = {
+  'Argentina': 'Argentina', 'Brasil': 'Brazil', 'Colombia': 'Colombia',
+  'Uruguay': 'Uruguay', 'México': 'Mexico', 'Estados Unidos': 'United States',
+  'España': 'Spain', 'Francia': 'France', 'Portugal': 'Portugal',
+  'Alemania': 'Germany', 'Inglaterra': 'England', 'Marruecos': 'Morocco',
+  'Senegal': 'Senegal', 'Japón': 'Japan', 'Corea del Sur': 'South Korea',
+  'Países Bajos': 'Netherlands', 'Ecuador': 'Ecuador', 'Canadá': 'Canada',
+  'Paraguay': 'Paraguay', 'Venezuela': 'Venezuela', 'Bolivia': 'Bolivia',
+  'Perú': 'Peru', 'Chile': 'Chile', 'Costa Rica': 'Costa Rica',
+  'Panamá': 'Panama', 'Arabia Saudita': 'Saudi Arabia', 'Australia': 'Australia',
+  'Irán': 'Iran', 'Qatar': 'Qatar', 'Croacia': 'Croatia', 'Serbia': 'Serbia',
+  'Suiza': 'Switzerland', 'Ghana': 'Ghana', 'Nigeria': 'Nigeria',
+  'Egipto': 'Egypt', 'Nueva Zelanda': 'New Zealand', 'Bélgica': 'Belgium',
+  'Polonia': 'Poland', 'Turquía': 'Turkey', 'República Checa': 'Czech Republic',
+  'Escocia': 'Scotland', 'Ucrania': 'Ukraine', 'Rumania': 'Romania',
+  'Hungría': 'Hungary', 'Eslovenia': 'Slovenia', 'Bosnia y Herzegovina': 'Bosnia & Herzegovina',
+  'Albania': 'Albania', 'Georgia': 'Georgia', 'Sudáfrica': 'South Africa',
+  'Camerún': 'Cameroon', 'Mali': 'Mali', 'Costa de Marfil': "Ivory Coast",
+  'Túnez': 'Tunisia', 'Argelia': 'Algeria', 'Congo': 'Congo',
+  'Zambia': 'Zambia', 'Zimbabue': 'Zimbabwe', 'Tanzania': 'Tanzania',
+  'Indonesia': 'Indonesia', 'Vietnam': 'Vietnam', 'Tailandia': 'Thailand',
+  'China': 'China', 'Irak': 'Iraq', 'Siria': 'Syria', 'Jordania': 'Jordan',
+  'Kuwait': 'Kuwait', 'Bahréin': 'Bahrain', 'Omán': 'Oman',
+  'República Dominicana': 'Dominican Republic', 'Cuba': 'Cuba',
+  'Guatemala': 'Guatemala', 'Honduras': 'Honduras', 'Jamaica': 'Jamaica',
+  'Trinidad y Tobago': 'Trinidad & Tobago', 'Haití': 'Haiti',
+}
+
+function translateTeam(name: string, locale: string): string {
+  if (locale !== 'en') return name
+  return TEAM_NAMES_EN[name] || name
+}
 
 function FlagImg({ code, size = 28 }: { code: string; size?: number }) {
   const normalized = (code || 'un').toLowerCase()
@@ -22,19 +57,21 @@ function FlagImg({ code, size = 28 }: { code: string; size?: number }) {
 
 function formatTimes(dateStr: string) {
   const date = new Date(dateStr)
-  const fmt = (tz: string) =>
+  const fmt24 = (tz: string) =>
     date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: tz })
+  const fmt12 = (tz: string) =>
+    date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz })
   return {
-    ar: fmt('America/Argentina/Buenos_Aires'),
-    co: fmt('America/Bogota'),
-    et: fmt('America/New_York'),
-    ct: fmt('America/Chicago'),
-    pt: fmt('America/Los_Angeles'),
+    ar: fmt24('America/Argentina/Buenos_Aires'),
+    co: fmt24('America/Bogota'),
+    et: fmt12('America/New_York'),
+    ct: fmt12('America/Chicago'),
+    pt: fmt12('America/Los_Angeles'),
   }
 }
 
-function formatDay(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('es-ES', {
+function formatDay(dateStr: string, locale = 'es') {
+  return new Date(dateStr).toLocaleDateString(locale === 'en' ? 'en-US' : 'es-ES', {
     weekday: 'long', day: 'numeric', month: 'long', timeZone: 'America/New_York'
   })
 }
@@ -204,7 +241,8 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
   )
 }
 
-function MatchCard({ match }: { match: Match }) {
+function MatchCard({ match, locale = 'es' }: { match: Match; locale?: string }) {
+  const t = useTranslations('fixture')
   const times = formatTimes(match.match_date)
   const isLive = match.status === 'live'
   const isFinished = match.status === 'finished'
@@ -217,16 +255,16 @@ function MatchCard({ match }: { match: Match }) {
         <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3">
           <span className="text-base font-bold text-white">🇦🇷 {times.ar}</span>
           <span className="text-base font-bold text-white">🇨🇴 {times.co}</span>
-          <span className="text-base font-bold text-[#FFD700]">ET {times.et}</span>
-          <span className="text-base font-bold text-white">CT {times.ct}</span>
-          <span className="text-base font-bold text-white">PT {times.pt}</span>
+          <span className="text-base font-bold text-[#FFD700]">🇺🇸 ET {times.et}</span>
+          <span className="text-base font-bold text-white">🇺🇸 CT {times.ct}</span>
+          <span className="text-base font-bold text-white">🇺🇸 PT {times.pt}</span>
         </div>
 
         {/* Partido */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 flex-1">
             <FlagImg code={match.home_team_code} size={38} />
-            <span className="text-xl font-bold text-white">{match.home_team}</span>
+            <span className="text-xl font-bold text-white">{translateTeam(match.home_team, locale)}</span>
           </div>
           <div className="px-3 py-1 bg-[#1A1A2E] rounded-lg mx-2 shrink-0 min-w-[64px] text-center">
             {isLive ? (
@@ -241,7 +279,7 @@ function MatchCard({ match }: { match: Match }) {
             )}
           </div>
           <div className="flex items-center gap-2 flex-1 justify-end">
-            <span className="text-xl font-bold text-white text-right">{match.away_team}</span>
+            <span className="text-xl font-bold text-white text-right">{translateTeam(match.away_team, locale)}</span>
             <FlagImg code={match.away_team_code} size={38} />
           </div>
         </div>
@@ -252,7 +290,7 @@ function MatchCard({ match }: { match: Match }) {
           <button onClick={() => setShowStats(true)}
             className="flex items-center gap-1 text-base font-bold text-[#FFD700] hover:text-[#FFD700]/80 transition-colors">
             <BarChart2 size={16} />
-            Estadísticas
+            {t('stats')}
           </button>
         </div>
       </div>
@@ -280,9 +318,17 @@ function DayLabel({ day }: { day: string }) {
 }
 
 export default function FixturePage() {
+  const t = useTranslations('fixture')
+  const tc = useTranslations('common')
   const [matches, setMatches] = useState<Match[]>([])
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState<ViewMode>('grupo')
+  const [locale, setLocale] = useState('es')
+
+  useEffect(() => {
+    const match = document.cookie.match(/locale=([^;]+)/)
+    if (match) setLocale(match[1])
+  }, [])
 
   useEffect(() => {
     const supabase = createClient()
@@ -306,12 +352,12 @@ export default function FixturePage() {
   const knockoutMatches = matches.filter(m => m.stage !== 'Group Stage')
   const stageOrder = ['Round of 32', 'Round of 16', 'Quarter-finals', 'Semi-finals', 'Third Place', 'Final']
   const stageLabels: Record<string, string> = {
-    'Round of 32': 'Dieciseisavos de Final',
-    'Round of 16': 'Octavos de Final',
-    'Quarter-finals': 'Cuartos de Final',
-    'Semi-finals': 'Semifinales',
-    'Third Place': 'Tercer Puesto',
-    'Final': '🏆 Gran Final',
+    'Round of 32': t('round32'),
+    'Round of 16': t('round16'),
+    'Quarter-finals': t('quarters'),
+    'Semi-finals': t('semis'),
+    'Third Place': t('third'),
+    'Final': t('final'),
   }
 
   if (loading) return (
@@ -328,18 +374,18 @@ export default function FixturePage() {
     <div className="px-4 py-6 max-w-2xl mx-auto md:max-w-4xl">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
         <ArrowLeft size={20} />
-        Volver al Dashboard
+        {tc('back')}
       </Link>
-      <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">Fixture Mundial 2026</h1>
+      <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">{t('title')}</h1>
       <p className="text-sm font-semibold text-[#86EFAC] mb-5">
-        🇦🇷 Argentina · 🇨🇴 Colombia · ET (New York) · CT (Chicago) · PT (Los Angeles)
+        {t('timezones')}
       </p>
 
       {/* Selector de vista */}
       <div className="flex gap-2 mb-6">
-        <button className={`${btnBase} ${view === 'grupo' ? btnActive : btnInactive}`} onClick={() => setView('grupo')}>Por Grupo</button>
-        <button className={`${btnBase} ${view === 'dia' ? btnActive : btnInactive}`} onClick={() => setView('dia')}>Por Día</button>
-        <button className={`${btnBase} ${view === 'ciudad' ? btnActive : btnInactive}`} onClick={() => setView('ciudad')}>Por Ciudad</button>
+        <button className={`${btnBase} ${view === 'grupo' ? btnActive : btnInactive}`} onClick={() => setView('grupo')}>{t('byGroup')}</button>
+        <button className={`${btnBase} ${view === 'dia' ? btnActive : btnInactive}`} onClick={() => setView('dia')}>{t('byDay')}</button>
+        <button className={`${btnBase} ${view === 'ciudad' ? btnActive : btnInactive}`} onClick={() => setView('ciudad')}>{t('byCity')}</button>
       </div>
 
       {/* VISTA POR GRUPO */}
@@ -347,10 +393,10 @@ export default function FixturePage() {
         <>
           {Object.entries(groupBy(groupMatches, m => m.group_name || 'X')).sort(([a], [b]) => a.localeCompare(b)).map(([group, ms]) => (
             <SectionWrapper key={group} title={`Grupo ${group}`} color="text-[#FFD700]">
-              {Object.entries(groupBy(ms, m => formatDay(m.match_date))).map(([day, dms]) => (
+              {Object.entries(groupBy(ms, m => formatDay(m.match_date, locale))).map(([day, dms]) => (
                 <div key={day}>
                   <DayLabel day={day} />
-                  {dms.map(m => <MatchCard key={m.id} match={m} />)}
+                  {dms.map(m => <MatchCard key={m.id} match={m} locale={locale} />)}
                 </div>
               ))}
             </SectionWrapper>
@@ -360,10 +406,10 @@ export default function FixturePage() {
             if (!ms.length) return null
             return (
               <SectionWrapper key={stage} title={stageLabels[stage] || stage} color="text-[#A855F7]">
-                {Object.entries(groupBy(ms, m => formatDay(m.match_date))).map(([day, dms]) => (
+                {Object.entries(groupBy(ms, m => formatDay(m.match_date, locale))).map(([day, dms]) => (
                   <div key={day}>
                     <DayLabel day={day} />
-                    {dms.map(m => <MatchCard key={m.id} match={m} />)}
+                    {dms.map(m => <MatchCard key={m.id} match={m} locale={locale} />)}
                   </div>
                 ))}
               </SectionWrapper>
@@ -375,9 +421,9 @@ export default function FixturePage() {
       {/* VISTA POR DÍA */}
       {view === 'dia' && (
         <>
-          {Object.entries(groupBy(matches, m => formatDay(m.match_date))).map(([day, ms]) => (
+          {Object.entries(groupBy(matches, m => formatDay(m.match_date, locale))).map(([day, ms]) => (
             <SectionWrapper key={day} title={day} color="text-[#FFD700]">
-              {ms.map(m => <MatchCard key={m.id} match={m} />)}
+              {ms.map(m => <MatchCard key={m.id} match={m} locale={locale} />)}
             </SectionWrapper>
           ))}
         </>
@@ -388,10 +434,10 @@ export default function FixturePage() {
         <>
           {Object.entries(groupBy(matches, m => m.city || 'Sin ciudad')).sort(([a], [b]) => a.localeCompare(b)).map(([city, ms]) => (
             <SectionWrapper key={city} title={city} color="text-[#22C55E]">
-              {Object.entries(groupBy(ms, m => formatDay(m.match_date))).map(([day, dms]) => (
+              {Object.entries(groupBy(ms, m => formatDay(m.match_date, locale))).map(([day, dms]) => (
                 <div key={day}>
                   <DayLabel day={day} />
-                  {dms.map(m => <MatchCard key={m.id} match={m} />)}
+                  {dms.map(m => <MatchCard key={m.id} match={m} locale={locale} />)}
                 </div>
               ))}
             </SectionWrapper>

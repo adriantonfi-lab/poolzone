@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import NewsSection from './NewsSection'
 import Link from 'next/link'
-import { Zap, Calendar, Sparkles, Users, MessageCircle, Trophy, BarChart2 } from 'lucide-react'
+import { Zap, Calendar, Sparkles, Users, MessageCircle, Trophy, BarChart2, BookOpen } from 'lucide-react'
 
 const ARG_MATCHES = [
   '2026-06-13T02:00:00Z','2026-06-22T22:00:00Z','2026-06-27T23:00:00Z',
@@ -84,10 +85,10 @@ function JSTicker({ items, fast = false, bgLabel, label }: {
   items: React.ReactNode[]; fast?: boolean; bgLabel: string; label: string
 }) {
   return (
-    <div className="flex items-stretch overflow-hidden rounded-2xl border border-[#2A2A4A] mb-3" style={{height:'40px'}}>
+    <div className="flex items-stretch overflow-hidden rounded-2xl border border-[#2A2A4A] mb-3" style={{height:'52px'}}>
       <div className={`shrink-0 ${bgLabel} px-3 flex items-center gap-1.5 z-10`}>
         <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-        <span className="font-bebas text-white text-sm tracking-wider whitespace-nowrap">{label}</span>
+        <span className="font-bebas text-white text-base tracking-wider whitespace-nowrap">{label}</span>
       </div>
       <div className="flex-1 overflow-hidden relative">
         <div className={fast ? 'ticker-run-fast' : 'ticker-run'}>
@@ -106,15 +107,15 @@ function NavBtn({ href, icon: Icon, label, iconColor, glow }: {
   return (
     <Link href={href}
       onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      className="flex flex-col items-center gap-1 rounded-xl py-3 border-2 transition-all duration-200"
+      className="flex flex-col items-center gap-1 rounded-xl py-4 border-2 transition-all duration-200"
       style={{
         background: h ? `radial-gradient(circle, ${glow}30, #1A1A2E)` : '#1A1A2E',
         borderColor: h ? glow : '#2A2A4A',
         boxShadow: h ? `0 0 20px ${glow}, 0 0 40px ${glow}60` : 'none',
         transform: h ? 'scale(1.08)' : 'scale(1)',
       }}>
-      <Icon size={20} className={iconColor} />
-      <span className={`text-xs font-bold ${iconColor}`}>{label}</span>
+      <Icon size={24} className={iconColor} />
+      <span className={`text-sm font-bold ${iconColor}`}>{label}</span>
     </Link>
   )
 }
@@ -132,6 +133,7 @@ const teamFlags: Record<string,string> = {
 export default function DashboardClient({ profile, matches, onlineCount, openBattles }: {
   profile: any; matches: any[]; onlineCount: number; openBattles: any[]
 }) {
+  const t = useTranslations('dashboard')
   const teamCode = teamFlags[profile?.favorite_team] || 'un'
 
   function formatTime(d: string) {
@@ -148,16 +150,16 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
           <span className="mx-4 text-[#FFD700]/40">★</span>
         </span>
       ))
-    : [<span key="0" className="text-base font-bold text-[#FFD700] whitespace-nowrap px-6">⚡ No hay batallas abiertas — ¡Sé el primero en abrir una!</span>]
+    : [<span key="0" className="text-base font-bold text-[#FFD700] whitespace-nowrap px-6">⚡ ⚡ No open battles — Be the first!</span>]
 
   const matchItems = matches.map((m, i) => (
-    <span key={i} className="flex items-center gap-2 text-sm font-bold text-white whitespace-nowrap px-5">
-      <img src={`https://flagcdn.com/40x30/${(m.home_team_code||'un').toLowerCase()}.png`} width={18} height={13} className="rounded-sm" alt="" />
+    <span key={i} className="flex items-center gap-2 text-base font-bold text-white whitespace-nowrap px-5">
+      <img src={`https://flagcdn.com/40x30/${(m.home_team_code||'un').toLowerCase()}.png`} width={24} height={18} className="rounded-sm" alt="" />
       {m.home_team}
       <span className="text-[#FFD700]">vs</span>
       {m.away_team}
-      <img src={`https://flagcdn.com/40x30/${(m.away_team_code||'un').toLowerCase()}.png`} width={18} height={13} className="rounded-sm" alt="" />
-      <span className="text-[#86EFAC] text-xs">{formatDate(m.match_date)} · {formatTime(m.match_date)} ET</span>
+      <img src={`https://flagcdn.com/40x30/${(m.away_team_code||'un').toLowerCase()}.png`} width={24} height={18} className="rounded-sm" alt="" />
+      <span className="text-[#86EFAC] text-sm">{formatDate(m.match_date)} · {formatTime(m.match_date)} ET</span>
       <span className="text-[#2A2A4A] mx-2">|</span>
     </span>
   ))
@@ -165,7 +167,7 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
   return (
     <div className="w-full pb-24 md:pb-6">
 
-      {/* HERO - aspect ratio 1200/400, image contained */}
+      {/* HERO */}
       <div className="relative w-full bg-[#0D0D0D] mb-4" style={{aspectRatio:'1200/400'}}>
         <img src="/che-bacano_logo_.png" alt="Che-Bacano"
           className="w-full h-full object-contain"
@@ -179,7 +181,7 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
 
           {/* Reloj Mundial */}
           <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-3">
-            <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">FALTAN PARA EL MUNDIAL 2026</p>
+            <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">{t('nextWorldCup')}</p>
             <BigClock targetDate="2026-06-11T20:00:00Z" />
           </div>
 
@@ -253,17 +255,18 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
 
         {/* TICKER PARTIDOS */}
         {matchItems.length > 0 && (
-          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label="PARTIDOS" />
+          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label={t('matches')} />
         )}
 
-        {/* BOTONES NAV */}
-        <div className="grid grid-cols-6 gap-2 mb-4">
-          <NavBtn href="/fixture" icon={Calendar} label="Fixture" iconColor="text-blue-400" glow="#60A5FA" />
-          <NavBtn href="/oracle" icon={Sparkles} label="Oráculo" iconColor="text-[#A855F7]" glow="#A855F7" />
-          <NavBtn href="/predictions" icon={Trophy} label="Mi Polla" iconColor="text-[#FFD700]" glow="#FFD700" />
+        {/* BOTONES NAV — 7 botones con Reglas */}
+        <div className="grid grid-cols-7 gap-2 mb-4">
+          <NavBtn href="/fixture" icon={Calendar} label={t('fixture')} iconColor="text-blue-400" glow="#60A5FA" />
+          <NavBtn href="/oracle" icon={Sparkles} label={t('oracle')} iconColor="text-[#A855F7]" glow="#A855F7" />
+          <NavBtn href="/predictions" icon={Trophy} label={t('myPolla')} iconColor="text-[#FFD700]" glow="#FFD700" />
           <NavBtn href="/ranking" icon={BarChart2} label="Ranking" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/battles" icon={Zap} label="Batalla" iconColor="text-orange-400" glow="#FB923C" />
-          <NavBtn href="/locker-room" icon={MessageCircle} label="Chat Quilombo" iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/battles" icon={Zap} label={t('battle')} iconColor="text-orange-400" glow="#FB923C" />
+          <NavBtn href="/locker-room" icon={MessageCircle} label={t('quilombo')} iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/rules" icon={BookOpen} label="Reglas" iconColor="text-pink-400" glow="#F472B6" />
         </div>
 
         {/* BATALLAS ABIERTAS */}
@@ -272,10 +275,10 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#2A2A4A]">
               <div className="flex items-center gap-2">
                 <Zap size={14} className="text-[#FFD700]" />
-                <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">Batallas Abiertas</h2>
+                <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">{t('openBattlesTitle')}</h2>
                 <span className="bg-[#FFD700] text-black text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">{openBattles.length}</span>
               </div>
-              <Link href="/battles" className="text-xs font-bold text-[#FFD700] hover:underline">Ver todas</Link>
+              <Link href="/battles" className="text-xs font-bold text-[#FFD700] hover:underline">{t('seeBattles')}</Link>
             </div>
             <div className="divide-y divide-[#2A2A4A]">
               {openBattles.slice(0,3).map((b: any) => (
@@ -294,7 +297,7 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
           </div>
         )}
 
-        {/* NOTICIAS ARG & COL */}
+        {/* NOTICIAS */}
         <NewsSection />
 
       </div>

@@ -4,15 +4,14 @@ import { createClient } from '@supabase/supabase-js'
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { action, userId, battleId, matchId, prediction, amount, title, description } = body
+    const { action, userId, battleId, matchId, prediction, amount, title, description, battleType } = body
 
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE!
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zjlaabrqfjtvbtbvoaic.supabase.co',
+      process.env.SUPABASE_SERVICE_ROLE_KEY || ''
     )
 
     if (action === 'create') {
-      // Crear batalla
       const { data: battle, error } = await supabase
         .from('battles')
         .insert({
@@ -24,14 +23,13 @@ export async function POST(req: Request) {
           pot_total: amount,
           current_participants: 1,
           status: 'open',
-          battle_type: 'match',
+          battle_type: battleType || 'match_result',
         })
         .select()
         .single()
 
       if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-      // Agregar al creador como participante
       await supabase.from('battle_participants').insert({
         battle_id: battle.id,
         user_id: userId,
@@ -43,7 +41,6 @@ export async function POST(req: Request) {
     }
 
     if (action === 'join') {
-      // Verificar que la batalla existe y está abierta
       const { data: battle } = await supabase
         .from('battles')
         .select('*')
@@ -54,7 +51,6 @@ export async function POST(req: Request) {
       if (battle.status !== 'open') return NextResponse.json({ error: 'La batalla ya no está abierta' }, { status: 400 })
       if (battle.created_by === userId) return NextResponse.json({ error: 'No podés unirte a tu propia batalla' }, { status: 400 })
 
-      // Verificar que no esté ya participando
       const { data: existing } = await supabase
         .from('battle_participants')
         .select('id')
@@ -64,7 +60,6 @@ export async function POST(req: Request) {
 
       if (existing) return NextResponse.json({ error: 'Ya estás en esta batalla' }, { status: 400 })
 
-      // Agregar participante
       await supabase.from('battle_participants').insert({
         battle_id: battleId,
         user_id: userId,
@@ -72,7 +67,6 @@ export async function POST(req: Request) {
         amount_placed: amount,
       })
 
-      // Actualizar pozo y participantes
       await supabase.from('battles').update({
         pot_total: battle.pot_total + amount,
         current_participants: battle.current_participants + 1,

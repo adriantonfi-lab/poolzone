@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Trophy, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react'
@@ -13,11 +13,31 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
+
+  // Cargar email guardado si el usuario eligió recordar
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('rememberedEmail')
+    const savedRemember = localStorage.getItem('rememberMe') === 'true'
+    if (savedRemember && savedEmail) {
+      setEmail(savedEmail)
+      setRememberMe(true)
+    }
+  }, [])
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
+
+    // Guardar o borrar email según checkbox
+    if (rememberMe) {
+      localStorage.setItem('rememberedEmail', email)
+      localStorage.setItem('rememberMe', 'true')
+    } else {
+      localStorage.removeItem('rememberedEmail')
+      localStorage.removeItem('rememberMe')
+    }
 
     const supabase = createClient()
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
@@ -59,26 +79,66 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          {/* autocomplete="off" en el form y en cada input para evitar que el browser autocomplete */}
+          <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Email</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@email.com" required
-                className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base" />
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="tu@email.com"
+                required
+                autoComplete="off"
+                name="email-login"
+                className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base"
+              />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Contraseña</label>
               <div className="relative">
-                <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  autoComplete="new-password"
+                  name="password-login"
+                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base"
+                />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
-            <button type="submit" disabled={loading}
-              className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base">
+            {/* Recordarme */}
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <div
+                  onClick={() => setRememberMe(!rememberMe)}
+                  className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer ${rememberMe ? 'bg-[#FFD700] border-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D]'}`}
+                >
+                  {rememberMe && (
+                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                      <path d="M1 5L4.5 8.5L11 1" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </div>
+                <span className="text-sm text-gray-400">Recordar mi email</span>
+              </label>
+              <Link href="/forgot-password" className="text-sm text-[#FFD700] hover:underline">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
+            >
               {loading ? <><Loader2 size={18} className="animate-spin" />Ingresando...</> : '¡Dale, entrá!'}
             </button>
           </form>

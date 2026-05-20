@@ -253,6 +253,17 @@ export default function SuperAdminClient({
                       <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                         p.inscription_status === 'paid' ? 'bg-[#22C55E]/20 text-[#22C55E]' : 'bg-red-500/20 text-red-400'
                       }`}>{p.inscription_status === 'paid' ? '✅ Pagado' : '❌ Sin pagar'}</span>
+                      {p.role !== 'super_admin' && (
+                        <select
+                          defaultValue={p.role || 'guest'}
+                          onChange={e => handleRoleChange(p.id, e.target.value)}
+                          className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-[#FFD700] cursor-pointer">
+                          <option value="guest">Guest</option>
+                          <option value="family">Family</option>
+                          <option value="admin">Manager</option>
+                          <option value="super_admin">Super Admin</option>
+                        </select>
+                      )}
                     </div>
                     <p className="text-xs text-gray-400 mt-0.5">{email}</p>
                     <p className="text-xs text-gray-400">{p.full_name} · {p.favorite_team} · {p.country_of_residence}</p>

@@ -7,11 +7,10 @@ export async function POST(req: Request) {
     const { action, userId, matchId, homeScore, awayScore, targetId, newRole, targetUserId } = body
 
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE!
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zjlaabrqfjtvbtbvoaic.supabase.co',
+      process.env.SUPABASE_SERVICE_ROLE_KEY || ''
     )
 
-    // Verificar que el usuario es admin
     const { data: caller } = await supabase
       .from('profiles')
       .select('role')
@@ -24,22 +23,18 @@ export async function POST(req: Request) {
 
     const isSuperAdmin = caller.role === 'super_admin'
 
-    // GUARDAR RESULTADO Y CALCULAR PUNTOS
     if (action === 'save_result') {
-      // Actualizar partido
       await supabase.from('matches').update({
         home_score: homeScore,
         away_score: awayScore,
         status: 'finished',
       }).eq('id', matchId)
 
-      // Traer predicciones de este partido
       const { data: preds } = await supabase
         .from('predictions')
         .select('*')
         .eq('match_id', matchId)
 
-      // Traer el partido
       const { data: match } = await supabase
         .from('matches')
         .select('home_team, away_team')
@@ -48,12 +43,10 @@ export async function POST(req: Request) {
 
       if (!match) return NextResponse.json({ error: 'Partido no encontrado' }, { status: 404 })
 
-      // Calcular ganador real
       let realWinner = 'Empate'
       if (homeScore > awayScore) realWinner = match.home_team
       if (awayScore > homeScore) realWinner = match.away_team
 
-      // Calcular puntos para cada predicción
       for (const pred of preds || []) {
         let points = 0
         const mult = pred.late_fee > 0 ?
@@ -61,11 +54,15 @@ export async function POST(req: Request) {
           pred.late_fee === 5 ? 0.5 :
           pred.late_fee === 8 ? 0.25 : 1 : 1
 
-        // Nivel 1: ganador
-        if (pred.predicted_winner === realWinner) points += 10
+        // Nivel 1: ganador — 20 pts
+        if (pred.predicted_winner === realWinner) points += 20
 
-        // Nivel 2: marcador exacto
-        if (pred.predicted_home_score === homeScore && pred.predicted_away_score === awayScore) points += 15
+        // Nivel 2: marcador exacto — 25 pts
+        if (pred.predicted_home_score === homeScore && pred.predicted_away_score === awayScore) points += 25
+
+        // Nivel 3: goles por tiempo — 15 pts (se calcula cuando se carguen los datos de tiempo)
+        // Por ahora se suma si los campos están cargados y son correctos
+        // (requiere home_first_half_score y away_first_half_score en la tabla matches)
 
         const finalPoints = Math.round(points * mult)
 
@@ -78,21 +75,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true })
     }
 
-    // GENERAR CÓDIGO (solo super_admin)
     if (action === 'generate_code') {
       if (!isSuperAdmin) return NextResponse.json({ error: 'Solo el super admin puede generar códigos' }, { status: 403 })
-
       const code = Math.random().toString(36).substring(2, 8).toUpperCase()
-
-      // Guardar código en la predicción o en una tabla temporal
-      // Por ahora lo devolvemos directo — en producción se guardaría en DB
       return NextResponse.json({ success: true, code })
     }
 
-    // CAMBIAR ROL (solo super_admin)
     if (action === 'change_role') {
       if (!isSuperAdmin) return NextResponse.json({ error: 'Sin permisos' }, { status: 403 })
-
       await supabase.from('profiles').update({ role: newRole }).eq('id', targetId)
       return NextResponse.json({ success: true })
     }

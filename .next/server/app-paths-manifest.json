@@ -1,8 +1,7 @@
 {
   "/api/news/route": "app/api/news/route.js",
+  "/(app)/fixture/page": "app/(app)/fixture/page.js",
+  "/(app)/predictions/page": "app/(app)/predictions/page.js",
   "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
-  "/(app)/inscription/page": "app/(app)/inscription/page.js",
-  "/(app)/admin/page": "app/(app)/admin/page.js",
-  "/(app)/wallet/page": "app/(app)/wallet/page.js",
-  "/(app)/superadmin/page": "app/(app)/superadmin/page.js"
+  "/(app)/rules/page": "app/(app)/rules/page.js"
 }

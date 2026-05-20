@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Zap, Plus, Users, Trophy, Clock, ArrowLeft, X, ChevronRight, Share2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 type Battle = {
@@ -47,14 +48,15 @@ function FlagImg({ code, size = 24 }: { code: string; size?: number }) {
   )
 }
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('es-ES', {
+function formatDate(dateStr: string, locale = 'es') {
+  return new Date(dateStr).toLocaleDateString(locale === 'en' ? 'en-US' : 'es-ES', {
     day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
     timeZone: 'America/New_York'
   })
 }
 
 function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void; onCreated: () => void; userId: string }) {
+  const t = useTranslations('battles')
   const [matches, setMatches] = useState<Match[]>([])
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
   const [prediction, setPrediction] = useState('')
@@ -73,7 +75,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
 
   async function handleCreate() {
     if (!selectedMatch || !prediction || !amount) {
-      setError('Completá todos los campos')
+      setError(t('chooseMatch'))
       return
     }
     const amt = parseFloat(amount)
@@ -105,7 +107,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
       <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
         <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
-          <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">Nueva Batalla</span>
+          <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">{t('newBattle')}</span>
           <button onClick={onClose} className="text-white hover:text-[#FFD700]"><X size={22} /></button>
         </div>
 
@@ -114,7 +116,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
 
           {/* Elegir partido */}
           <div>
-            <p className="text-base font-bold text-white mb-2">Elegí el partido</p>
+            <p className="text-base font-bold text-white mb-2">{t('chooseMatch')}</p>
             <div className="space-y-2 max-h-48 overflow-y-auto">
               {matches.map(m => (
                 <button key={m.id} onClick={() => { setSelectedMatch(m); setPrediction('') }}
@@ -133,7 +135,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
           {/* Elegir equipo */}
           {selectedMatch && (
             <div>
-              <p className="text-base font-bold text-white mb-2">¿A quién le apostás?</p>
+              <p className="text-base font-bold text-white mb-2">{t('chooseTeam')}</p>
               <div className="flex gap-3">
                 <button onClick={() => setPrediction(selectedMatch.home_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
@@ -150,7 +152,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
                       ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]'
                       : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#86EFAC]/40'
                   }`}>
-                  =
+                  {t('draw')}
                 </button>
                 <button onClick={() => setPrediction(selectedMatch.away_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
@@ -168,7 +170,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
           {/* Monto */}
           {prediction && (
             <div>
-              <p className="text-base font-bold text-white mb-2">Monto a apostar (USD)</p>
+              <p className="text-base font-bold text-white mb-2">{t('amount')}</p>
               <div className="flex gap-2 mb-2">
                 {[5, 10, 20, 50].map(v => (
                   <button key={v} onClick={() => setAmount(String(v))}
@@ -183,7 +185,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
               </div>
               <input
                 type="number" value={amount} onChange={e => setAmount(e.target.value)}
-                placeholder="O ingresá otro monto..."
+                placeholder={t('amount')}
                 className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#FFD700]"
               />
             </div>
@@ -193,7 +195,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
         <div className="p-4 border-t border-[#2A2A4A] shrink-0">
           <button onClick={handleCreate} disabled={loading || !selectedMatch || !prediction || !amount}
             className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
-            {loading ? 'Creando...' : `⚡ Abrir Batalla por $${amount || '0'}`}
+            {loading ? '...' : `${t('openBattle')}${amount || '0'}`}
           </button>
         </div>
       </div>
@@ -202,6 +204,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
 }
 
 function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onClose: () => void; onJoined: () => void; userId: string }) {
+  const t = useTranslations('battles')
   const [prediction, setPrediction] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -232,7 +235,7 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
       <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
         <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
-          <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">Unirse a la Batalla</span>
+          <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">{t('enter')}</span>
           <button onClick={onClose} className="text-white hover:text-[#FFD700]"><X size={22} /></button>
         </div>
         <div className="p-4 space-y-4">
@@ -240,13 +243,13 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
 
           <div className="bg-[#0D0D0D] rounded-xl p-4">
             <p className="text-base font-bold text-white mb-1">{battle.title}</p>
-            <p className="text-base text-[#FFD700] font-bold">Monto: ${battle.bet_amount}</p>
-            <p className="text-sm text-[#86EFAC]">Pozo actual: ${battle.pot_total}</p>
+            <p className="text-base text-[#FFD700] font-bold">{t('amount')}: ${battle.bet_amount}</p>
+            <p className="text-sm text-[#86EFAC]">{t('pot')}: ${battle.pot_total}</p>
           </div>
 
           {match && (
             <div>
-              <p className="text-base font-bold text-white mb-2">¿A quién le apostás?</p>
+              <p className="text-base font-bold text-white mb-2">{t('chooseTeam')}</p>
               <div className="flex gap-3">
                 <button onClick={() => setPrediction(match.home_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
@@ -258,7 +261,7 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
                   className={`px-4 py-3 rounded-xl border text-base font-bold transition-all ${
                     prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white'
                   }`}>
-                  =
+                  {t('draw')}
                 </button>
                 <button onClick={() => setPrediction(match.away_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
@@ -282,6 +285,7 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
 }
 
 function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: string; onRefresh: () => void }) {
+  const t = useTranslations('battles')
   const [showJoin, setShowJoin] = useState(false)
   const isCreator = battle.created_by === userId
   const isFull = battle.status !== 'open'
@@ -304,7 +308,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
                 <span className="text-xs font-bold text-gray-400 bg-gray-400/10 border border-gray-400/20 px-2 py-0.5 rounded-full">CERRADA</span>
               )}
               {isCreator && (
-                <span className="text-xs font-bold text-[#A855F7] bg-[#A855F7]/10 border border-[#A855F7]/20 px-2 py-0.5 rounded-full">TU BATALLA</span>
+                <span className="text-xs font-bold text-[#A855F7] bg-[#A855F7]/10 border border-[#A855F7]/20 px-2 py-0.5 rounded-full">{t('yourBattle')}</span>
               )}
             </div>
             <p className="text-lg font-bold text-white">{battle.title}</p>
@@ -315,15 +319,15 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
         <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="bg-[#0D0D0D] rounded-xl p-3 text-center">
             <p className="text-xl font-bebas text-[#FFD700]">${battle.bet_amount}</p>
-            <p className="text-xs font-semibold text-white">por lado</p>
+            <p className="text-xs font-semibold text-white">{t('perSide')}</p>
           </div>
           <div className="bg-[#0D0D0D] rounded-xl p-3 text-center">
             <p className="text-xl font-bebas text-[#22C55E]">${battle.pot_total}</p>
-            <p className="text-xs font-semibold text-white">pozo total</p>
+            <p className="text-xs font-semibold text-white">{t('pot')}</p>
           </div>
           <div className="bg-[#0D0D0D] rounded-xl p-3 text-center">
             <p className="text-xl font-bebas text-white">{battle.current_participants}</p>
-            <p className="text-xs font-semibold text-white">jugadores</p>
+            <p className="text-xs font-semibold text-white">{t('players')}</p>
           </div>
         </div>
 
@@ -347,7 +351,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
               <button onClick={() => setShowJoin(true)}
                 className="flex items-center gap-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-4 py-2 rounded-xl text-base transition-all hover:opacity-90">
                 <Zap size={16} />
-                Entrar
+                {t('enter')}
                 <ChevronRight size={16} />
               </button>
             )}
@@ -368,6 +372,8 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
 }
 
 export default function BattlesPage() {
+  const t = useTranslations('battles')
+  const tc = useTranslations('common')
   const [userId, setUserId] = useState('')
   const [battles, setBattles] = useState<Battle[]>([])
   const [loading, setLoading] = useState(true)
@@ -403,41 +409,41 @@ export default function BattlesPage() {
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto md:max-w-4xl">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver al Dashboard
+        <ArrowLeft size={20} />{tc('back')}
       </Link>
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-bebas text-5xl text-white tracking-wider">Batallas</h1>
-          <p className="text-sm font-semibold text-[#86EFAC]">Apostá contra otros fanáticos</p>
+          <h1 className="font-bebas text-5xl text-white tracking-wider">{t('title')}</h1>
+          <p className="text-sm font-semibold text-[#86EFAC]">{t('subtitle')}</p>
         </div>
         <button onClick={() => setShowCreate(true)}
           className="flex items-center gap-2 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-4 py-3 rounded-xl text-base hover:opacity-90 transition-all">
           <Plus size={20} />
-          Nueva
+          {t('new')}
         </button>
       </div>
 
       <div className="flex gap-2 mb-6">
         <button className={`${btnBase} ${tab === 'todas' ? btnActive : btnInactive}`} onClick={() => setTab('todas')}>
-          Abiertas ({todasBattles.length})
+          {t('open')} ({todasBattles.length})
         </button>
         <button className={`${btnBase} ${tab === 'mis' ? btnActive : btnInactive}`} onClick={() => setTab('mis')}>
-          Mis Batallas ({misBattles.length})
+          {t('mine')} ({misBattles.length})
         </button>
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center h-32 text-white">Cargando batallas...</div>
+        <div className="flex items-center justify-center h-32 text-white">{tc('loading')}</div>
       ) : tab === 'todas' ? (
         todasBattles.length === 0 ? (
           <div className="text-center py-16">
             <Zap size={40} className="text-[#FFD700] mx-auto mb-3" />
-            <p className="text-xl font-bold text-white mb-2">No hay batallas abiertas</p>
-            <p className="text-base text-white mb-4">¡Sé el primero en abrir una!</p>
+            <p className="text-xl font-bold text-white mb-2">{t('noBattles')}</p>
+            <p className="text-base text-white mb-4">{t('beFirst')}</p>
             <button onClick={() => setShowCreate(true)}
               className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-6 py-3 rounded-xl text-base">
-              + Nueva Batalla
+              + {t('newBattle')}
             </button>
           </div>
         ) : (
@@ -447,10 +453,10 @@ export default function BattlesPage() {
         misBattles.length === 0 ? (
           <div className="text-center py-16">
             <Trophy size={40} className="text-[#FFD700] mx-auto mb-3" />
-            <p className="text-xl font-bold text-white mb-2">Todavía no abriste ninguna batalla</p>
+            <p className="text-xl font-bold text-white mb-2">{t('noMyBattles')}</p>
             <button onClick={() => setShowCreate(true)}
               className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-6 py-3 rounded-xl text-base mt-2">
-              + Nueva Batalla
+              + {t('newBattle')}
             </button>
           </div>
         ) : (

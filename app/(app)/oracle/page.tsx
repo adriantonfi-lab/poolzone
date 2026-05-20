@@ -3,17 +3,27 @@
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Sparkles, Send, Loader2, Lock, ArrowLeft } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 type Message = { role: 'user' | 'oracle'; content: string }
 
-const SUGGESTED_QUESTIONS = [
+const SUGGESTED_QUESTIONS_ES = [
   '¿Quién tiene más chances de ganar el Grupo A?',
   '¿Argentina puede llegar a la final?',
   '¿Qué selección tiene el mejor ataque del torneo?',
   '¿Brasil vs Francia, quién gana y con qué marcador?',
   '¿Cuál es la selección más peligrosa del torneo?',
   '¿Qué equipos sorpresa pueden llegar lejos?',
+]
+
+const SUGGESTED_QUESTIONS_EN = [
+  'Who has the best chances of winning Group A?',
+  'Can Argentina make it to the final?',
+  'Which team has the best attack in the tournament?',
+  'Brazil vs France, who wins and what score?',
+  'Which is the most dangerous team in the tournament?',
+  'Which surprise teams can go far?',
 ]
 
 function TypewriterText({ text }: { text: string }) {
@@ -79,6 +89,15 @@ function TypewriterText({ text }: { text: string }) {
 }
 
 export default function OraclePage() {
+  const t = useTranslations('oracle')
+  const tc = useTranslations('common')
+  const [locale, setLocale] = useState(() => {
+    if (typeof document !== 'undefined') {
+      const m = document.cookie.match(/locale=([^;]+)/)
+      return m ? m[1] : 'es'
+    }
+    return 'es'
+  })
   const [user, setUser] = useState<{ id: string } | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [question, setQuestion] = useState('')
@@ -163,7 +182,7 @@ export default function OraclePage() {
       {/* Botón volver */}
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#A855F7] transition-colors mb-4">
         <ArrowLeft size={20} />
-        Volver al Dashboard
+        {tc('back')}
       </Link>
 
       {/* Header */}
@@ -173,14 +192,14 @@ export default function OraclePage() {
             <Sparkles size={24} className="text-white" />
           </div>
           <div>
-            <h1 className="font-bebas text-4xl text-white tracking-wider">El Oráculo</h1>
-            <p className="text-sm font-semibold text-[#A855F7]">Análisis estadístico · Mundial 2026</p>
+            <h1 className="font-bebas text-4xl text-white tracking-wider">{t('title')}</h1>
+            <p className="text-sm font-semibold text-[#A855F7]">{t('subtitle')}</p>
           </div>
         </div>
         {!loadingQueries && (
           <div className="text-right">
             <p className="text-3xl font-bebas text-[#FFD700]">{queriesLeft}</p>
-            <p className="text-xs font-bold text-[#86EFAC] uppercase tracking-wider">consultas</p>
+            <p className="text-xs font-bold text-[#86EFAC] uppercase tracking-wider">{t('queries')}</p>
           </div>
         )}
       </div>
@@ -194,7 +213,7 @@ export default function OraclePage() {
               style={{ width: `${(queriesUsed / MAX_QUERIES) * 100}%` }}
             />
           </div>
-          <p className="text-xs text-white font-semibold mt-1">{queriesUsed} de {MAX_QUERIES} consultas usadas</p>
+          <p className="text-xs text-white font-semibold mt-1">{queriesUsed} {t('used')} {MAX_QUERIES} {t('queriesUsed')}</p>
         </div>
       )}
 
@@ -209,13 +228,13 @@ export default function OraclePage() {
                 <span className="text-base font-bold text-[#A855F7]">El Oráculo</span>
               </div>
               <p className="text-base text-white leading-relaxed">
-                Soy El Oráculo del Mundial 2026. Analizo estadísticas, historial de enfrentamientos y probabilidades matemáticas para darte predicciones precisas. Tenés <span className="font-bold text-[#FFD700]">{queriesLeft} consultas</span> disponibles. ¿Qué querés saber?
+                {t('welcome')} <span className="font-bold text-[#FFD700]">{queriesLeft} {t('queries')}</span> {t('available')}
               </p>
             </div>
             <div>
-              <p className="text-base font-bold text-white mb-3">Preguntas sugeridas:</p>
+              <p className="text-base font-bold text-white mb-3">{t('suggested')}</p>
               <div className="grid grid-cols-1 gap-2">
-                {SUGGESTED_QUESTIONS.map((q, i) => (
+                {(locale === 'en' ? SUGGESTED_QUESTIONS_EN : SUGGESTED_QUESTIONS_ES).map((q, i) => (
                   <button key={i} onClick={() => handleAsk(q)}
                     className="text-left px-4 py-3 bg-[#1A1A2E] border border-[#2A2A4A] hover:border-[#A855F7] hover:bg-[#A855F7]/5 rounded-xl text-base text-white font-medium transition-all">
                     ✦ {q}
@@ -256,7 +275,7 @@ export default function OraclePage() {
             <div className="bg-[#1A1A2E] border border-[#7C3AED]/30 rounded-2xl px-4 py-3">
               <div className="flex items-center gap-2 text-white">
                 <Loader2 size={16} className="animate-spin text-[#A855F7]" />
-                <span className="text-base">El Oráculo está analizando...</span>
+                <span className="text-base">{t('analyzing')}</span>
               </div>
             </div>
           </div>
@@ -269,7 +288,7 @@ export default function OraclePage() {
       {limitReached ? (
         <div className="bg-[#1A1A2E] border border-[#7C3AED]/30 rounded-2xl p-4 flex items-center gap-3">
           <Lock size={20} className="text-[#A855F7] shrink-0" />
-          <p className="text-base text-white font-semibold">Límite alcanzado. Próximamente podrás adquirir más consultas.</p>
+          <p className="text-base text-white font-semibold">{t('limitReached')}</p>
         </div>
       ) : (
         <div className="flex gap-2">
@@ -277,7 +296,7 @@ export default function OraclePage() {
             value={question}
             onChange={e => setQuestion(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleAsk()}
-            placeholder="Preguntá al Oráculo..."
+            placeholder={t('placeholder')}
             className="flex-1 bg-[#1A1A2E] border border-[#2A2A4A] focus:border-[#A855F7] rounded-xl px-4 py-3 text-base text-white font-medium focus:outline-none placeholder:text-gray-500 transition-all"
           />
           <button onClick={() => handleAsk()} disabled={loading || !question.trim()}
