@@ -87,7 +87,7 @@ export default function LockerRoomPage() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const typingTimeoutRef = useRef<NodeJS.Timeout>()
+  const typingTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
   const presenceChannelRef = useRef<any>(null)
   const messagesChannelRef = useRef<any>(null)
 
