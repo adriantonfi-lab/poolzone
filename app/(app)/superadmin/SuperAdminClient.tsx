@@ -74,6 +74,18 @@ export default function SuperAdminClient({
     setApprovingId('')
   }
 
+  async function handleRoleChange(userId: string, newRole: string) {
+    setSaving(true)
+    const res = await fetch('/api/superadmin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'change_role', userId, role: newRole }),
+    })
+    const data = await res.json()
+    setMsg(data.success ? `✅ Rol actualizado a ${newRole}` : `❌ ${data.error}`)
+    setSaving(false)
+  }
+
   async function handleCreateChallenge() {
     if (!challengeTitle || !challengeMatch) { setMsg('❌ Completá el título y el partido'); return }
     setSaving(true)
