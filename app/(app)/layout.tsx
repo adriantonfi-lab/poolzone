@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Calendar, Zap, MessageCircle, Sparkles, Wallet, LogOut, Trophy, BarChart2, Shield, DollarSign, Eye, BookOpen, GitBranch } from 'lucide-react'
+import { LayoutDashboard, Calendar, Zap, MessageCircle, Sparkles, Wallet, LogOut, Trophy, BarChart2, Shield, DollarSign, Eye, BookOpen, GitBranch, LayoutGrid } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import LanguageSwitcher from '@/app/components/LanguageSwitcher'
 import { useTranslations } from 'next-intl'
@@ -26,7 +26,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/wallet', label: t('wallet'), icon: Wallet },
     { href: '/inscription', label: t('inscription'), icon: DollarSign },
     { href: '/rules', label: 'Reglas', icon: BookOpen },
-    { href: '/bracket', label: 'Cuadro', icon: GitBranch },
+    { href: '/grupos', label: 'Grupos', icon: LayoutGrid },
+    { href: '/bracket', label: 'Eliminat.', icon: GitBranch },
   ]
 
   useEffect(() => {
