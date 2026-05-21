@@ -3,7 +3,9 @@ compatibility_date = "2026-05-20"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".open-next/assets"
 
-[[d1_databases]]
-binding = "DB"
-database_name = "che-bacano"
-database_id = "local"
+[build]
+command = "npm install --legacy-peer-deps && npx opennextjs-cloudflare build"
+
+[[rules]]
+type = "ESModule"
+globs = ["**/*.js"]
