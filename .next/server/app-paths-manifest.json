@@ -1,7 +1,0 @@
-{
-  "/api/news/route": "app/api/news/route.js",
-  "/(app)/fixture/page": "app/(app)/fixture/page.js",
-  "/(app)/predictions/page": "app/(app)/predictions/page.js",
-  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
-  "/(app)/rules/page": "app/(app)/rules/page.js"
-}
