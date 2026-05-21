@@ -350,13 +350,12 @@ export default function FixturePage() {
 
   const groupMatches = matches.filter(m => m.stage === 'Group Stage')
   const knockoutMatches = matches.filter(m => m.stage !== 'Group Stage')
-  const stageOrder = ['Round of 32', 'Round of 16', 'Quarter-finals', 'Semi-finals', 'Third Place', 'Final']
+  const stageOrder = ['Octavos de Final', 'Cuartos de Final', 'Semifinal', 'Tercer Puesto', 'Final']
   const stageLabels: Record<string, string> = {
-    'Round of 32': t('round32'),
-    'Round of 16': t('round16'),
-    'Quarter-finals': t('quarters'),
-    'Semi-finals': t('semis'),
-    'Third Place': t('third'),
+    'Octavos de Final': t('round16'),
+    'Cuartos de Final': t('quarters'),
+    'Semifinal': t('semis'),
+    'Tercer Puesto': t('third'),
     'Final': t('final'),
   }
 
