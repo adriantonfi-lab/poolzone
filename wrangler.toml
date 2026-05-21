@@ -2,10 +2,3 @@ name = "che-bacano-final"
 compatibility_date = "2026-05-20"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".open-next/assets"
-
-[build]
-command = "npm install --legacy-peer-deps && npx opennextjs-cloudflare build"
-
-[[rules]]
-type = "ESModule"
-globs = ["**/*.js"]
