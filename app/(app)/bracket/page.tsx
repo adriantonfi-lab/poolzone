@@ -86,7 +86,7 @@ export default function BracketPage() {
   const fY = TH/2-CH/2-20
   const tY = TH/2+CH+20
   const cx = (i: number) => i*COL
-  const lc = '#2A2A4A'; const dc = '#3A3A5A'
+  const lc = '#FFD700'; const dc = '#FFD70066'
   return (
     <div className="px-4 py-6 max-w-full mx-auto">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5"><ArrowLeft size={16}/>Volver</Link>
@@ -100,17 +100,17 @@ export default function BracketPage() {
           {[{l:'OCTAVOS',x:cx(0)},{l:'CUARTOS',x:cx(1)},{l:'SEMI',x:cx(2)},{l:'SEMI',x:cx(4)},{l:'CUARTOS',x:cx(5)},{l:'OCTAVOS',x:cx(6)}].map(({l,x})=>(
             <div key={x} className="absolute font-bebas text-base tracking-wider text-center text-[#FFD700]" style={{left:x,top:56,width:CW}}>{l}</div>
           ))}
-          <div className="absolute font-bebas text-sm tracking-wider text-center text-[#FFD700]" style={{left:cx(3),top:56,width:CW}}>🏆 FINAL</div>
+          <div className="absolute font-bebas text-2xl tracking-wider text-center text-[#FFD700]" style={{left:cx(3)-20,top:48,width:CW+40}}>🏆 GRAN FINAL</div>
           <div className="absolute font-bebas text-xs tracking-wider text-center text-gray-500" style={{left:cx(3),top:tY-16,width:CW}}>3° PUESTO</div>
           <svg className="absolute inset-0 pointer-events-none" width={TW} height={TH} style={{overflow:'visible'}}>
-            {octavos.slice(0,4).map((_,i)=>{ const pair=Math.floor(i/2); const x1=cx(0)+CW,y1=oY(i)+CH/2,x2=cx(1),y2=qY(pair); return <path key={`ol${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1.5" fill="none"/> })}
-            {octavos.slice(4,8).map((_,i)=>{ const pair=Math.floor(i/2); const x1=cx(6),y1=oY(i)+CH/2,x2=cx(5)+CW,y2=qY(pair+2); return <path key={`or${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1.5" fill="none"/> })}
-            {[0,1].map(i=>{ const x1=cx(1)+CW,y1=qY(i),x2=cx(2),y2=sY(0); return <path key={`cl${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1.5" fill="none"/> })}
-            {[0,1].map(i=>{ const x1=cx(5),y1=qY(i+2),x2=cx(4)+CW,y2=sY(1); return <path key={`cr${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1.5" fill="none"/> })}
-            <path d={`M${cx(2)+CW} ${sY(0)}H${(cx(2)+CW+cx(3))/2}V${fY+CH/2}H${cx(3)}`} stroke={lc} strokeWidth="1.5" fill="none"/>
-            <path d={`M${cx(4)} ${sY(1)}H${(cx(4)+cx(3)+CW)/2}V${fY+CH/2}H${cx(3)+CW}`} stroke={lc} strokeWidth="1.5" fill="none"/>
-            <path d={`M${cx(2)+CW} ${sY(0)}H${cx(2)+CW+18}V${tY+CH/2}H${cx(3)}`} stroke={dc} strokeWidth="1" strokeDasharray="5 3" fill="none"/>
-            <path d={`M${cx(4)} ${sY(1)}H${cx(4)-18}V${tY+CH/2}H${cx(3)+CW}`} stroke={dc} strokeWidth="1" strokeDasharray="5 3" fill="none"/>
+            {octavos.slice(0,4).map((_,i)=>{ const pair=Math.floor(i/2); const x1=cx(0)+CW,y1=oY(i)+CH/2,x2=cx(1),y2=qY(pair); return <path key={`ol${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/> })}
+            {octavos.slice(4,8).map((_,i)=>{ const pair=Math.floor(i/2); const x1=cx(6),y1=oY(i)+CH/2,x2=cx(5)+CW,y2=qY(pair+2); return <path key={`or${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/> })}
+            {[0,1].map(i=>{ const x1=cx(1)+CW,y1=qY(i),x2=cx(2),y2=sY(0); return <path key={`cl${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/> })}
+            {[0,1].map(i=>{ const x1=cx(5),y1=qY(i+2),x2=cx(4)+CW,y2=sY(1); return <path key={`cr${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/> })}
+            <path d={`M${cx(2)+CW} ${sY(0)}H${(cx(2)+CW+cx(3))/2}V${fY+CH/2}H${cx(3)}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/>
+            <path d={`M${cx(4)} ${sY(1)}H${(cx(4)+cx(3)+CW)/2}V${fY+CH/2}H${cx(3)+CW}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/>
+            <path d={`M${cx(2)+CW} ${sY(0)}H${cx(2)+CW+18}V${tY+CH/2}H${cx(3)}`} stroke={dc} strokeWidth="1" opacity="0.3" strokeDasharray="5 3" fill="none"/>
+            <path d={`M${cx(4)} ${sY(1)}H${cx(4)-18}V${tY+CH/2}H${cx(3)+CW}`} stroke={dc} strokeWidth="1" opacity="0.3" strokeDasharray="5 3" fill="none"/>
           </svg>
           {octavos.slice(0,4).map((m,i)=><div key={i} className="absolute" style={{left:cx(0),top:oY(i),width:CW}}><MatchCard match={m}/></div>)}
           {cuartos.slice(0,2).map((m,i)=><div key={i} className="absolute" style={{left:cx(1),top:qY(i)-CH/2,width:CW}}><MatchCard match={m}/></div>)}
