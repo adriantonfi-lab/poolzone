@@ -9,6 +9,9 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  // Mark user as online
+  await supabase.from('profiles').update({ is_online: true, last_seen: new Date().toISOString() }).eq('id', user.id)
+
   const [profileRes, matchesRes, onlineRes, battlesRes] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('matches').select('*').in('status', ['scheduled', 'live']).order('match_date', { ascending: true }).limit(4),
