@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Users, Trophy, DollarSign, MessageCircle, Zap, Sparkles, AlertTriangle, CheckCircle, XCircle, Clock, Plus, Eye } from 'lucide-react'
+import { ArrowLeft, Users, Trophy, DollarSign, MessageCircle, Zap, Sparkles, AlertTriangle, CheckCircle, Clock, Shield, BarChart3, Settings, Bell, TrendingUp } from 'lucide-react'
 
 type Tab = 'overview' | 'usuarios' | 'pagos' | 'chat' | 'desafios' | 'resultados'
 
@@ -16,34 +16,25 @@ export default function SuperAdminClient({
   const [tab, setTab] = useState<Tab>('overview')
   const [msg, setMsg] = useState('')
   const [saving, setSaving] = useState(false)
-
-  // Challenge form
   const [challengeMatch, setChallengeMatch] = useState('')
   const [challengeTitle, setChallengeTitle] = useState('')
   const [challengeDesc, setChallengeDesc] = useState('')
   const [challengePrize, setChallengePrize] = useState('')
   const [challengePoints, setChallengePoints] = useState('')
-
-  // Approve payment form
   const [approvingId, setApprovingId] = useState('')
 
-  // Stats
   const totalUsers = profiles.length
   const paidUsers = profiles.filter(p => p.inscription_status === 'paid').length
   const pendingPayments = payments.filter(p => p.status === 'pending').length
   const totalPot = paidUsers * 25
-  const openBattles = battles.filter(b => b.status === 'open').length
   const totalPredictions = predictions.length
   const totalMessages = messages.length
   const oracleRevenue = oracleQueries.reduce((s: number, q: any) => s + (q.cost || 0), 0)
 
-  // Per user stats
   const predByUser: Record<string, number> = {}
   for (const p of predictions) predByUser[p.user_id] = (predByUser[p.user_id] || 0) + 1
-
   const pointsByUser: Record<string, number> = {}
   for (const p of predictions) pointsByUser[p.user_id] = (pointsByUser[p.user_id] || 0) + (p.points_earned || 0)
-
   const msgByUser: Record<string, number> = {}
   for (const m of messages) msgByUser[m.sender_id] = (msgByUser[m.sender_id] || 0) + 1
 
@@ -61,26 +52,16 @@ export default function SuperAdminClient({
   }
 
   async function handleApprovePayment(paymentId: string, userId: string, amount: number) {
-    setApprovingId(paymentId)
-    setSaving(true)
-    const res = await fetch('/api/superadmin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'approve_payment', paymentId, userId, amount }),
-    })
+    setApprovingId(paymentId); setSaving(true)
+    const res = await fetch('/api/superadmin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'approve_payment', paymentId, userId, amount }) })
     const data = await res.json()
     setMsg(data.success ? '✅ Pago aprobado' : `❌ ${data.error}`)
-    setSaving(false)
-    setApprovingId('')
+    setSaving(false); setApprovingId('')
   }
 
   async function handleRoleChange(userId: string, newRole: string) {
     setSaving(true)
-    const res = await fetch('/api/superadmin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'change_role', userId, role: newRole }),
-    })
+    const res = await fetch('/api/superadmin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'change_role', userId, role: newRole }) })
     const data = await res.json()
     setMsg(data.success ? `✅ Rol actualizado a ${newRole}` : `❌ ${data.error}`)
     setSaving(false)
@@ -89,18 +70,7 @@ export default function SuperAdminClient({
   async function handleCreateChallenge() {
     if (!challengeTitle || !challengeMatch) { setMsg('❌ Completá el título y el partido'); return }
     setSaving(true)
-    const res = await fetch('/api/superadmin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'create_challenge',
-        matchId: challengeMatch,
-        title: challengeTitle,
-        description: challengeDesc,
-        prizeAmount: parseFloat(challengePrize || '0'),
-        bonusPoints: parseInt(challengePoints || '0'),
-      }),
-    })
+    const res = await fetch('/api/superadmin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'create_challenge', matchId: challengeMatch, title: challengeTitle, description: challengeDesc, prizeAmount: parseFloat(challengePrize || '0'), bonusPoints: parseInt(challengePoints || '0') }) })
     const data = await res.json()
     setMsg(data.success ? '✅ Desafío creado' : `❌ ${data.error}`)
     setSaving(false)
@@ -108,7 +78,7 @@ export default function SuperAdminClient({
   }
 
   const tabs: { id: Tab; label: string; icon: any; badge?: number }[] = [
-    { id: 'overview', label: 'Overview', icon: Eye },
+    { id: 'overview', label: 'Resumen', icon: BarChart3 },
     { id: 'usuarios', label: 'Usuarios', icon: Users, badge: totalUsers },
     { id: 'pagos', label: 'Pagos', icon: DollarSign, badge: pendingPayments },
     { id: 'chat', label: 'Chat', icon: MessageCircle, badge: totalMessages },
@@ -116,43 +86,40 @@ export default function SuperAdminClient({
     { id: 'resultados', label: 'Resultados', icon: Zap },
   ]
 
-  const btnBase = 'flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold transition-all'
-  const btnActive = 'bg-[#FFD700] text-black'
-  const btnInactive = 'bg-[#1A1A2E] text-white border border-[#2A2A4A] hover:border-[#FFD700]'
-
   return (
     <div className="px-4 py-6 max-w-5xl mx-auto pb-24 md:pb-6">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
-        <ArrowLeft size={20} />Dashboard
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5">
+        <ArrowLeft size={16} /> Volver al Dashboard
       </Link>
 
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-[#FFD700]/20 flex items-center justify-center">
-          <span className="text-2xl">👁️</span>
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-6 bg-gradient-to-r from-[#FFD700]/10 to-transparent border border-[#FFD700]/20 rounded-2xl p-4">
+        <div className="w-12 h-12 rounded-2xl bg-[#FFD700]/20 border border-[#FFD700]/30 flex items-center justify-center shrink-0">
+          <Shield size={24} className="text-[#FFD700]" />
         </div>
         <div>
-          <h1 className="font-bebas text-4xl text-white tracking-wider">Big Brother</h1>
-          <p className="text-sm font-bold text-[#FFD700]">Panel Super Admin · Che-Bacano Mundial 2026</p>
+          <h1 className="font-bebas text-3xl text-white tracking-wider leading-none">SUPER ADMINISTRADOR</h1>
+          <p className="text-sm font-semibold text-[#FFD700]">Panel de control · Che-Bacano Mundial 2026</p>
+        </div>
+        <div className="ml-auto text-right hidden md:block">
+          <p className="text-xs text-gray-500">Usuarios totales</p>
+          <p className="font-bebas text-3xl text-white">{totalUsers}</p>
         </div>
       </div>
 
       {msg && (
-        <div className={`mb-4 px-4 py-3 rounded-xl text-base font-semibold ${
-          msg.startsWith('✅') ? 'bg-[#22C55E]/10 border border-[#22C55E]/30 text-[#22C55E]' : 'bg-red-500/10 border border-red-500/30 text-red-400'
-        }`}>{msg}</div>
+        <div className={`mb-4 px-4 py-3 rounded-xl text-sm font-semibold ${msg.startsWith('✅') ? 'bg-[#22C55E]/10 border border-[#22C55E]/30 text-[#22C55E]' : 'bg-red-500/10 border border-red-500/30 text-red-400'}`}>{msg}</div>
       )}
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
         {tabs.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
-            className={`${btnBase} ${tab === t.id ? btnActive : btnInactive}`}>
-            <t.icon size={14} />
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${tab === t.id ? 'bg-[#FFD700] text-black shadow-lg shadow-[#FFD700]/20' : 'bg-[#1A1A2E] text-gray-300 border border-[#2A2A4A] hover:border-[#FFD700]/50 hover:text-white'}`}>
+            <t.icon size={15} />
             {t.label}
             {t.badge !== undefined && t.badge > 0 && (
-              <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-black/20 text-black' : 'bg-[#FFD700] text-black'}`}>
-                {t.badge}
-              </span>
+              <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-black/20 text-black' : 'bg-[#FFD700]/20 text-[#FFD700]'}`}>{t.badge}</span>
             )}
           </button>
         ))}
@@ -161,68 +128,68 @@ export default function SuperAdminClient({
       {/* OVERVIEW */}
       {tab === 'overview' && (
         <div className="space-y-4">
-          {/* KPIs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { label: 'Participantes', value: totalUsers, sub: `${paidUsers} pagaron`, color: 'text-white', icon: '👥' },
-              { label: 'Pozo total', value: `$${totalPot}`, sub: `${paidUsers} × $25`, color: 'text-[#FFD700]', icon: '💰' },
-              { label: 'Predicciones', value: totalPredictions, sub: `${totalUsers} usuarios`, color: 'text-[#A855F7]', icon: '🎯' },
-              { label: 'Oráculo $', value: `$${oracleRevenue}`, sub: `${oracleQueries.length} consultas`, color: 'text-[#22C55E]', icon: '🔮' },
+              { label: 'Participantes', value: totalUsers, sub: `${paidUsers} pagaron`, color: 'text-white', icon: Users, iconColor: 'text-blue-400', border: 'border-blue-400/20' },
+              { label: 'Pozo total', value: `$${totalPot}`, sub: `${paidUsers} × $25`, color: 'text-[#FFD700]', icon: DollarSign, iconColor: 'text-[#FFD700]', border: 'border-[#FFD700]/20' },
+              { label: 'Predicciones', value: totalPredictions, sub: `${totalUsers} usuarios`, color: 'text-[#A855F7]', icon: TrendingUp, iconColor: 'text-[#A855F7]', border: 'border-[#A855F7]/20' },
+              { label: 'Oráculo', value: `$${oracleRevenue}`, sub: `${oracleQueries.length} consultas`, color: 'text-[#22C55E]', icon: Sparkles, iconColor: 'text-[#22C55E]', border: 'border-[#22C55E]/20' },
             ].map(k => (
-              <div key={k.label} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">{k.icon}</span>
-                  <p className="text-xs font-bold text-gray-400">{k.label}</p>
+              <div key={k.label} className={`bg-[#1A1A2E] border ${k.border} rounded-2xl p-4`}>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{k.label}</p>
+                  <k.icon size={16} className={k.iconColor} />
                 </div>
-                <p className={`font-bebas text-3xl ${k.color}`}>{k.value}</p>
+                <p className={`font-bebas text-4xl ${k.color}`}>{k.value}</p>
                 <p className="text-xs text-gray-500 mt-1">{k.sub}</p>
               </div>
             ))}
           </div>
 
-          {/* Premios estimados */}
-          <div className="bg-gradient-to-r from-[#FFD700]/10 to-[#FFA500]/10 border border-[#FFD700]/30 rounded-2xl p-5">
-            <p className="font-bebas text-xl text-[#FFD700] tracking-wider mb-3">DISTRIBUCIÓN DEL POZO — ${totalPot}</p>
+          <div className="bg-gradient-to-r from-[#FFD700]/10 to-[#FFA500]/5 border border-[#FFD700]/30 rounded-2xl p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <Trophy size={18} className="text-[#FFD700]" />
+              <p className="font-bebas text-xl text-[#FFD700] tracking-wider">DISTRIBUCIÓN DEL POZO — ${totalPot}</p>
+            </div>
             <div className="grid grid-cols-3 gap-3">
-              {[{p:'1°',pct:60},{p:'2°',pct:30},{p:'3°',pct:10}].map(({p,pct})=>(
-                <div key={p} className="text-center bg-[#0D0D0D] rounded-xl p-3">
-                  <p className="font-bebas text-3xl text-[#FFD700]">${Math.round(totalPot*pct/100)}</p>
-                  <p className="text-sm font-bold text-white">{p} — {pct}%</p>
+              {[{p:'1°',pct:60,color:'text-[#FFD700]'},{p:'2°',pct:30,color:'text-gray-300'},{p:'3°',pct:10,color:'text-orange-400'}].map(({p,pct,color})=>(
+                <div key={p} className="text-center bg-[#0D0D0D] rounded-xl p-4 border border-[#2A2A4A]">
+                  <p className={`font-bebas text-4xl ${color}`}>${Math.round(totalPot*pct/100)}</p>
+                  <p className="text-sm font-bold text-white mt-1">{p}</p>
+                  <p className="text-xs text-gray-500">{pct}%</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Alertas */}
-          <div className="bg-[#1A1A2E] border border-red-500/30 rounded-2xl p-5">
-            <p className="font-bebas text-xl text-red-400 tracking-wider mb-3">⚠️ ALERTAS</p>
-            <div className="space-y-2">
-              {profiles.filter(p => p.inscription_status !== 'paid').length > 0 && (
-                <div className="flex items-center gap-2 text-sm text-red-400 font-bold">
-                  <AlertTriangle size={16} />
-                  {profiles.filter(p => p.inscription_status !== 'paid').length} usuarios sin pagar inscripción
-                </div>
-              )}
-              {pendingPayments > 0 && (
-                <div className="flex items-center gap-2 text-sm text-[#FFD700] font-bold">
-                  <Clock size={16} />
-                  {pendingPayments} comprobantes pendientes de aprobación
-                </div>
-              )}
-              {matches.filter(m => m.status === 'finished' && m.home_score === null).length > 0 && (
-                <div className="flex items-center gap-2 text-sm text-orange-400 font-bold">
-                  <AlertTriangle size={16} />
-                  {matches.filter(m => m.status === 'finished' && m.home_score === null).length} partidos sin resultado cargado
-                </div>
-              )}
-              {profiles.filter(p => (predByUser[p.id] || 0) === 0).length > 0 && (
-                <div className="flex items-center gap-2 text-sm text-blue-400 font-bold">
-                  <AlertTriangle size={16} />
-                  {profiles.filter(p => (predByUser[p.id] || 0) === 0).length} usuarios sin ninguna predicción
-                </div>
-              )}
+          {(profiles.filter(p => p.inscription_status !== 'paid').length > 0 || pendingPayments > 0) && (
+            <div className="bg-[#1A1A2E] border border-red-500/30 rounded-2xl p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Bell size={16} className="text-red-400" />
+                <p className="font-bebas text-lg text-red-400 tracking-wider">ALERTAS</p>
+              </div>
+              <div className="space-y-2">
+                {profiles.filter(p => p.inscription_status !== 'paid').length > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-red-400 font-semibold bg-red-500/5 rounded-xl px-3 py-2">
+                    <AlertTriangle size={14} />
+                    {profiles.filter(p => p.inscription_status !== 'paid').length} usuarios sin pagar inscripción
+                  </div>
+                )}
+                {pendingPayments > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-[#FFD700] font-semibold bg-[#FFD700]/5 rounded-xl px-3 py-2">
+                    <Clock size={14} />
+                    {pendingPayments} comprobantes pendientes de aprobación
+                  </div>
+                )}
+                {profiles.filter(p => (predByUser[p.id] || 0) === 0).length > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-blue-400 font-semibold bg-blue-500/5 rounded-xl px-3 py-2">
+                    <AlertTriangle size={14} />
+                    {profiles.filter(p => (predByUser[p.id] || 0) === 0).length} usuarios sin predicciones
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 
@@ -236,55 +203,42 @@ export default function SuperAdminClient({
             const preds = predByUser[p.id] || 0
             const points = pointsByUser[p.id] || 0
             const msgs = msgByUser[p.id] || 0
-
             return (
-              <div key={p.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
+              <div key={p.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 hover:border-[#FFD700]/30 transition-all">
                 <div className="flex items-start gap-3">
-                  {/* Semáforo */}
-                  <div className={`w-3 h-3 rounded-full mt-1.5 shrink-0 ${
-                    status === 'green' ? 'bg-[#22C55E]' : status === 'yellow' ? 'bg-[#FFD700]' : 'bg-red-500'
-                  }`} />
-
-                  {/* Avatar */}
+                  <div className={`w-2.5 h-2.5 rounded-full mt-2 shrink-0 ${status === 'green' ? 'bg-[#22C55E]' : status === 'yellow' ? 'bg-[#FFD700]' : 'bg-red-500'}`} />
                   {p.avatar_url ? (
-                    <img src={p.avatar_url} alt={p.username} className="w-10 h-10 rounded-xl object-cover shrink-0" />
+                    <img src={p.avatar_url} alt={p.username} className="w-11 h-11 rounded-xl object-cover shrink-0 border border-[#2A2A4A]" />
                   ) : (
-                    <div className="w-10 h-10 rounded-xl bg-[#FFD700]/20 flex items-center justify-center shrink-0">
-                      <span className="font-bebas text-lg text-[#FFD700]">{p.username?.[0]?.toUpperCase()}</span>
+                    <div className="w-11 h-11 rounded-xl bg-[#FFD700]/20 border border-[#FFD700]/20 flex items-center justify-center shrink-0">
+                      <span className="font-bebas text-xl text-[#FFD700]">{p.username?.[0]?.toUpperCase()}</span>
                     </div>
                   )}
-
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
                       <p className="text-base font-bold text-white">@{p.username}</p>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                        p.role === 'super_admin' ? 'bg-[#FFD700]/20 text-[#FFD700]' :
-                        p.role === 'admin' ? 'bg-[#A855F7]/20 text-[#A855F7]' :
-                        'bg-[#2A2A4A] text-gray-400'
-                      }`}>{p.role || 'guest'}</span>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                        p.inscription_status === 'paid' ? 'bg-[#22C55E]/20 text-[#22C55E]' : 'bg-red-500/20 text-red-400'
-                      }`}>{p.inscription_status === 'paid' ? '✅ Pagado' : '❌ Sin pagar'}</span>
-                      {p.role !== 'super_admin' && (
-                        <select
-                          defaultValue={p.role || 'guest'}
-                          onChange={e => handleRoleChange(p.id, e.target.value)}
-                          className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-[#FFD700] cursor-pointer">
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${p.role === 'super_admin' ? 'bg-[#FFD700]/20 text-[#FFD700]' : p.role === 'admin' ? 'bg-[#A855F7]/20 text-[#A855F7]' : 'bg-[#2A2A4A] text-gray-400'}`}>{p.role || 'guest'}</span>
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${p.inscription_status === 'paid' ? 'bg-[#22C55E]/20 text-[#22C55E]' : 'bg-red-500/20 text-red-400'}`}>{p.inscription_status === 'paid' ? 'Pagado' : 'Sin pagar'}</span>
+                    </div>
+                    <p className="text-xs text-gray-500 mb-1">{email}</p>
+                    <p className="text-xs text-gray-400">{p.full_name} · {p.favorite_team}</p>
+                    <div className="flex gap-4 mt-2 flex-wrap">
+                      <span className="text-xs font-bold text-[#A855F7]">{preds} pred. · {points} pts</span>
+                      <span className="text-xs font-bold text-[#22C55E]">{msgs} mensajes</span>
+                      <span className="text-xs font-bold text-[#FFD700]">{p.credits || 0} CR</span>
+                      <span className="text-xs text-gray-500">Último acceso: {formatDate(lastSeen)}</span>
+                    </div>
+                    {p.role !== 'super_admin' && (
+                      <div className="mt-2">
+                        <select defaultValue={p.role || 'guest'} onChange={e => handleRoleChange(p.id, e.target.value)}
+                          className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FFD700] cursor-pointer hover:border-[#FFD700]/50 transition-all">
                           <option value="guest">Guest</option>
                           <option value="family">Family</option>
                           <option value="admin">Manager</option>
                           <option value="super_admin">Super Admin</option>
                         </select>
-                      )}
-                    </div>
-                    <p className="text-xs text-gray-400 mt-0.5">{email}</p>
-                    <p className="text-xs text-gray-400">{p.full_name} · {p.favorite_team} · {p.country_of_residence}</p>
-                    <div className="flex gap-4 mt-2 flex-wrap">
-                      <span className="text-xs font-bold text-[#A855F7]">🎯 {preds} pred. ({points} pts)</span>
-                      <span className="text-xs font-bold text-[#22C55E]">💬 {msgs} msgs</span>
-                      <span className="text-xs font-bold text-[#FFD700]">💰 {p.credits || 0} CR</span>
-                      <span className="text-xs text-gray-500">Último acceso: {formatDate(lastSeen)}</span>
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -296,20 +250,15 @@ export default function SuperAdminClient({
       {/* PAGOS */}
       {tab === 'pagos' && (
         <div className="space-y-3">
-          <p className="text-sm font-bold text-white mb-3">
-            {pendingPayments > 0 ? `⏳ ${pendingPayments} comprobantes pendientes de revisión` : '✅ No hay comprobantes pendientes'}
-          </p>
+          <div className="flex items-center gap-2 mb-4">
+            <DollarSign size={16} className={pendingPayments > 0 ? 'text-[#FFD700]' : 'text-[#22C55E]'} />
+            <p className="text-sm font-bold text-white">{pendingPayments > 0 ? `${pendingPayments} comprobantes pendientes de revisión` : 'No hay comprobantes pendientes'}</p>
+          </div>
           {payments.map(p => (
-            <div key={p.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
+            <div key={p.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 hover:border-[#FFD700]/30 transition-all">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  {p.profiles?.avatar_url ? (
-                    <img src={p.profiles.avatar_url} alt="" className="w-10 h-10 rounded-xl object-cover" />
-                  ) : (
-                    <div className="w-10 h-10 rounded-xl bg-[#FFD700]/20 flex items-center justify-center">
-                      <span className="font-bebas text-lg text-[#FFD700]">{p.profiles?.username?.[0]?.toUpperCase()}</span>
-                    </div>
-                  )}
+                  {p.profiles?.avatar_url ? <img src={p.profiles.avatar_url} alt="" className="w-10 h-10 rounded-xl object-cover" /> : <div className="w-10 h-10 rounded-xl bg-[#FFD700]/20 flex items-center justify-center"><span className="font-bebas text-lg text-[#FFD700]">{p.profiles?.username?.[0]?.toUpperCase()}</span></div>}
                   <div>
                     <p className="text-base font-bold text-white">@{p.profiles?.username}</p>
                     <p className="text-xs text-gray-400">{p.payment_method} · ${p.amount} · {formatDate(p.created_at)}</p>
@@ -317,45 +266,30 @@ export default function SuperAdminClient({
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-                    p.status === 'approved' ? 'bg-[#22C55E]/20 text-[#22C55E]' :
-                    p.status === 'pending' ? 'bg-[#FFD700]/20 text-[#FFD700]' :
-                    'bg-red-500/20 text-red-400'
-                  }`}>{p.status === 'approved' ? '✅ Aprobado' : p.status === 'pending' ? '⏳ Pendiente' : '❌ Rechazado'}</span>
-                  {p.status === 'pending' && (
-                    <button
-                      onClick={() => handleApprovePayment(p.id, p.user_id, p.amount)}
-                      disabled={saving && approvingId === p.id}
-                      className="bg-[#22C55E] text-black font-bold px-3 py-1.5 rounded-xl text-xs disabled:opacity-40 hover:bg-[#16A34A] transition-all">
-                      Aprobar
-                    </button>
-                  )}
+                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${p.status === 'approved' ? 'bg-[#22C55E]/20 text-[#22C55E]' : p.status === 'pending' ? 'bg-[#FFD700]/20 text-[#FFD700]' : 'bg-red-500/20 text-red-400'}`}>{p.status === 'approved' ? 'Aprobado' : p.status === 'pending' ? 'Pendiente' : 'Rechazado'}</span>
+                  {p.status === 'pending' && <button onClick={() => handleApprovePayment(p.id, p.user_id, p.amount)} disabled={saving && approvingId === p.id} className="bg-[#22C55E] text-black font-bold px-3 py-1.5 rounded-xl text-xs disabled:opacity-40 hover:bg-[#16A34A] transition-all">Aprobar</button>}
                 </div>
               </div>
             </div>
           ))}
-          {payments.length === 0 && (
-            <p className="text-center text-white py-8">No hay comprobantes de pago todavía.</p>
-          )}
+          {payments.length === 0 && <div className="text-center py-12 text-gray-500"><DollarSign size={32} className="mx-auto mb-2 opacity-30" /><p>No hay comprobantes todavía</p></div>}
         </div>
       )}
 
       {/* CHAT */}
       {tab === 'chat' && (
         <div>
-          <p className="text-sm font-bold text-white mb-3">Últimos {messages.length} mensajes del Chat del Quilombo</p>
+          <div className="flex items-center gap-2 mb-4">
+            <MessageCircle size={16} className="text-[#22C55E]" />
+            <p className="text-sm font-bold text-white">Últimos {messages.length} mensajes del Chat del Quilombo</p>
+          </div>
           <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
             <div className="divide-y divide-[#2A2A4A] max-h-[600px] overflow-y-auto">
               {messages.map((m: any) => (
-                <div key={m.id} className="flex items-start gap-3 px-4 py-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#FFD700]/20 flex items-center justify-center shrink-0">
-                    <span className="font-bebas text-sm text-[#FFD700]">{m.profiles?.username?.[0]?.toUpperCase() || '?'}</span>
-                  </div>
+                <div key={m.id} className="flex items-start gap-3 px-4 py-3 hover:bg-white/[0.02] transition-all">
+                  <div className="w-8 h-8 rounded-xl bg-[#FFD700]/20 flex items-center justify-center shrink-0"><span className="font-bebas text-sm text-[#FFD700]">{m.profiles?.username?.[0]?.toUpperCase() || '?'}</span></div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold text-[#22C55E]">@{m.profiles?.username || '?'}</p>
-                      <p className="text-xs text-gray-500">{formatDate(m.created_at)}</p>
-                    </div>
+                    <div className="flex items-center gap-2"><p className="text-sm font-bold text-[#22C55E]">@{m.profiles?.username || '?'}</p><p className="text-xs text-gray-500">{formatDate(m.created_at)}</p></div>
                     <p className="text-sm text-white">{m.content}</p>
                   </div>
                 </div>
@@ -368,54 +302,29 @@ export default function SuperAdminClient({
       {/* DESAFÍOS */}
       {tab === 'desafios' && (
         <div className="space-y-4">
-          {/* Crear desafío */}
           <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-5">
-            <p className="font-bebas text-xl text-[#FFD700] tracking-wider mb-4">+ NUEVO DESAFÍO</p>
+            <div className="flex items-center gap-2 mb-4">
+              <Trophy size={18} className="text-[#FFD700]" />
+              <p className="font-bebas text-xl text-[#FFD700] tracking-wider">NUEVO DESAFÍO</p>
+            </div>
             <div className="space-y-3">
-              <div>
-                <p className="text-sm font-bold text-white mb-1">Partido</p>
-                <select value={challengeMatch} onChange={e => setChallengeMatch(e.target.value)}
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]">
+              <div><p className="text-sm font-bold text-white mb-1.5">Partido</p>
+                <select value={challengeMatch} onChange={e => setChallengeMatch(e.target.value)} className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700]">
                   <option value="">Seleccioná un partido</option>
-                  {matches.filter(m => m.status === 'scheduled').map(m => (
-                    <option key={m.id} value={m.id}>{m.home_team} vs {m.away_team}</option>
-                  ))}
+                  {matches.filter(m => m.status === 'scheduled').map(m => <option key={m.id} value={m.id}>{m.home_team} vs {m.away_team}</option>)}
                 </select>
               </div>
-              <div>
-                <p className="text-sm font-bold text-white mb-1">Título del desafío</p>
-                <input value={challengeTitle} onChange={e => setChallengeTitle(e.target.value)}
-                  placeholder="Ej: ¡$100 para quien acierte el marcador!"
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]" />
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white mb-1">Descripción (opcional)</p>
-                <textarea value={challengeDesc} onChange={e => setChallengeDesc(e.target.value)}
-                  rows={2} placeholder="Detalles del desafío..."
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700] resize-none" />
-              </div>
+              <div><p className="text-sm font-bold text-white mb-1.5">Título</p><input value={challengeTitle} onChange={e => setChallengeTitle(e.target.value)} placeholder="Ej: ¡$100 para quien acierte el marcador!" className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700]" /></div>
+              <div><p className="text-sm font-bold text-white mb-1.5">Descripción (opcional)</p><textarea value={challengeDesc} onChange={e => setChallengeDesc(e.target.value)} rows={2} placeholder="Detalles..." className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700] resize-none" /></div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-sm font-bold text-white mb-1">Premio en $ (USD)</p>
-                  <input type="number" value={challengePrize} onChange={e => setChallengePrize(e.target.value)}
-                    placeholder="100"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white mb-1">Puntos bonus</p>
-                  <input type="number" value={challengePoints} onChange={e => setChallengePoints(e.target.value)}
-                    placeholder="50"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]" />
-                </div>
+                <div><p className="text-sm font-bold text-white mb-1.5">Premio USD</p><input type="number" value={challengePrize} onChange={e => setChallengePrize(e.target.value)} placeholder="100" className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700]" /></div>
+                <div><p className="text-sm font-bold text-white mb-1.5">Puntos bonus</p><input type="number" value={challengePoints} onChange={e => setChallengePoints(e.target.value)} placeholder="50" className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700]" /></div>
               </div>
-              <button onClick={handleCreateChallenge} disabled={saving}
-                className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40">
-                {saving ? 'Creando...' : '⚡ Crear Desafío'}
+              <button onClick={handleCreateChallenge} disabled={saving} className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-sm disabled:opacity-40 hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                <Zap size={16} />{saving ? 'Creando...' : 'Crear Desafío'}
               </button>
             </div>
           </div>
-
-          {/* Lista de desafíos */}
           {challenges.length > 0 && (
             <div className="space-y-2">
               <p className="text-sm font-bold text-white">Desafíos activos</p>
@@ -425,8 +334,8 @@ export default function SuperAdminClient({
                   <p className="text-sm text-white">{c.matches?.home_team} vs {c.matches?.away_team}</p>
                   {c.description && <p className="text-xs text-gray-400 mt-1">{c.description}</p>}
                   <div className="flex gap-3 mt-2">
-                    {c.prize_amount > 0 && <span className="text-xs font-bold text-[#22C55E]">💰 ${c.prize_amount}</span>}
-                    {c.bonus_points > 0 && <span className="text-xs font-bold text-[#A855F7]">⭐ +{c.bonus_points} pts</span>}
+                    {c.prize_amount > 0 && <span className="text-xs font-bold text-[#22C55E]">${c.prize_amount} premio</span>}
+                    {c.bonus_points > 0 && <span className="text-xs font-bold text-[#A855F7]">+{c.bonus_points} pts</span>}
                   </div>
                 </div>
               ))}
@@ -437,11 +346,12 @@ export default function SuperAdminClient({
 
       {/* RESULTADOS */}
       {tab === 'resultados' && (
-        <div>
-          <p className="text-sm font-bold text-white mb-3">Cargá los resultados — el sistema calcula puntos automáticamente.</p>
-          <Link href="/admin" className="inline-flex items-center gap-2 bg-[#FFD700] text-black font-bold px-4 py-3 rounded-xl text-base hover:bg-[#FFA500] transition-all">
-            <Zap size={18} />
-            Ir al Panel de Resultados
+        <div className="text-center py-12">
+          <Zap size={48} className="text-[#FFD700] mx-auto mb-4 opacity-60" />
+          <p className="text-white font-bold mb-2">Cargá los resultados desde el panel de manager</p>
+          <p className="text-gray-400 text-sm mb-6">El sistema calcula puntos automáticamente.</p>
+          <Link href="/admin" className="inline-flex items-center gap-2 bg-[#FFD700] text-black font-bold px-6 py-3 rounded-xl text-sm hover:bg-[#FFA500] transition-all">
+            <Zap size={16} /> Ir al Panel de Resultados
           </Link>
         </div>
       )}
