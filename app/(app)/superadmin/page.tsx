@@ -15,7 +15,7 @@ export default async function SuperAdminPage() {
 
   const supabaseAdmin = createAdmin(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE!
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqbGFhYnJxZmp0dmJ0YnZvYWljIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3ODgyNDA3NywiZXhwIjoyMDk0NDAwMDc3fQ.BEq1sbAj87kbPAb8a6yPBvx2N7_GxPgye2fQSkCdEbY'
   )
 
   const [
