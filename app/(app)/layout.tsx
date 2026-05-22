@@ -66,7 +66,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 pathname === href
                   ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                  : 'text-gray-400 hover:text-[#22C55E] hover:bg-[#22C55E]/10'
+                  : 'text-gray-400 hover:text-[#FFD700] hover:bg-[#FFD700]/10'
               }`}>
               <Icon size={18} />
               {label}
@@ -79,7 +79,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             className={`flex items-center gap-3 px-3 py-2.5 mx-2 mb-1 rounded-xl text-sm font-medium transition-all ${
               pathname === '/admin'
                 ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                : 'text-gray-400 hover:text-[#22C55E] hover:bg-[#22C55E]/10'
+                : 'text-gray-400 hover:text-[#FFD700] hover:bg-[#FFD700]/10'
             }`}>
             <Shield size={18} />
             Administrador
@@ -91,7 +91,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             className={`flex items-center gap-3 px-3 py-2.5 mx-2 mb-1 rounded-xl text-sm font-medium transition-all ${
               pathname === '/superadmin'
                 ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                : 'text-gray-400 hover:text-[#22C55E] hover:bg-[#22C55E]/10'
+                : 'text-gray-400 hover:text-[#FFD700] hover:bg-[#FFD700]/10'
             }`}>
             <Eye size={18} />
             Super Administrador
