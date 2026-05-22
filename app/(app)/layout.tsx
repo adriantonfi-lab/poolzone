@@ -25,9 +25,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/oracle', label: t('oracle'), icon: Sparkles },
     { href: '/wallet', label: t('wallet'), icon: Wallet },
     { href: '/inscription', label: t('inscription'), icon: DollarSign },
-    { href: '/rules', label: 'Reglas', icon: BookOpen },
     { href: '/grupos', label: 'Grupos', icon: LayoutGrid },
-    { href: '/bracket', label: 'Eliminat.', icon: GitBranch },
+    { href: '/bracket', label: 'Eliminatorias', icon: GitBranch },
+    { href: '/rules', label: 'Reglas', icon: BookOpen },
   ]
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 pathname === href
                   ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  : 'text-gray-400 hover:text-[#22C55E] hover:bg-[#22C55E]/10'
               }`}>
               <Icon size={18} />
               {label}
@@ -79,10 +79,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             className={`flex items-center gap-3 px-3 py-2.5 mx-2 mb-1 rounded-xl text-sm font-medium transition-all ${
               pathname === '/admin'
                 ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                : 'text-gray-400 hover:text-[#22C55E] hover:bg-[#22C55E]/10'
             }`}>
             <Shield size={18} />
-            Manager
+            Administrador
             {pathname === '/admin' && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
           </Link>
         )}
@@ -91,15 +91,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             className={`flex items-center gap-3 px-3 py-2.5 mx-2 mb-1 rounded-xl text-sm font-medium transition-all ${
               pathname === '/superadmin'
                 ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                : 'text-gray-400 hover:text-[#22C55E] hover:bg-[#22C55E]/10'
             }`}>
             <Eye size={18} />
-            {isSuperAdmin ? 'Administrador' : 'Manager'}
+            Super Administrador
             {pathname === '/superadmin' && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
           </Link>
         )}
         <button onClick={handleLogout}
-          className="flex items-center gap-3 px-5 py-4 text-gray-500 hover:text-white text-sm border-t border-[#2A2A4A] transition-colors">
+          className="flex items-center gap-3 px-3 py-2.5 mx-2 mb-2 rounded-xl text-sm font-bold bg-red-600 text-white hover:bg-red-700 transition-all border-t-0 mt-1">
           <LogOut size={16} />
           {t('logout')}
         </button>
