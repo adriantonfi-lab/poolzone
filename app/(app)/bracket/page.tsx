@@ -98,7 +98,7 @@ export default function BracketPage() {
       <div className="hidden md:block overflow-x-auto pb-6">
         <div className="relative" style={{width:TW,height:TH}}>
           {[{l:'OCTAVOS',x:cx(0)},{l:'CUARTOS',x:cx(1)},{l:'SEMI',x:cx(2)},{l:'SEMI',x:cx(4)},{l:'CUARTOS',x:cx(5)},{l:'OCTAVOS',x:cx(6)}].map(({l,x})=>(
-            <div key={x} className="absolute font-bebas text-xs tracking-wider text-center text-[#A855F7]" style={{left:x,top:56,width:CW}}>{l}</div>
+            <div key={x} className="absolute font-bebas text-base tracking-wider text-center text-[#FFD700]" style={{left:x,top:56,width:CW}}>{l}</div>
           ))}
           <div className="absolute font-bebas text-sm tracking-wider text-center text-[#FFD700]" style={{left:cx(3),top:56,width:CW}}>🏆 FINAL</div>
           <div className="absolute font-bebas text-xs tracking-wider text-center text-gray-500" style={{left:cx(3),top:tY-16,width:CW}}>3° PUESTO</div>
