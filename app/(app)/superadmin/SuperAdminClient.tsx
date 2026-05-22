@@ -102,7 +102,7 @@ export default function SuperAdminClient({
           <p className="text-sm font-semibold text-[#FFD700]">Panel de control · Che-Bacano Mundial 2026</p>
         </div>
         <div className="ml-auto text-right hidden md:block">
-          <p className="text-xs text-gray-500">Usuarios totales</p>
+          <p className="text-sm font-bold text-orange-400">Usuarios totales</p>
           <p className="font-bebas text-3xl text-white">{totalUsers}</p>
         </div>
       </div>
@@ -141,7 +141,7 @@ export default function SuperAdminClient({
                   <k.icon size={16} className={k.iconColor} />
                 </div>
                 <p className={`font-bebas text-4xl ${k.color}`}>{k.value}</p>
-                <p className="text-xs text-gray-500 mt-1">{k.sub}</p>
+                <p className="text-sm font-bold text-orange-400 mt-1">{k.sub}</p>
               </div>
             ))}
           </div>
@@ -156,7 +156,7 @@ export default function SuperAdminClient({
                 <div key={p} className="text-center bg-[#0D0D0D] rounded-xl p-4 border border-[#2A2A4A]">
                   <p className={`font-bebas text-4xl ${color}`}>${Math.round(totalPot*pct/100)}</p>
                   <p className="text-sm font-bold text-white mt-1">{p}</p>
-                  <p className="text-xs text-gray-500">{pct}%</p>
+                  <p className="text-sm font-bold text-orange-400">{pct}%</p>
                 </div>
               ))}
             </div>
@@ -220,13 +220,13 @@ export default function SuperAdminClient({
                       <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${p.role === 'super_admin' ? 'bg-[#FFD700]/20 text-[#FFD700]' : p.role === 'admin' ? 'bg-[#A855F7]/20 text-[#A855F7]' : 'bg-[#2A2A4A] text-gray-400'}`}>{p.role || 'guest'}</span>
                       <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${p.inscription_status === 'paid' ? 'bg-[#22C55E]/20 text-[#22C55E]' : 'bg-red-500/20 text-red-400'}`}>{p.inscription_status === 'paid' ? 'Pagado' : 'Sin pagar'}</span>
                     </div>
-                    <p className="text-xs text-gray-500 mb-1">{email}</p>
+                    <p className="text-sm font-bold text-orange-400 mb-1">{email}</p>
                     <p className="text-xs text-gray-400">{p.full_name} · {p.favorite_team}</p>
                     <div className="flex gap-4 mt-2 flex-wrap">
                       <span className="text-xs font-bold text-[#A855F7]">{preds} pred. · {points} pts</span>
                       <span className="text-xs font-bold text-[#22C55E]">{msgs} mensajes</span>
                       <span className="text-xs font-bold text-[#FFD700]">{p.credits || 0} CR</span>
-                      <span className="text-xs text-gray-500">Último acceso: {formatDate(lastSeen)}</span>
+                      <span className="text-sm font-bold text-orange-400">Último acceso: {formatDate(lastSeen)}</span>
                     </div>
                     {p.role !== 'super_admin' && (
                       <div className="mt-2">
@@ -289,7 +289,7 @@ export default function SuperAdminClient({
                 <div key={m.id} className="flex items-start gap-3 px-4 py-3 hover:bg-white/[0.02] transition-all">
                   <div className="w-8 h-8 rounded-xl bg-[#FFD700]/20 flex items-center justify-center shrink-0"><span className="font-bebas text-sm text-[#FFD700]">{m.profiles?.username?.[0]?.toUpperCase() || '?'}</span></div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2"><p className="text-sm font-bold text-[#22C55E]">@{m.profiles?.username || '?'}</p><p className="text-xs text-gray-500">{formatDate(m.created_at)}</p></div>
+                    <div className="flex items-center gap-2"><p className="text-sm font-bold text-[#22C55E]">@{m.profiles?.username || '?'}</p><p className="text-sm font-bold text-orange-400">{formatDate(m.created_at)}</p></div>
                     <p className="text-sm text-white">{m.content}</p>
                   </div>
                 </div>
