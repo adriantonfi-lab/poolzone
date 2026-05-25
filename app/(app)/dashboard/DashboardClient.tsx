@@ -253,17 +253,17 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
 
         {/* TICKER PARTIDOS */}
         {matchItems.length > 0 && (
-          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label=PARTIDOS />
+          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label="PARTIDOS" />
         )}
 
         {/* BOTONES NAV — 7 botones con Reglas */}
         <div className="grid grid-cols-7 gap-2 mb-4">
-          <NavBtn href="/fixture" icon={Calendar} label=Fixture iconColor="text-blue-400" glow="#60A5FA" />
-          <NavBtn href="/oracle" icon={Sparkles} label=Oráculo iconColor="text-[#A855F7]" glow="#A855F7" />
-          <NavBtn href="/predictions" icon={Trophy} label=Mi Polla iconColor="text-[#FFD700]" glow="#FFD700" />
+          <NavBtn href="/fixture" icon={Calendar} label="Fixture" iconColor="text-blue-400" glow="#60A5FA" />
+          <NavBtn href="/oracle" icon={Sparkles} label="Oráculo" iconColor="text-[#A855F7]" glow="#A855F7" />
+          <NavBtn href="/predictions" icon={Trophy} label="Mi Polla" iconColor="text-[#FFD700]" glow="#FFD700" />
           <NavBtn href="/ranking" icon={BarChart2} label="Ranking" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/battles" icon={Zap} label=Batallas iconColor="text-orange-400" glow="#FB923C" />
-          <NavBtn href="/locker-room" icon={MessageCircle} label=Chat iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/battles" icon={Zap} label="Batallas" iconColor="text-orange-400" glow="#FB923C" />
+          <NavBtn href="/locker-room" icon={MessageCircle} label="Chat" iconColor="text-[#22C55E]" glow="#22C55E" />
           <NavBtn href="/rules" icon={BookOpen} label="Reglas" iconColor="text-pink-400" glow="#F472B6" />
         </div>
 
