@@ -130,9 +130,16 @@ const teamFlags: Record<string,string> = {
 }
 
 export default function DashboardClient({ profile, matches, onlineCount, openBattles }: {
-  profile: any; matches: any[]; onlineCount: number; openBattles: any[]
+  profile: any; matches: any[]; onlineCount: number; registeredCount: number; openBattles: any[]
 }) {
   const teamCode = teamFlags[profile?.favorite_team] || 'un'
+
+  useEffect(() => {
+    async function heartbeat() { await fetch('/api/heartbeat', { method: 'POST' }) }
+    heartbeat()
+    const id = setInterval(heartbeat, 30000)
+    return () => clearInterval(id)
+  }, [])
 
   function formatTime(d: string) {
     return new Date(d).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',timeZone:'America/New_York'})
