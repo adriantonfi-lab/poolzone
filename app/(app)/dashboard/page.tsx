@@ -9,13 +9,18 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  // Mark user as online
-  await supabase.from('profiles').update({ is_online: true, last_seen: new Date().toISOString() }).eq('id', user.id)
+  // Mark user as online con last_seen actualizado
+  const now = new Date().toISOString()
+  await supabase.from('profiles').update({ is_online: true, last_seen: now }).eq('id', user.id)
 
-  const [profileRes, matchesRes, onlineRes, battlesRes] = await Promise.all([
+  // Online real = last_seen en los últimos 2 minutos
+  const twoMinsAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString()
+
+  const [profileRes, matchesRes, onlineRes, registeredRes, battlesRes] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase.from('matches').select('*').in('status', ['scheduled', 'live']).order('match_date', { ascending: true }).limit(4),
-    supabase.from('profiles').select('id', { count: 'exact' }).eq('is_online', true),
+    supabase.from('profiles').select('id', { count: 'exact' }).gte('last_seen', twoMinsAgo),
+    supabase.from('profiles').select('id', { count: 'exact' }),
     supabase.from('battles').select('*, profiles!battles_created_by_fkey(username, avatar_url)').eq('status', 'open').order('created_at', { ascending: false }).limit(10),
   ])
 
@@ -24,6 +29,7 @@ export default async function DashboardPage() {
       profile={profileRes.data}
       matches={matchesRes.data || []}
       onlineCount={onlineRes.count || 0}
+      registeredCount={registeredRes.count || 0}
       openBattles={battlesRes.data || []}
     />
   )

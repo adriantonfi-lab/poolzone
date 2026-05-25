@@ -134,42 +134,6 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
 }) {
   const teamCode = teamFlags[profile?.favorite_team] || 'un'
 
-  // Auto-register push notifications on first visit
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    if (!('Notification' in window) || !('serviceWorker' in navigator)) return
-    if (Notification.permission !== 'default') return // already decided
-
-    // Small delay so dashboard loads first
-    const timer = setTimeout(async () => {
-      try {
-        const reg = await navigator.serviceWorker.register('/sw.js')
-        await navigator.serviceWorker.ready
-        const perm = await Notification.requestPermission()
-        if (perm !== 'granted') return
-        const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-        if (!vapidKey) return
-        const padding = '='.repeat((4 - vapidKey.length % 4) % 4)
-        const base64 = (vapidKey + padding).replace(/-/g, '+').replace(/_/g, '/')
-        const raw = window.atob(base64)
-        const key = new Uint8Array(raw.length)
-        for (let i = 0; i < raw.length; i++) key[i] = raw.charCodeAt(i)
-        const sub = await reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: key.buffer,
-        })
-        await fetch('/api/push/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ subscription: sub }),
-        })
-      } catch (e) {
-        console.error('Push registration error:', e)
-      }
-    }, 3000)
-    return () => clearTimeout(timer)
-  }, [])
-
   function formatTime(d: string) {
     return new Date(d).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',timeZone:'America/New_York'})
   }
@@ -273,14 +237,18 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
                   <p className="text-xs text-gray-400">Mi equipo</p>
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <div className="text-center">
                   <p className="font-bebas text-4xl text-orange-400">{openBattles.length}</p>
                   <p className="text-xs text-white font-bold">Batallas</p>
                 </div>
                 <div className="text-center">
                   <p className="font-bebas text-4xl text-[#22C55E]">{onlineCount}</p>
-                  <p className="text-xs text-white font-bold">Online</p>
+                  <p className="text-xs text-white font-bold">🟢 Online</p>
+                </div>
+                <div className="text-center">
+                  <p className="font-bebas text-4xl text-[#74C0FC]">{registeredCount}</p>
+                  <p className="text-xs text-white font-bold">👥 Total</p>
                 </div>
               </div>
             </div>
