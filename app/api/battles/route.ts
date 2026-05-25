@@ -1,5 +1,7 @@
+// app/api/battles/route.ts
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { notifyNewBattle } from '@/app/lib/push'
 
 export async function POST(req: Request) {
   try {
@@ -37,6 +39,16 @@ export async function POST(req: Request) {
         amount_placed: amount,
       })
 
+      // 🔔 Notificar a todos que hay una nueva batalla
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('id', userId)
+        .single()
+
+      const creatorName = profile?.username || 'Alguien'
+      notifyNewBattle(creatorName, title, amount, battle.id) // fire & forget
+
       return NextResponse.json({ success: true, battle })
     }
 
@@ -72,6 +84,25 @@ export async function POST(req: Request) {
         current_participants: battle.current_participants + 1,
         status: 'active',
       }).eq('id', battleId)
+
+      // 🔔 Notificar al creador de la batalla que alguien se unió
+      const { data: joinerProfile } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('id', userId)
+        .single()
+
+      const joinerName = joinerProfile?.username || 'Alguien'
+
+      import('@/app/lib/push').then(({ sendPush }) => {
+        sendPush({
+          type: 'battle',
+          title: '¡Aceptaron tu batalla! ⚔️',
+          body: `${joinerName} se unió a "${battle.title}" — pozo $${battle.pot_total + amount}`,
+          url: '/battles',
+          userIds: [battle.created_by],
+        })
+      })
 
       return NextResponse.json({ success: true })
     }
