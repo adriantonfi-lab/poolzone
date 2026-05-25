@@ -1,7 +1,7 @@
 // app/api/battles/route.ts
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { notifyNewBattle } from '@/app/lib/push'
+import { notifyNewBattle } from '@/lib/push'
 
 export async function POST(req: Request) {
   try {
@@ -94,7 +94,7 @@ export async function POST(req: Request) {
 
       const joinerName = joinerProfile?.username || 'Alguien'
 
-      import('@/app/lib/push').then(({ sendPush }) => {
+      import('@/lib/push').then(({ sendPush }) => {
         sendPush({
           type: 'battle',
           title: '¡Aceptaron tu batalla! ⚔️',
