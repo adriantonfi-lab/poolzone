@@ -77,7 +77,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
         setReengancheMsg(data.error)
       } else {
         setReengancheUsed(true)
-        setCredits(c => c - 250)
+        setCredits((c: number) => c - 250)
         setReengancheMsg('¡Re-enganche activado! +50 puntos sumados al ranking 🎉')
       }
     } catch {
