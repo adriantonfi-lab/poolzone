@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useTranslations } from 'next-intl'
 import NewsSection from './NewsSection'
 import Link from 'next/link'
 import { Zap, Calendar, Sparkles, Users, MessageCircle, Trophy, BarChart2, BookOpen } from 'lucide-react'
@@ -133,7 +132,6 @@ const teamFlags: Record<string,string> = {
 export default function DashboardClient({ profile, matches, onlineCount, openBattles }: {
   profile: any; matches: any[]; onlineCount: number; openBattles: any[]
 }) {
-  const t = useTranslations('dashboard')
   const teamCode = teamFlags[profile?.favorite_team] || 'un'
 
   function formatTime(d: string) {
@@ -181,7 +179,7 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
 
           {/* Reloj Mundial */}
           <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-3">
-            <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">{t('nextWorldCup')}</p>
+            <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">PRÓXIMO MUNDIAL</p>
             <BigClock targetDate="2026-06-11T20:00:00Z" />
           </div>
 
@@ -255,17 +253,17 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
 
         {/* TICKER PARTIDOS */}
         {matchItems.length > 0 && (
-          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label={t('matches')} />
+          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label=PARTIDOS />
         )}
 
         {/* BOTONES NAV — 7 botones con Reglas */}
         <div className="grid grid-cols-7 gap-2 mb-4">
-          <NavBtn href="/fixture" icon={Calendar} label={t('fixture')} iconColor="text-blue-400" glow="#60A5FA" />
-          <NavBtn href="/oracle" icon={Sparkles} label={t('oracle')} iconColor="text-[#A855F7]" glow="#A855F7" />
-          <NavBtn href="/predictions" icon={Trophy} label={t('myPolla')} iconColor="text-[#FFD700]" glow="#FFD700" />
+          <NavBtn href="/fixture" icon={Calendar} label=Fixture iconColor="text-blue-400" glow="#60A5FA" />
+          <NavBtn href="/oracle" icon={Sparkles} label=Oráculo iconColor="text-[#A855F7]" glow="#A855F7" />
+          <NavBtn href="/predictions" icon={Trophy} label=Mi Polla iconColor="text-[#FFD700]" glow="#FFD700" />
           <NavBtn href="/ranking" icon={BarChart2} label="Ranking" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/battles" icon={Zap} label={t('battle')} iconColor="text-orange-400" glow="#FB923C" />
-          <NavBtn href="/locker-room" icon={MessageCircle} label={t('quilombo')} iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/battles" icon={Zap} label=Batallas iconColor="text-orange-400" glow="#FB923C" />
+          <NavBtn href="/locker-room" icon={MessageCircle} label=Chat iconColor="text-[#22C55E]" glow="#22C55E" />
           <NavBtn href="/rules" icon={BookOpen} label="Reglas" iconColor="text-pink-400" glow="#F472B6" />
         </div>
 
@@ -275,10 +273,10 @@ export default function DashboardClient({ profile, matches, onlineCount, openBat
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#2A2A4A]">
               <div className="flex items-center gap-2">
                 <Zap size={14} className="text-[#FFD700]" />
-                <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">{t('openBattlesTitle')}</h2>
+                <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">BATALLAS ABIERTAS</h2>
                 <span className="bg-[#FFD700] text-black text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">{openBattles.length}</span>
               </div>
-              <Link href="/battles" className="text-xs font-bold text-[#FFD700] hover:underline">{t('seeBattles')}</Link>
+              <Link href="/battles" className="text-xs font-bold text-[#FFD700] hover:underline">Ver todas</Link>
             </div>
             <div className="divide-y divide-[#2A2A4A]">
               {openBattles.slice(0,3).map((b: any) => (
