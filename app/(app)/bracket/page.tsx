@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Trophy, ArrowLeft, Loader2, Users } from 'lucide-react'
@@ -69,10 +71,24 @@ const CW = 150; const CH = 52; const CG = 32; const COL = CW + CG
 export default function BracketPage() {
   const [matches, setMatches] = useState<Match[]>([])
   const [loading, setLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
+
   useEffect(() => {
-    createClient().from('matches').select('*').neq('stage','Group Stage').order('match_date',{ascending:true}).then(({data})=>{setMatches(data||[]);setLoading(false)})
+    setMounted(true)
+    createClient()
+      .from('matches')
+      .select('*')
+      .neq('stage','Group Stage')
+      .order('match_date',{ascending:true})
+      .then(({data}) => { setMatches(data||[]); setLoading(false) })
   }, [])
-  if (loading) return <div className="flex items-center justify-center h-64"><Loader2 size={32} className="animate-spin text-[#FFD700]" /></div>
+
+  if (!mounted || loading) return (
+    <div className="flex items-center justify-center h-64">
+      <Loader2 size={32} className="animate-spin text-[#FFD700]" />
+    </div>
+  )
+
   const pad = (arr: Match[], n: number): (Match|null)[] => { const r: (Match|null)[] = [...arr]; while(r.length<n) r.push(null); return r }
   const octavos = pad(matches.filter(m=>m.stage==='Octavos de Final'),8)
   const cuartos = pad(matches.filter(m=>m.stage==='Cuartos de Final'),4)
@@ -87,6 +103,7 @@ export default function BracketPage() {
   const tY = TH/2+CH+20
   const cx = (i: number) => i*COL
   const lc = '#FFD700'; const dc = '#FFD70066'
+
   return (
     <div className="px-4 py-6 max-w-full mx-auto">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5"><ArrowLeft size={16}/>Volver</Link>

@@ -1,9 +1,11 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Trophy, Lock, Clock, CheckCircle, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+
 import Link from 'next/link'
 
 type Match = {
@@ -107,7 +109,7 @@ function MatchPredictionCard({
   saving: boolean
   locale?: string
 }) {
-  const t = useTranslations('predictions')
+
   const [open, setOpen] = useState(false)
   const [winner, setWinner] = useState(prediction?.predicted_winner || '')
   const [homeScore, setHomeScore] = useState<string>(prediction?.predicted_home_score?.toString() || '')
@@ -196,7 +198,7 @@ function MatchPredictionCard({
       {window.locked && (
         <div className="px-4 pb-3">
           <span className="text-xs font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">
-            {t('locked')}
+            Bloqueado
           </span>
         </div>
       )}
@@ -208,7 +210,7 @@ function MatchPredictionCard({
           {/* Nivel 1: Ganador */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              {t('level1')} <span className="text-[#FFD700]">(+{BASE_POINTS.winner} pts)</span>
+              Nivel 1 — Ganador <span className="text-[#FFD700]">(+{BASE_POINTS.winner} pts)</span>
             </p>
             <div className="flex gap-2">
               {[match.home_team, 'Empate', match.away_team].map(opt => (
@@ -220,7 +222,7 @@ function MatchPredictionCard({
                   }`}>
                   {opt === match.home_team && <FlagImg code={match.home_team_code} size={18} />}
                   {opt === match.away_team && <FlagImg code={match.away_team_code} size={18} />}
-                  {opt === 'Empate' ? t('draw') : translateTeam(opt, locale)}
+                  {opt === 'Empate' ? 'Empate' : translateTeam(opt, locale)}
                 </button>
               ))}
             </div>
@@ -229,7 +231,7 @@ function MatchPredictionCard({
           {/* Nivel 2: Marcador */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              {t('level2')} <span className="text-[#A855F7]">(+{BASE_POINTS.score} pts)</span>
+              Nivel 2 — Marcador exacto <span className="text-[#A855F7]">(+{BASE_POINTS.score} pts)</span>
             </p>
             <div className="flex items-center gap-3">
               <div className="flex-1">
@@ -251,17 +253,17 @@ function MatchPredictionCard({
           {/* Nivel 3: Goles por tiempo (antes era nivel 4) */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              {t('level3')} <span className="text-orange-400">(+{BASE_POINTS.halves} pts)</span>
+              Nivel 3 — Goles por tiempo <span className="text-orange-400">(+{BASE_POINTS.halves} pts)</span>
             </p>
             <div className="flex gap-3">
               <div className="flex-1">
-                <p className="text-xs text-gray-400 mb-1">{t('firstHalf')}</p>
+                <p className="text-xs text-gray-400 mb-1">Primer tiempo</p>
                 <input type="number" min="0" max="20" value={firstHalf}
                   onChange={e => setFirstHalf(e.target.value)}
                   className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-lg font-bebas text-white focus:outline-none focus:border-orange-400" />
               </div>
               <div className="flex-1">
-                <p className="text-xs text-gray-400 mb-1">{t('secondHalf')}</p>
+                <p className="text-xs text-gray-400 mb-1">Segundo tiempo</p>
                 <input type="number" min="0" max="20" value={secondHalf}
                   onChange={e => setSecondHalf(e.target.value)}
                   className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-lg font-bebas text-white focus:outline-none focus:border-orange-400" />
@@ -273,7 +275,7 @@ function MatchPredictionCard({
           {isElim && (
             <div>
               <p className="text-sm font-bold text-white mb-2">
-                {t('level4')} <span className="text-red-400">(+{BASE_POINTS.penalties} pts)</span>
+                Nivel 4 — Penales <span className="text-red-400">(+{BASE_POINTS.penalties} pts)</span>
               </p>
               <div className="flex gap-3">
                 {[true, false].map(v => (
@@ -283,7 +285,7 @@ function MatchPredictionCard({
                         ? 'border-red-400 bg-red-400/10 text-red-400'
                         : 'border-[#2A2A4A] bg-[#0D0D0D] text-white'
                     }`}>
-                    {v ? t('yes') : t('no')}
+                    {v ? 'Sí' : 'No'}
                   </button>
                 ))}
               </div>
@@ -293,9 +295,9 @@ function MatchPredictionCard({
           {/* Guardar */}
           <button onClick={handleSave} disabled={!winner || saving}
             className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
-            {saving ? t('saving') : window.fee > 0
-              ? `💰 ${t('save')} — $${window.fee} — +${earnablePoints} pts`
-              : `${t('save')} — +${earnablePoints} pts`}
+            {saving ? 'Guardando...' : window.fee > 0
+              ? `💰 $Guardar polla — $${window.fee} — +${earnablePoints} pts`
+              : `$Guardar polla — +${earnablePoints} pts`}
           </button>
         </div>
       )}
@@ -304,8 +306,8 @@ function MatchPredictionCard({
 }
 
 export default function PredictionsPage() {
-  const t = useTranslations('predictions')
-  const tc = useTranslations('common')
+
+
   const [locale, setLocale] = useState('es')
   const [userId, setUserId] = useState('')
   const [username, setUsername] = useState('')
@@ -417,7 +419,7 @@ export default function PredictionsPage() {
   return (
     <div className="px-4 py-6 max-w-3xl mx-auto pb-24 md:pb-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
-        <ArrowLeft size={20} />{tc('back')}
+        <ArrowLeft size={20} />Volver
       </Link>
 
       {/* Header */}
@@ -433,24 +435,24 @@ export default function PredictionsPage() {
               </div>
             )}
             <div>
-              <h1 className="font-bebas text-3xl text-[#FFD700] tracking-wider leading-none">{t('title')}</h1>
+              <h1 className="font-bebas text-3xl text-[#FFD700] tracking-wider leading-none">MI POLLA</h1>
               <p className="text-base text-white font-semibold">@{username}</p>
-              <p className="text-xs text-[#86EFAC] font-bold">{t('subtitle')}</p>
+              <p className="text-xs text-[#86EFAC] font-bold">FIFA World Cup 2026™</p>
             </div>
           </div>
           <div className="text-right shrink-0">
             <p className="font-bebas text-5xl text-[#FFD700]">{totalPoints}</p>
-            <p className="text-xs font-bold text-white uppercase tracking-wider">{t('points')}</p>
+            <p className="text-xs font-bold text-white uppercase tracking-wider">Puntos</p>
           </div>
         </div>
         <div className="flex gap-4 mt-4 border-t border-[#2A2A4A] pt-3">
           <div>
             <p className="font-bebas text-2xl text-[#22C55E]">{savedCount}</p>
-            <p className="text-xs text-white font-bold">{t('completed')}</p>
+            <p className="text-xs text-white font-bold">Completadas</p>
           </div>
           <div>
             <p className="font-bebas text-2xl text-white">{matches.length - savedCount}</p>
-            <p className="text-xs text-white font-bold">{t('pending')}</p>
+            <p className="text-xs text-white font-bold">Pendientes</p>
           </div>
           <div className="ml-auto">
             <div className="w-32 h-2 bg-[#2A2A4A] rounded-full overflow-hidden">
@@ -480,13 +482,13 @@ export default function PredictionsPage() {
 
       {/* Sistema de puntos — sin nivel 3 goleador */}
       <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-2xl p-4 mb-6">
-        <p className="font-bebas text-lg text-white tracking-wider mb-3">{t('pointsSystem')}</p>
+        <p className="font-bebas text-lg text-white tracking-wider mb-3">SISTEMA DE PUNTOS</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
           {[
-            { label: t('winner'), pts: 10, color: 'text-[#FFD700]' },
-            { label: t('exactScore'), pts: 15, color: 'text-[#A855F7]' },
-            { label: t('halfGoals'), pts: 5, color: 'text-orange-400' },
-            { label: t('penalties'), pts: 10, color: 'text-red-400' },
+            { label: 'Ganador', pts: 10, color: 'text-[#FFD700]' },
+            { label: 'Marcador exacto', pts: 15, color: 'text-[#A855F7]' },
+            { label: 'Goles por tiempo', pts: 5, color: 'text-orange-400' },
+            { label: 'Penales', pts: 10, color: 'text-red-400' },
           ].map(({ label, pts, color }) => (
             <div key={label} className="flex items-center justify-between bg-[#1A1A2E] rounded-xl px-3 py-2">
               <span className="text-white text-xs">{label}</span>

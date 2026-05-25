@@ -1,9 +1,11 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { ArrowLeft, Copy, Check, CreditCard, Users, Trophy, UserPlus, Banknote, Wallet, DollarSign, Share2 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+
 import Link from 'next/link'
 
 type Profile = {
@@ -37,8 +39,8 @@ function calcDiscount(referralsCount: number, isInvited: boolean): number {
 }
 
 export default function InscriptionPage() {
-  const t = useTranslations('inscription')
-  const tc = useTranslations('common')
+
+
   const [locale, setLocale] = useState(() => {
     if (typeof document !== 'undefined') {
       return document.cookie.match(/locale=([^;]+)/)?.[1] || 'es'
@@ -116,7 +118,7 @@ export default function InscriptionPage() {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
-  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-white font-bebas text-2xl animate-pulse">{tc('loading')}</p></div>
+  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-white font-bebas text-2xl animate-pulse">Cargando...</p></div>
 
   const fee = calcFee(profile?.referrals_count || 0, !!profile?.referred_by)
   const discount = calcDiscount(profile?.referrals_count || 0, !!profile?.referred_by)
@@ -131,7 +133,7 @@ export default function InscriptionPage() {
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto pb-24 md:pb-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
-        <ArrowLeft size={20} />{tc('back')}
+        <ArrowLeft size={20} />Volver
       </Link>
 
       <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">{locale === 'en' ? 'Registration' : 'Inscripción'}</h1>

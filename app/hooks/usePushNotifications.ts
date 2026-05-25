@@ -5,11 +5,15 @@ import { useState, useEffect, useCallback } from 'react'
 
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
 
-function urlBase64ToUint8Array(base64String: string): Uint8Array {
+function urlBase64ToUint8Array(base64String: string): ArrayBuffer {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
   const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
   const rawData = window.atob(base64)
-  return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)))
+  const outputArray = new Uint8Array(rawData.length)
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i)
+  }
+  return outputArray.buffer
 }
 
 export function usePushNotifications() {
@@ -41,11 +45,9 @@ export function usePushNotifications() {
     setIsLoading(true)
 
     try {
-      // 1. Registrar Service Worker
       const registration = await navigator.serviceWorker.register('/sw.js')
       await navigator.serviceWorker.ready
 
-      // 2. Pedir permiso
       const perm = await Notification.requestPermission()
       setPermission(perm)
       if (perm !== 'granted') {
@@ -53,13 +55,11 @@ export function usePushNotifications() {
         return false
       }
 
-      // 3. Suscribirse al push
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
       })
 
-      // 4. Guardar en Supabase
       const res = await fetch('/api/push/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
