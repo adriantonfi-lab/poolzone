@@ -129,7 +129,7 @@ const teamFlags: Record<string,string> = {
   'Serbia':'rs','Suiza':'ch','Ghana':'gh','Nigeria':'ng','Egipto':'eg','Nueva Zelanda':'nz',
 }
 
-export default function DashboardClient({ profile, matches, onlineCount, openBattles }: {
+export default function DashboardClient({ profile, matches, onlineCount, registeredCount, openBattles }: {
   profile: any; matches: any[]; onlineCount: number; registeredCount: number; openBattles: any[]
 }) {
   const teamCode = teamFlags[profile?.favorite_team] || 'un'
