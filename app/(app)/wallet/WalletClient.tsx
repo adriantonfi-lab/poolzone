@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, TrendingUp, TrendingDown, DollarSign, Trophy, Zap, Sparkles, Gift, RefreshCw, Loader2 } from 'lucide-react'
+import { ArrowLeft, TrendingUp, TrendingDown, DollarSign, Trophy, Zap, Sparkles, Gift, RefreshCw, Loader2, Upload, CheckCircle, Camera } from 'lucide-react'
 
 type Transaction = {
   id: string
@@ -13,6 +13,15 @@ type Transaction = {
   created_at: string
 }
 
+const PAYMENT_METHODS = [
+  { id: 'zelle', label: 'Zelle', flag: '🇺🇸', detail: 'adrian.tonfi@gmail.com' },
+  { id: 'nequi', label: 'Nequi', flag: '🇨🇴', detail: '+57 300 000 0000' },
+  { id: 'transferencia', label: 'Transferencia', flag: '🇦🇷', detail: 'CVU: 0000000000000000000000' },
+  { id: 'paypal', label: 'PayPal', flag: '🌎', detail: 'paypal.me/chebacano' },
+]
+
+const AMOUNTS = [25, 50, 100]
+
 function getIcon(type: string) {
   if (type.includes('battle') || type.includes('batalla')) return <Zap size={16} className="text-orange-400" />
   if (type.includes('oracle') || type.includes('oraculo')) return <Sparkles size={16} className="text-[#A855F7]" />
@@ -20,6 +29,7 @@ function getIcon(type: string) {
   if (type.includes('referral') || type.includes('referido')) return <Gift size={16} className="text-[#22C55E]" />
   if (type.includes('prize') || type.includes('premio')) return <Trophy size={16} className="text-[#FFD700]" />
   if (type.includes('reenganche')) return <RefreshCw size={16} className="text-[#A855F7]" />
+  if (type.includes('late_fee')) return <TrendingDown size={16} className="text-orange-400" />
   if (type.includes('win') || type.includes('ganancia')) return <TrendingUp size={16} className="text-[#22C55E]" />
   if (type.includes('fee') || type.includes('cargo')) return <TrendingDown size={16} className="text-red-400" />
   return <DollarSign size={16} className="text-gray-400" />
@@ -37,6 +47,19 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
   const [reengancheUsed, setReengancheUsed] = useState(profile?.reenganche_used || false)
   const [credits, setCredits] = useState(profile?.credits || 0)
 
+  // Carga de créditos
+  const [showDeposit, setShowDeposit] = useState(false)
+  const [depositAmount, setDepositAmount] = useState(25)
+  const [customAmount, setCustomAmount] = useState('')
+  const [selectedMethod, setSelectedMethod] = useState('')
+  const [proofImage, setProofImage] = useState<string | null>(null)
+  const [proofFileName, setProofFileName] = useState('')
+  const [depositNotes, setDepositNotes] = useState('')
+  const [depositLoading, setDepositLoading] = useState(false)
+  const [depositMsg, setDepositMsg] = useState('')
+  const [depositSuccess, setDepositSuccess] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
+
   function formatDate(d: string) {
     return new Date(d).toLocaleDateString('es-ES', {
       day: 'numeric', month: 'short', year: 'numeric',
@@ -53,13 +76,62 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
       'oracle_fee': '🔮 Consulta al Oráculo',
       'inscription': '🎫 Inscripción',
       'referral_bonus': '🌟 Bonus referidos',
-      'late_fee': '⏰ Fee tardío',
+      'late_fee': '⏰ Fee por modificación tardía',
       'prize': '🥇 Premio del torneo',
       'admin_credit': '⭐ Crédito admin',
       'admin_debit': '📉 Débito admin',
       'reenganche': '🔄 Re-enganche',
     }
     return labels[type] || type
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) {
+      setDepositMsg('La imagen no puede superar 5MB')
+      return
+    }
+    setProofFileName(file.name)
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      setProofImage(ev.target?.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  async function handleDeposit() {
+    const amount = customAmount ? parseFloat(customAmount) : depositAmount
+    if (!amount || amount < 5) { setDepositMsg('El mínimo es $5'); return }
+    if (!selectedMethod) { setDepositMsg('Elegí un método de pago'); return }
+    if (!proofImage) { setDepositMsg('Subí el comprobante de pago'); return }
+
+    setDepositLoading(true)
+    setDepositMsg('')
+
+    try {
+      const res = await fetch('/api/deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: profile.id,
+          amount,
+          paymentMethod: selectedMethod,
+          proofImage,
+          notes: depositNotes,
+        }),
+      })
+      const data = await res.json()
+      if (data.error) {
+        setDepositMsg(data.error)
+      } else {
+        setDepositSuccess(true)
+        setDepositMsg('✅ Comprobante enviado. El admin lo revisará y acreditará los créditos en breve.')
+      }
+    } catch {
+      setDepositMsg('Error de conexión')
+    }
+    setDepositLoading(false)
   }
 
   async function handleReenganche() {
@@ -88,6 +160,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
   const totalIn = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0)
   const totalOut = transactions.filter(t => t.amount < 0).reduce((s, t) => s + Math.abs(t.amount), 0)
+  const selectedMethodData = PAYMENT_METHODS.find(m => m.id === selectedMethod)
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto pb-24 md:pb-6">
@@ -117,7 +190,157 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs font-bold text-white">Batallas</p>
           </div>
         </div>
+        <button
+          onClick={() => setShowDeposit(true)}
+          className="w-full mt-4 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base hover:opacity-90 transition-all flex items-center justify-center gap-2"
+        >
+          <DollarSign size={18} />Cargar Créditos
+        </button>
       </div>
+
+      {/* MODAL CARGA DE CRÉDITOS */}
+      {showDeposit && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
+          <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
+              <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">Cargar Créditos</span>
+              <button onClick={() => { setShowDeposit(false); setDepositSuccess(false); setDepositMsg(''); setProofImage(null) }}
+                className="text-white hover:text-[#FFD700] text-xl font-bold">✕</button>
+            </div>
+
+            {depositSuccess ? (
+              <div className="p-8 text-center">
+                <CheckCircle size={48} className="text-[#22C55E] mx-auto mb-4" />
+                <p className="font-bebas text-2xl text-white mb-2">¡Comprobante enviado!</p>
+                <p className="text-sm text-gray-400">El admin lo revisará y acreditará los créditos en breve. Te llegará una notificación cuando esté listo.</p>
+                <button onClick={() => { setShowDeposit(false); setDepositSuccess(false); setProofImage(null) }}
+                  className="mt-6 bg-[#FFD700] text-black font-bold px-6 py-3 rounded-xl">
+                  Cerrar
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-y-auto flex-1 p-4 space-y-4">
+                {/* Monto */}
+                <div>
+                  <p className="text-sm font-bold text-white mb-2">¿Cuánto querés cargar?</p>
+                  <div className="flex gap-2 mb-2">
+                    {AMOUNTS.map(a => (
+                      <button key={a} onClick={() => { setDepositAmount(a); setCustomAmount('') }}
+                        className={`flex-1 py-2.5 rounded-xl border text-base font-bold transition-all ${
+                          depositAmount === a && !customAmount
+                            ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]'
+                            : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                        }`}>
+                        ${a}
+                      </button>
+                    ))}
+                  </div>
+                  <input
+                    type="number"
+                    value={customAmount}
+                    onChange={e => setCustomAmount(e.target.value)}
+                    placeholder="Otro monto"
+                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]"
+                  />
+                  <p className="text-xs text-gray-400 mt-1">
+                    = {((customAmount ? parseFloat(customAmount) : depositAmount) * 10).toFixed(0)} créditos
+                  </p>
+                </div>
+
+                {/* Método de pago */}
+                <div>
+                  <p className="text-sm font-bold text-white mb-2">Método de pago</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {PAYMENT_METHODS.map(m => (
+                      <button key={m.id} onClick={() => setSelectedMethod(m.id)}
+                        className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-bold transition-all ${
+                          selectedMethod === m.id
+                            ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]'
+                            : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                        }`}>
+                        <span>{m.flag}</span>{m.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Datos para pagar */}
+                {selectedMethodData && (
+                  <div className="bg-[#0D0D0D] border border-[#FFD700]/20 rounded-xl p-3">
+                    <p className="text-xs text-gray-400 mb-1">Enviá el pago a:</p>
+                    <p className="text-base font-bold text-[#FFD700]">{selectedMethodData.label}</p>
+                    <p className="text-sm text-white font-mono mt-1">{selectedMethodData.detail}</p>
+                    <p className="text-xs text-gray-400 mt-2">
+                      Monto: <span className="text-white font-bold">${customAmount || depositAmount}</span>
+                    </p>
+                  </div>
+                )}
+
+                {/* Subir comprobante */}
+                <div>
+                  <p className="text-sm font-bold text-white mb-2">Comprobante de pago</p>
+                  <input
+                    type="file"
+                    ref={fileRef}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                  {proofImage ? (
+                    <div className="relative">
+                      <img src={proofImage} alt="Comprobante" className="w-full rounded-xl object-cover max-h-48" />
+                      <button onClick={() => { setProofImage(null); setProofFileName('') }}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                        ✕
+                      </button>
+                      <p className="text-xs text-gray-400 mt-1">{proofFileName}</p>
+                    </div>
+                  ) : (
+                    <button onClick={() => fileRef.current?.click()}
+                      className="w-full border-2 border-dashed border-[#2A2A4A] hover:border-[#FFD700]/40 rounded-xl p-6 flex flex-col items-center gap-2 transition-all">
+                      <Camera size={24} className="text-gray-500" />
+                      <p className="text-sm text-gray-400">Tocá para subir la foto del comprobante</p>
+                      <p className="text-xs text-gray-600">JPG, PNG — máx 5MB</p>
+                    </button>
+                  )}
+                </div>
+
+                {/* Notas opcionales */}
+                <div>
+                  <p className="text-sm font-bold text-white mb-2">Notas (opcional)</p>
+                  <input
+                    type="text"
+                    value={depositNotes}
+                    onChange={e => setDepositNotes(e.target.value)}
+                    placeholder="Ej: Transferencia del 25/05"
+                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700]"
+                  />
+                </div>
+
+                {depositMsg && !depositSuccess && (
+                  <div className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3 text-sm font-semibold">
+                    {depositMsg}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {!depositSuccess && (
+              <div className="p-4 border-t border-[#2A2A4A] shrink-0">
+                <button
+                  onClick={handleDeposit}
+                  disabled={depositLoading || !proofImage || !selectedMethod}
+                  className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all flex items-center justify-center gap-2"
+                >
+                  {depositLoading
+                    ? <><Loader2 size={18} className="animate-spin" />Enviando...</>
+                    : <><Upload size={18} />Enviar comprobante</>}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Resumen rápido */}
       <div className="grid grid-cols-2 gap-3 mb-6">
@@ -176,7 +399,6 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs text-[#A855F7] font-semibold">Fase Eliminatoria — Una sola vez</p>
           </div>
         </div>
-
         {reengancheUsed ? (
           <div className="bg-[#A855F7]/10 rounded-xl p-3 text-center">
             <p className="text-base font-bold text-[#A855F7]">✅ Re-enganche activado</p>
@@ -195,22 +417,17 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
               </div>
             </div>
             <p className="text-xs text-gray-400 mb-4">
-              ¿Quedaste lejos en el ranking? Pagá $25 y sumá 50 puntos para meterte en la pelea durante la fase eliminatoria. También válido para nuevos participantes.
+              ¿Quedaste lejos en el ranking? Pagá $25 y sumá 50 puntos para meterte en la pelea durante la fase eliminatoria.
             </p>
             {reengancheMsg && (
               <div className={`rounded-xl p-3 mb-3 text-sm font-semibold text-center ${
-                reengancheMsg.includes('✅') || reengancheMsg.includes('activado')
-                  ? 'bg-[#22C55E]/10 text-[#22C55E]'
-                  : 'bg-red-500/10 text-red-400'
+                reengancheMsg.includes('activado') ? 'bg-[#22C55E]/10 text-[#22C55E]' : 'bg-red-500/10 text-red-400'
               }`}>
                 {reengancheMsg}
               </div>
             )}
-            <button
-              onClick={handleReenganche}
-              disabled={reengancheLoading || credits < 250}
-              className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all hover:opacity-90 flex items-center justify-center gap-2"
-            >
+            <button onClick={handleReenganche} disabled={reengancheLoading || credits < 250}
+              className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all hover:opacity-90 flex items-center justify-center gap-2">
               {reengancheLoading
                 ? <><Loader2 size={18} className="animate-spin" />Procesando...</>
                 : credits < 250
