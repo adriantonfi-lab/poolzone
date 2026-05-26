@@ -312,7 +312,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
           <div className="flex items-center gap-2">
             <button
               onClick={() => {
-                const text = `⚡ ¡BATALLA ABIERTA en Che-Bacano!\n\n🏆 ${battle.title}\n💰 Apostá $${battle.bet_amount} — ${battle.description}\n💵 Pozo actual: $${battle.pot_total}\n\n¿Te sumás? Entrá acá 👇\nhttps://che-bacano.com/challenges`
+                const text = `⚡ ¡BATALLA ABIERTA en PoolZone!\n\n🏆 ${battle.title}\n💰 Apostá $${battle.bet_amount} — ${battle.description}\n💵 Pozo actual: $${battle.pot_total}\n\n¿Te sumás? Entrá acá 👇\nhttps://poolzone.com/challenges`
                 window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
               }}
               className="flex items-center gap-1 bg-[#25D366] text-white font-bold px-3 py-2 rounded-xl text-sm transition-all hover:opacity-90">

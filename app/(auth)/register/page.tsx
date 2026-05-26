@@ -170,7 +170,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Trophy size={40} className="text-[#FFD700] mx-auto mb-3" />
-          <h1 className="font-bebas text-4xl text-white tracking-wider">CHE-BACANO</h1>
+          <h1 className="font-bebas text-4xl text-white tracking-wider">POOLZONE</h1>
           <p className="text-gray-400 mt-1">Creá tu cuenta mundialera</p>
         </div>
 

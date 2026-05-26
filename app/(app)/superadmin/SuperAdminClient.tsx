@@ -99,7 +99,7 @@ export default function SuperAdminClient({
         </div>
         <div>
           <h1 className="font-bebas text-3xl text-white tracking-wider leading-none">SUPER ADMINISTRADOR</h1>
-          <p className="text-sm font-semibold text-[#FFD700]">Panel de control · Che-Bacano Mundial 2026</p>
+          <p className="text-sm font-semibold text-[#FFD700]">Panel de control · PoolZone Mundial 2026</p>
         </div>
         <div className="ml-auto text-right hidden md:block">
           <p className="text-sm font-bold text-orange-400">Usuarios totales</p>

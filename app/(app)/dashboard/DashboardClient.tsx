@@ -174,7 +174,7 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
 
       {/* HERO */}
       <div className="relative w-full bg-[#0D0D0D] mb-4" style={{aspectRatio:'1200/400'}}>
-        <img src="/che-bacano_logo_.png" alt="Che-Bacano"
+        <img src="/poolzone_logo_.png" alt="PoolZone"
           className="w-full h-full object-contain"
           onError={(e) => { (e.target as HTMLImageElement).style.display='none' }} />
       </div>

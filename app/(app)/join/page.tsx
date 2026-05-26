@@ -113,8 +113,8 @@ export default function InscriptionPage() {
   function shareWhatsApp() {
     if (!profile?.referral_code) return
     const text = locale === 'en'
-      ? `🏆 Join Che-Bacano, the family World Cup 2026 pool!\n\nUse my referral code: *${profile.referral_code}*\n\nSign up at: https://che-bacano.com/register\n\n$5 discount for each friend you bring!`
-      : `🏆 ¡Unite a Che-Bacano, la polla familiar del Mundial 2026!\n\nUsá mi código de referido: *${profile.referral_code}*\n\nRegistrate en: https://che-bacano.com/register\n\n¡$5 de descuento por cada amigo que traigas!`
+      ? `🏆 Join PoolZone, the family World Cup 2026 pool!\n\nUse my referral code: *${profile.referral_code}*\n\nSign up at: https://poolzone.com/register\n\n$5 discount for each friend you bring!`
+      : `🏆 ¡Unite a PoolZone, la sports pool del Mundial 2026!\n\nUsá mi código de referido: *${profile.referral_code}*\n\nRegistrate en: https://poolzone.com/register\n\n¡$5 de descuento por cada amigo que traigas!`
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
@@ -137,7 +137,7 @@ export default function InscriptionPage() {
       </Link>
 
       <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">{locale === 'en' ? 'Registration' : 'Inscripción'}</h1>
-      <p className="text-sm font-semibold text-[#86EFAC] mb-6">Mundial 2026 · Che-Bacano</p>
+      <p className="text-sm font-semibold text-[#86EFAC] mb-6">Mundial 2026 · PoolZone</p>
 
       {/* Estado */}
       <div className={`rounded-2xl p-5 mb-6 border-2 ${isPaid ? 'bg-[#22C55E]/10 border-[#22C55E]/40' : isReview ? 'bg-[#FFD700]/10 border-[#FFD700]/40' : 'bg-[#1A1A2E] border-[#2A2A4A]'}`}>

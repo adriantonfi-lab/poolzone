@@ -23,14 +23,14 @@ export default function RulesPage() {
           <Trophy size={32} className="text-[#FFD700]" />
         </div>
         <h1 className="font-bebas text-5xl text-[#FFD700] tracking-wider mb-2">Reglas del Juego</h1>
-        <p className="text-white font-bold text-lg">Che-Bacano — Mundial 2026</p>
+        <p className="text-white font-bold text-lg">PoolZone — Mundial 2026</p>
         <p className="text-gray-400 text-sm mt-1">Todo lo que necesitás saber para jugar y ganar</p>
       </div>
 
       {/* ¿Qué es? */}
-      <Section icon={<Star size={22} className="text-[#FFD700]" />} title="¿Qué es Che-Bacano?" color="text-[#FFD700]">
+      <Section icon={<Star size={22} className="text-[#FFD700]" />} title="¿Qué es PoolZone?" color="text-[#FFD700]">
         <p className="text-white text-base leading-relaxed">
-          Che-Bacano es la polla familiar del Mundial 2026. Cada participante predice los resultados de los <strong className="text-[#FFD700]">103 partidos</strong> del torneo y acumula puntos según sus aciertos. Al final, el que más puntos tenga se lleva el primer premio. Simple, divertido y competitivo.
+          PoolZone es la sports pool del Mundial 2026. Cada participante predice los resultados de los <strong className="text-[#FFD700]">103 partidos</strong> del torneo y acumula puntos según sus aciertos. Al final, el que más puntos tenga se lleva el primer premio. Simple, divertido y competitivo.
         </p>
       </Section>
 

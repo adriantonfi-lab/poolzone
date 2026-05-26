@@ -54,10 +54,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex flex-col w-56 bg-[#1A1A2E] border-r border-[#2A2A4A] fixed h-full z-40">
         <div className="px-4 py-4 border-b border-[#2A2A4A]">
           <div className="flex items-center justify-between mb-1">
-            <p className="font-bebas text-2xl text-[#FFD700] tracking-wider">CHE-BACANO</p>
+            <p className="font-bebas text-2xl text-[#FFD700] tracking-wider">POOLZONE</p>
             <LanguageSwitcher />
           </div>
-          <p className="text-xs text-gray-500">MUNDIAL 2026</p>
+          <p className="text-xs text-gray-500">WORLD CUP 2026</p>
         </div>
         <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => (

@@ -90,7 +90,7 @@ function mapStatus(status: string): string {
 export async function GET(req: Request) {
   // Verificar que es llamada legítima (desde cron o admin)
   const authHeader = req.headers.get('authorization')
-  const cronSecret = process.env.CRON_SECRET || 'che-bacano-cron'
+  const cronSecret = process.env.CRON_SECRET || 'poolzone-cron'
   
   if (authHeader !== `Bearer ${cronSecret}`) {
     // Permitir también sin auth para testing manual
@@ -156,7 +156,7 @@ export async function GET(req: Request) {
       if (isNewGoal) {
         goalsNotified.push(`${homeTeam} ${newHome}-${newAway} ${awayTeam}`)
         
-        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://che-bacano-final.vercel.app'
+        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://poolzone-final.vercel.app'
         fetch(`${BASE_URL}/api/push/send`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -213,7 +213,7 @@ export async function GET(req: Request) {
 
       // Si el partido recién terminó → calcular puntos automáticamente
       if (status === 'finished' && match.status !== 'finished' && homeScore !== null && awayScore !== null) {
-        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://che-bacano-final.vercel.app'
+        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://poolzone-final.vercel.app'
         
         // Llamar al sistema de cálculo de puntos
         fetch(`${BASE_URL}/api/admin`, {

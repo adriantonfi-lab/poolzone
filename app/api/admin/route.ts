@@ -155,7 +155,7 @@ export async function POST(req: Request) {
 
       // Notificar goles a todos los usuarios
       try {
-        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://che-bacano-final.vercel.app'
+        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://poolzone-final.vercel.app'
         const scoreStr = `${homeScore}-${awayScore}`
         fetch(`${BASE_URL}/api/push/send`, {
           method: 'POST',

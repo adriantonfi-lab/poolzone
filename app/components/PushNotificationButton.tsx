@@ -21,7 +21,7 @@ export function PushNotificationButton({ variant = 'full', className = '' }: Pro
       const ok = await subscribe()
       if (ok) {
         // Pequeña notificación de bienvenida
-        new Notification('¡Che-Bacano activado! 🏆', {
+        new Notification('¡PoolZone activado! 🏆', {
           body: 'Te vamos a avisar de goles, batallas y todo lo importante',
           icon: '/icon-192.png',
         })

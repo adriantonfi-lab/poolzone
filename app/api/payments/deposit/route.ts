@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       const adminIds = admins?.map(a => a.id) || []
 
       if (adminIds.length > 0) {
-        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://che-bacano-final.vercel.app'
+        const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://poolzone-final.vercel.app'
         fetch(`${BASE_URL}/api/push/send`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

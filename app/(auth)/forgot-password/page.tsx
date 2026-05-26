@@ -43,8 +43,8 @@ export default function ForgotPasswordPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#FFD700]/10 border border-[#FFD700]/20 mb-4">
             <Trophy size={32} className="text-[#FFD700]" />
           </div>
-          <h1 className="font-bebas text-4xl text-[#FFD700] tracking-wider">CHE-BACANO</h1>
-          <p className="text-gray-400 text-sm mt-1">MUNDIAL 2026 🏆</p>
+          <h1 className="font-bebas text-4xl text-[#FFD700] tracking-wider">POOLZONE</h1>
+          <p className="text-gray-400 text-sm mt-1">WORLD CUP 2026 🏆</p>
         </div>
 
         <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-6">
