@@ -39,7 +39,7 @@ export default function RulesPage() {
         <div className="space-y-3">
           <Row icon={<Users size={18} className="text-[#FFD700]" />} label="Familia" value="$25" color="text-[#FFD700]" />
           <Row icon={<Users size={18} className="text-[#FFD700]" />} label="Invitados" value="$25" color="text-[#FFD700]" />
-          <Row icon={<RefreshCw size={18} className="text-[#A855F7]" />} label="Re-enganche (Octavos en adelante)" value="$25" color="text-[#A855F7]" />
+          <Row icon={<RefreshCw size={18} className="text-[#A855F7]" />} label="Re-enganche (solo en Octavos)" value="$25" color="text-[#A855F7]" />
         </div>
         <div className="mt-3 flex items-start gap-2 bg-green-500/10 border border-green-500/20 rounded-xl p-3">
           <CheckCircle size={16} className="text-green-400 shrink-0 mt-0.5" />
@@ -158,7 +158,7 @@ export default function RulesPage() {
         </div>
         <div className="mt-3 flex items-start gap-2 bg-[#A855F7]/10 border border-[#A855F7]/30 rounded-xl p-3">
           <Info size={16} className="text-[#A855F7] shrink-0 mt-0.5" />
-          <p className="text-[#A855F7] text-sm font-bold">El re-enganche crea un ranking paralelo desde esa etapa. Los que jugaron bien desde el principio mantienen su ventaja.</p>
+          <p className="text-[#A855F7] text-sm font-bold">Al re-engancharte sumás 50 puntos base a tu ranking actual. Los que jugaron bien desde el principio mantienen su ventaja — los 50 puntos son el precio de haber entrado tarde.</p>
         </div>
       </Section>
 
@@ -226,7 +226,7 @@ export default function RulesPage() {
             { q: '¿Cómo se paga el premio?', a: 'Se coordina directamente con el organizador una vez terminado el torneo.' },
             { q: '¿Cómo cargo créditos?', a: 'Desde tu Wallet — mandás el comprobante de pago y el admin te acredita. 1 dólar = 10 créditos.' },
             { q: '¿Qué pasa con el 0-0?', a: 'Si pusiste empate y marcador 0-0 y el resultado es 0-0, solo cobrás el Nivel 1 (20 pts). No suma Nivel 2.' },
-            { q: '¿Qué es el re-enganche?', a: 'Al inicio de Octavos, Cuartos o Semis podés pagar $25 y competir en un ranking paralelo desde esa etapa.' },
+            { q: '¿Qué es el re-enganche?', a: 'Al inicio de la fase de Octavos podés pagar $25 y sumar 50 puntos al ranking. Disponible una sola vez por persona.' },
             { q: '¿Cuántos créditos gano por referidos?', a: '$5 en créditos por cada persona que traés. Máximo hasta 6 referidos = $30 en créditos.' },
           ].map(({ q, a }) => (
             <div key={q} className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3">
