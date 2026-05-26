@@ -4,49 +4,35 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Trophy, Users, Zap, Shield, ChevronDown, DollarSign, Star, Globe } from 'lucide-react'
 
-function useTime() {
-  const [now, setNow] = useState(new Date())
+function ClockZone({ label, timezone, color, targetDate }: { label: string; timezone: string; color: string; targetDate: string }) {
+  const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 })
   useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000)
-    return () => clearInterval(id)
-  }, [])
-  return now
-}
-
-function ClockZone({ label, timezone, color }: { label: string; timezone: string; color: string }) {
-  const now = useTime()
-  const timeStr = now.toLocaleTimeString('en-US', { timeZone: timezone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
-  const [time, ampm] = timeStr.split(' ')
-  const [hh, mm, ss] = time.split(':')
+    function calc() {
+      const diff = new Date(targetDate).getTime() - Date.now()
+      if (diff <= 0) return
+      setT({ d: Math.floor(diff/86400000), h: Math.floor((diff%86400000)/3600000), m: Math.floor((diff%3600000)/60000), s: Math.floor((diff%60000)/1000) })
+    }
+    calc(); const id = setInterval(calc, 1000); return () => clearInterval(id)
+  }, [targetDate])
+  const kickoff = new Date(targetDate).toLocaleTimeString('en-US', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: true })
   return (
     <div style={{ textAlign: 'center', flex: 1 }}>
-      <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>{label}</div>
-      <div style={{ background: 'rgba(0,0,0,0.5)', border: `2px solid ${color}40`, borderRadius: '16px', padding: '12px 8px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: '32px', fontWeight: 900, color, lineHeight: 1 }}>{hh}:{mm}</div>
-        <div style={{ fontFamily: 'monospace', fontSize: '18px', fontWeight: 700, color: `${color}90`, marginTop: '2px' }}>:{ss} <span style={{ fontSize: '14px' }}>{ampm}</span></div>
+      <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', marginBottom: '4px', textTransform: 'uppercase' }}>{label}</div>
+      <div style={{ fontSize: '11px', color, marginBottom: '8px', fontWeight: 600 }}>Kickoff {kickoff}</div>
+      <div style={{ background: 'rgba(0,0,0,0.5)', border: `2px solid ${color}40`, borderRadius: '16px', padding: '14px 6px' }}>
+        <div style={{ fontFamily: 'monospace', fontWeight: 900, color, lineHeight: 1.4 }}>
+          <div style={{ fontSize: '26px' }}>{String(t.d).padStart(2,'0')}d {String(t.h).padStart(2,'0')}h</div>
+          <div style={{ fontSize: '20px', marginTop: '4px' }}>{String(t.m).padStart(2,'0')}m {String(t.s).padStart(2,'0')}s</div>
+        </div>
       </div>
     </div>
   )
 }
 
-function useCountdown() {
-  const target = new Date('2026-06-11T19:00:00Z').getTime()
-  const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 })
-  useEffect(() => {
-    function calc() {
-      const diff = target - Date.now()
-      if (diff <= 0) return
-      setT({ d: Math.floor(diff/86400000), h: Math.floor((diff%86400000)/3600000), m: Math.floor((diff%3600000)/60000), s: Math.floor((diff%60000)/1000) })
-    }
-    calc(); const id = setInterval(calc, 1000); return () => clearInterval(id)
-  }, [])
-  return t
-}
-
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
   return (
-    <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+    <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
       <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '12px' }}>
         <span style={{ fontSize: '15px', fontWeight: 700, color: 'white' }}>{q}</span>
         <ChevronDown size={18} color="#00C896" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }} />
@@ -61,7 +47,7 @@ const FAQS_ES = [
   { q: '¿Cómo cobro si gano?', a: 'Pagamos por Zelle (USA), Wise (internacional) o PayPal. Dentro de las 48hs de terminado el torneo.' },
   { q: '¿Cuándo cierra la inscripción?', a: 'Podés inscribirte hasta el inicio del primer partido el 11 de junio.' },
   { q: '¿Puedo cambiar mis predicciones?', a: 'Sí, pero cambiar con menos de 24hs antes del partido tiene un cargo pequeño ($2-5) que va al pozo.' },
-  { q: '¿Qué es el Oráculo IA?', a: 'Nuestro Oráculo de IA te da análisis y predicciones para que hagas mejores picks. 12 consultas gratis incluidas.' },
+  { q: '¿Qué es el Oráculo IA?', a: 'Nuestro Oráculo de IA te da análisis y predicciones. 12 consultas gratis incluidas.' },
   { q: '¿Es legal?', a: 'PoolZone es un juego de habilidad y predicción para entretenimiento entre amigos y familia.' },
 ]
 
@@ -74,22 +60,21 @@ const FAQS_EN = [
   { q: 'Is this legal?', a: 'PoolZone is a skill-based prediction game for entertainment among friends and family.' },
 ]
 
+const TARGET = '2026-06-11T19:00:00Z'
+
 export default function LandingPage() {
   const [lang, setLang] = useState<'en'|'es'>('es')
-  const cd = useCountdown()
   const [players, setPlayers] = useState(0)
+  const es = lang === 'es'
+  const faqs = es ? FAQS_ES : FAQS_EN
 
   useEffect(() => {
     fetch('/api/game/stats').then(r => r.json()).then(d => setPlayers(d.players || 0)).catch(() => {})
   }, [])
 
-  const es = lang === 'es'
-  const faqs = es ? FAQS_ES : FAQS_EN
-
   return (
     <div style={{ minHeight: '100vh', background: '#0D0D1A', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
 
-      {/* NAV */}
       <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 24px', borderBottom: '1px solid rgba(255,255,255,0.07)', position: 'sticky', top: 0, background: 'rgba(13,13,26,0.97)', backdropFilter: 'blur(12px)', zIndex: 50 }}>
         <img src="/poolzone-logo.png" alt="PoolZone" style={{ height: '40px', objectFit: 'contain' }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -103,41 +88,21 @@ export default function LandingPage() {
 
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
 
-        {/* BANNER */}
         <div style={{ margin: '32px 0 28px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.15)', boxShadow: '0 0 60px rgba(0,200,150,0.08)' }}>
           <img src="/poolzone-banner.png" alt="PoolZone World Cup 2026" style={{ width: '100%', display: 'block' }} />
         </div>
 
-        {/* COUNTDOWN */}
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <p style={{ fontSize: '12px', fontWeight: 700, color: '#00C896', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px' }}>
+        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '24px', marginBottom: '32px' }}>
+          <p style={{ textAlign: 'center', fontSize: '12px', fontWeight: 700, color: '#00C896', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px' }}>
             {es ? 'El Mundial Arranca En' : 'World Cup Kicks Off In'}
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
-            {[{v:cd.d,l:es?'DÍAS':'DAYS'},{v:cd.h,l:'HRS'},{v:cd.m,l:'MIN'},{v:cd.s,l:es?'SEG':'SEC'}].map(({v,l},i)=>(
-              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                {i > 0 && <span style={{ color: '#00C896', fontSize: '32px', fontWeight: 900, lineHeight: 1, marginBottom: '20px' }}>:</span>}
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ background: 'rgba(0,0,0,0.5)', border: '2px solid rgba(0,200,150,0.35)', borderRadius: '14px', width: '72px', height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: '34px', fontWeight: 900, color: '#00C896', display: 'block', width: '2ch', textAlign: 'center' }}>{String(v).padStart(2,'0')}</span>
-                  </div>
-                  <span style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.45)', letterSpacing: '2px', marginTop: '6px', display: 'block' }}>{l}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 3 CLOCKS */}
-        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '20px 24px', marginBottom: '32px' }}>
           <div style={{ display: 'flex', gap: '16px' }}>
-            <ClockZone label="Eastern" timezone="America/New_York" color="#00C896" />
-            <ClockZone label="Central" timezone="America/Chicago" color="#FFD700" />
-            <ClockZone label="Pacific" timezone="America/Los_Angeles" color="#74C0FC" />
+            <ClockZone label="Eastern" timezone="America/New_York" color="#00C896" targetDate={TARGET} />
+            <ClockZone label="Central" timezone="America/Chicago" color="#FFD700" targetDate={TARGET} />
+            <ClockZone label="Pacific" timezone="America/Los_Angeles" color="#74C0FC" targetDate={TARGET} />
           </div>
         </div>
 
-        {/* CTA */}
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
           {players > 0 && (
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '100px', padding: '6px 16px', marginBottom: '20px' }}>
@@ -155,7 +120,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* HOW IT WORKS */}
         <div style={{ marginBottom: '60px' }}>
           <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '6px' }}>{es ? 'Cómo Funciona' : 'How It Works'}</h2>
           <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', marginBottom: '32px' }}>{es ? 'Simple. Divertido. Dinero real.' : 'Simple. Fun. Real money.'}</p>
@@ -174,7 +138,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* PRIZES */}
         <div style={{ marginBottom: '60px' }}>
           <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '32px' }}>{es ? 'Distribución de Premios' : 'Prize Distribution'}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
@@ -192,7 +155,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* FEATURES */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '60px' }}>
           {[
             { icon: <Users size={20} color="#00C896" />, title: es ? 'Para Familias y Amigos' : 'For Families & Friends', desc: es ? 'Jugá con tu gente. Hecho para la comunidad latina en USA.' : 'Play with your crew. Made for the Latino community in USA.' },
@@ -209,7 +171,6 @@ export default function LandingPage() {
           ))}
         </div>
 
-        {/* FAQ */}
         <div style={{ marginBottom: '60px' }}>
           <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '32px' }}>{es ? 'Preguntas Frecuentes' : 'FAQ'}</h2>
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '8px 24px' }}>
@@ -217,7 +178,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* FINAL CTA */}
         <div style={{ textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.07)', padding: '60px 0 40px' }}>
           <h2 style={{ fontSize: '38px', fontWeight: 900, marginBottom: '12px' }}>{es ? '¡No Te Quedés Afuera!' : "Don't Miss Out!"}</h2>
           <p style={{ color: 'rgba(255,255,255,0.45)', marginBottom: '32px', fontSize: '16px' }}>
