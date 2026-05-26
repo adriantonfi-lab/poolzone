@@ -1,4 +1,4 @@
-// app/api/predictions/route.ts
+// app/api/my-picks/route.ts
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 

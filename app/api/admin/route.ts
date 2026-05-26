@@ -164,7 +164,7 @@ export async function POST(req: Request) {
             type: 'result',
             title: 'Resultado final 🏆',
             body: `${match.home_team} ${scoreStr} ${match.away_team}`,
-            url: '/fixture',
+            url: '/schedule',
             broadcast: true,
           }),
         })

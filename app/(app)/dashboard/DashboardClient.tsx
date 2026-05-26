@@ -269,13 +269,13 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
 
         {/* BOTONES NAV — 7 botones con Reglas */}
         <div className="grid grid-cols-7 gap-2 mb-4">
-          <NavBtn href="/fixture" icon={Calendar} label="Fixture" iconColor="text-blue-400" glow="#60A5FA" />
-          <NavBtn href="/oracle" icon={Sparkles} label="Oráculo" iconColor="text-[#A855F7]" glow="#A855F7" />
-          <NavBtn href="/predictions" icon={Trophy} label="Mi Polla" iconColor="text-[#FFD700]" glow="#FFD700" />
-          <NavBtn href="/ranking" icon={BarChart2} label="Ranking" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/battles" icon={Zap} label="Batallas" iconColor="text-orange-400" glow="#FB923C" />
-          <NavBtn href="/locker-room" icon={MessageCircle} label="Chat" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/rules" icon={BookOpen} label="Reglas" iconColor="text-pink-400" glow="#F472B6" />
+          <NavBtn href="/schedule" icon={Calendar} label="Fixture" iconColor="text-blue-400" glow="#60A5FA" />
+          <NavBtn href="/ai-picks" icon={Sparkles} label="Oráculo" iconColor="text-[#A855F7]" glow="#A855F7" />
+          <NavBtn href="/my-picks" icon={Trophy} label="Mi Polla" iconColor="text-[#FFD700]" glow="#FFD700" />
+          <NavBtn href="/leaderboard" icon={BarChart2} label="Ranking" iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/challenges" icon={Zap} label="Batallas" iconColor="text-orange-400" glow="#FB923C" />
+          <NavBtn href="/chat" icon={MessageCircle} label="Chat" iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/how-to-play" icon={BookOpen} label="Reglas" iconColor="text-pink-400" glow="#F472B6" />
         </div>
 
         {/* BATALLAS ABIERTAS */}
@@ -287,11 +287,11 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
                 <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">BATALLAS ABIERTAS</h2>
                 <span className="bg-[#FFD700] text-black text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">{openBattles.length}</span>
               </div>
-              <Link href="/battles" className="text-xs font-bold text-[#FFD700] hover:underline">Ver todas</Link>
+              <Link href="/challenges" className="text-xs font-bold text-[#FFD700] hover:underline">Ver todas</Link>
             </div>
             <div className="divide-y divide-[#2A2A4A]">
               {openBattles.slice(0,3).map((b: any) => (
-                <Link href="/battles" key={b.id} className="flex items-center justify-between px-4 py-2.5 hover:bg-[#FFD700]/5 transition-all">
+                <Link href="/challenges" key={b.id} className="flex items-center justify-between px-4 py-2.5 hover:bg-[#FFD700]/5 transition-all">
                   <div className="flex-1">
                     <p className="text-sm font-bold text-white">{b.title}</p>
                     <p className="text-xs font-semibold text-[#86EFAC]">@{b.profiles?.username||'?'} — ${b.bet_amount} — {b.description}</p>

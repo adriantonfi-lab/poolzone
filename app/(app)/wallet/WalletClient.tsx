@@ -110,7 +110,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
     setDepositMsg('')
 
     try {
-      const res = await fetch('/api/deposit', {
+      const res = await fetch('/api/payments/deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -377,7 +377,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs text-gray-400">Fee: ${profile?.inscription_fee || 25}</p>
           </div>
           {profile?.inscription_status !== 'paid' && profile?.inscription_status !== 'approved' && (
-            <Link href="/inscription" className="bg-[#FFD700] text-black font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#FFA500] transition-all">
+            <Link href="/join" className="bg-[#FFD700] text-black font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#FFA500] transition-all">
               Pagar
             </Link>
           )}

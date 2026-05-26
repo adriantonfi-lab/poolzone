@@ -110,7 +110,7 @@ export default function LockerRoomPage() {
       setAvatarUrl(uavatar)
       setUserRole(urole)
 
-      const statusRes = await fetch(`/api/moderation?action=check_status&userId=${user.id}`)
+      const statusRes = await fetch(`/api/social/moderation?action=check_status&userId=${user.id}`)
       const statusData = await statusRes.json()
       if (mounted) {
         setIsMuted(statusData.isMuted)
@@ -201,7 +201,7 @@ export default function LockerRoomPage() {
   async function sendGif(gifUrl: string) {
     if (!userId || isMuted || isBanned) return
     setShowGifs(false)
-    await fetch('/api/moderation', {
+    await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -267,7 +267,7 @@ export default function LockerRoomPage() {
     const text = input.trim()
     setInput('')
 
-    await fetch('/api/moderation', {
+    await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -298,7 +298,7 @@ export default function LockerRoomPage() {
   }
 
   async function deleteMessage(messageId: string) {
-    await fetch('/api/moderation', {
+    await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'delete_message', userId, messageId })
@@ -307,7 +307,7 @@ export default function LockerRoomPage() {
   }
 
   async function reportMessage(messageId: string) {
-    await fetch('/api/moderation', {
+    await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'report_message', userId, messageId, reason: 'Contenido inapropiado' })

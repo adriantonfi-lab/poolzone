@@ -97,7 +97,7 @@ export default function InscriptionPage() {
   async function handleApplyReferral() {
     if (!referralInput.trim()) return
     setSubmitting(true)
-    const res = await fetch('/api/inscription', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply_referral', code: referralInput.trim().toUpperCase() }) })
+    const res = await fetch('/api/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply_referral', code: referralInput.trim().toUpperCase() }) })
     const data = await res.json()
     setMsg(data.success ? (locale === 'en' ? '✅ Code applied successfully' : '✅ Código aplicado correctamente') : `❌ ${data.error}`)
     setSubmitting(false)

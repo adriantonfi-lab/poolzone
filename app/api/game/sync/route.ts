@@ -1,4 +1,4 @@
-// app/api/football-sync/route.ts
+// app/api/game/sync/route.ts
 // Este endpoint se llama automáticamente por Vercel Cron cada 2 minutos
 // También puede llamarse manualmente desde el panel admin
 
@@ -164,7 +164,7 @@ export async function GET(req: Request) {
             type: 'goal',
             title: '⚽ ¡GOOOL!',
             body: `${homeTeam} ${newHome}-${newAway} ${awayTeam}`,
-            url: '/fixture',
+            url: '/schedule',
             broadcast: true,
           }),
         })
@@ -240,7 +240,7 @@ export async function GET(req: Request) {
             type: 'result',
             title: 'Resultado final 🏆',
             body: `${homeTeam} ${homeScore}-${awayScore} ${awayTeam}`,
-            url: '/fixture',
+            url: '/schedule',
             broadcast: true,
           }),
         })

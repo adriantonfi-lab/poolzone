@@ -82,7 +82,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
     if (amt < 1) { setError('El mínimo es $1'); return }
     setLoading(true)
     setError('')
-    const res = await fetch('/api/battles', {
+    const res = await fetch('/api/challenges', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -199,7 +199,7 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
   async function handleJoin() {
     if (!prediction) { setError('Elegí un equipo'); return }
     setLoading(true)
-    const res = await fetch('/api/battles', {
+    const res = await fetch('/api/challenges', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'join', userId, battleId: battle.id, prediction, amount: battle.bet_amount }),
@@ -312,7 +312,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
           <div className="flex items-center gap-2">
             <button
               onClick={() => {
-                const text = `⚡ ¡BATALLA ABIERTA en Che-Bacano!\n\n🏆 ${battle.title}\n💰 Apostá $${battle.bet_amount} — ${battle.description}\n💵 Pozo actual: $${battle.pot_total}\n\n¿Te sumás? Entrá acá 👇\nhttps://che-bacano.com/battles`
+                const text = `⚡ ¡BATALLA ABIERTA en Che-Bacano!\n\n🏆 ${battle.title}\n💰 Apostá $${battle.bet_amount} — ${battle.description}\n💵 Pozo actual: $${battle.pot_total}\n\n¿Te sumás? Entrá acá 👇\nhttps://che-bacano.com/challenges`
                 window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
               }}
               className="flex items-center gap-1 bg-[#25D366] text-white font-bold px-3 py-2 rounded-xl text-sm transition-all hover:opacity-90">

@@ -11,17 +11,17 @@ import LanguageSwitcher from '@/app/components/LanguageSwitcher'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/fixture', label: 'Fixture', icon: Calendar },
-  { href: '/predictions', label: 'Mi Polla', icon: Trophy },
-  { href: '/ranking', label: 'Ranking', icon: BarChart2 },
-  { href: '/battles', label: 'Batallas', icon: Zap },
-  { href: '/locker-room', label: 'Chat', icon: MessageCircle },
-  { href: '/oracle', label: 'Oráculo', icon: Sparkles },
+  { href: '/schedule', label: 'Fixture', icon: Calendar },
+  { href: '/my-picks', label: 'Mi Polla', icon: Trophy },
+  { href: '/leaderboard', label: 'Ranking', icon: BarChart2 },
+  { href: '/challenges', label: 'Batallas', icon: Zap },
+  { href: '/chat', label: 'Chat', icon: MessageCircle },
+  { href: '/ai-picks', label: 'Oráculo', icon: Sparkles },
   { href: '/wallet', label: 'Wallet', icon: Wallet },
-  { href: '/inscription', label: 'Inscripción', icon: DollarSign },
+  { href: '/join', label: 'Inscripción', icon: DollarSign },
   { href: '/grupos', label: 'Grupos', icon: LayoutGrid },
   { href: '/bracket', label: 'Eliminatorias', icon: GitBranch },
-  { href: '/rules', label: 'Reglas', icon: BookOpen },
+  { href: '/how-to-play', label: 'Reglas', icon: BookOpen },
 ]
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

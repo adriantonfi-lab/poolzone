@@ -106,8 +106,8 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   async function loadModerationData() {
     setLoadingMod(true)
     const [reportsRes, bansRes] = await Promise.all([
-      fetch(`/api/moderation?action=get_reports`),
-      fetch(`/api/moderation?action=get_bans`),
+      fetch(`/api/social/moderation?action=get_reports`),
+      fetch(`/api/social/moderation?action=get_bans`),
     ])
     const reportsData = await reportsRes.json()
     const bansData = await bansRes.json()
@@ -167,7 +167,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   }
 
   async function handleDeleteMessage(messageId: string) {
-    const res = await fetch('/api/moderation', {
+    const res = await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'delete_message', userId: currentUser.id, messageId }),
@@ -176,7 +176,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
     if (data.success) {
       setMsg('✅ Mensaje eliminado')
       // Resolver el reporte también
-      await fetch('/api/moderation', {
+      await fetch('/api/social/moderation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'resolve_report', userId: currentUser.id, messageId }),
@@ -186,7 +186,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   }
 
   async function handleDismissReport(reportId: string) {
-    await fetch('/api/moderation', {
+    await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'dismiss_report', userId: currentUser.id, messageId: reportId }),
@@ -198,7 +198,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   async function handleMuteUser() {
     if (!muteUserId) return
     setSaving(true)
-    const res = await fetch('/api/moderation', {
+    const res = await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -218,7 +218,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   async function handleBanUser() {
     if (!banUserId) return
     setSaving(true)
-    const res = await fetch('/api/moderation', {
+    const res = await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -236,7 +236,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   }
 
   async function handleUnban(targetUserId: string) {
-    const res = await fetch('/api/moderation', {
+    const res = await fetch('/api/social/moderation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'unban_user', userId: currentUser.id, targetUserId }),

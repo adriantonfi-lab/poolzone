@@ -1,4 +1,4 @@
-// app/api/battles/route.ts
+// app/api/challenges/route.ts
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { notifyNewBattle } from '@/lib/push'
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
           type: 'battle',
           title: '¡Aceptaron tu batalla! ⚔️',
           body: `${joinerName} se unió a "${battle.title}" — pozo $${battle.pot_total + amount}`,
-          url: '/battles',
+          url: '/challenges',
           userIds: [battle.created_by],
         })
       })

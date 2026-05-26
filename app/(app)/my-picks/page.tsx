@@ -358,7 +358,7 @@ export default function PredictionsPage() {
 
   async function handleSave(pred: Partial<Prediction>) {
     setSaving(true)
-    const res = await fetch('/api/predictions', {
+    const res = await fetch('/api/my-picks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...pred, userId }),
@@ -374,7 +374,7 @@ export default function PredictionsPage() {
   async function handleOracleFill() {
     setOracleFilling(true)
     setOracleMsg('')
-    const res = await fetch('/api/oracle-fill', {
+    const res = await fetch('/api/ai-picks-fill', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId }),

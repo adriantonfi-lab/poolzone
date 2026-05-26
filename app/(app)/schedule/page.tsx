@@ -94,7 +94,7 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
   const [questionsLeft, setQuestionsLeft] = useState(3)
 
   useEffect(() => {
-    fetch('/api/stats', {
+    fetch('/api/game/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'stats', homeTeam, awayTeam }),
@@ -106,7 +106,7 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
     setTeamLoading(true)
     setMessages([])
     setQuestionsLeft(3)
-    const res = await fetch('/api/stats', {
+    const res = await fetch('/api/game/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'team', team }),
@@ -124,7 +124,7 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
     setQuestion('')
     setChatLoading(true)
     setQuestionsLeft(q => q - 1)
-    const res = await fetch('/api/stats', {
+    const res = await fetch('/api/game/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'chat', team: selectedTeam, question, history: messages }),

@@ -245,14 +245,14 @@ export default function RulesPage() {
         <div className="grid grid-cols-2 gap-2">
           {[
             { href: '/dashboard', label: 'Dashboard', icon: <Home size={16} className="text-[#FFD700]" /> },
-            { href: '/fixture', label: 'Fixture', icon: <Calendar size={16} className="text-blue-400" /> },
-            { href: '/predictions', label: 'Mi Polla', icon: <Trophy size={16} className="text-[#FFD700]" /> },
-            { href: '/ranking', label: 'Ranking', icon: <BarChart2 size={16} className="text-[#22C55E]" /> },
-            { href: '/battles', label: 'Batallas', icon: <Zap size={16} className="text-orange-400" /> },
-            { href: '/locker-room', label: 'Chat del Quilombo', icon: <MessageCircle size={16} className="text-[#22C55E]" /> },
-            { href: '/oracle', label: 'El Oráculo', icon: <Sparkles size={16} className="text-[#A855F7]" /> },
+            { href: '/schedule', label: 'Fixture', icon: <Calendar size={16} className="text-blue-400" /> },
+            { href: '/my-picks', label: 'Mi Polla', icon: <Trophy size={16} className="text-[#FFD700]" /> },
+            { href: '/leaderboard', label: 'Ranking', icon: <BarChart2 size={16} className="text-[#22C55E]" /> },
+            { href: '/challenges', label: 'Batallas', icon: <Zap size={16} className="text-orange-400" /> },
+            { href: '/chat', label: 'Chat del Quilombo', icon: <MessageCircle size={16} className="text-[#22C55E]" /> },
+            { href: '/ai-picks', label: 'El Oráculo', icon: <Sparkles size={16} className="text-[#A855F7]" /> },
             { href: '/wallet', label: 'Wallet', icon: <Wallet size={16} className="text-blue-400" /> },
-            { href: '/inscription', label: 'Inscripción', icon: <FileText size={16} className="text-gray-400" /> },
+            { href: '/join', label: 'Inscripción', icon: <FileText size={16} className="text-gray-400" /> },
           ].map(({ href, label, icon }) => (
             <Link key={href} href={href}
               className="flex items-center gap-2 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 hover:border-[#FFD700]/40 transition-all">
@@ -265,7 +265,7 @@ export default function RulesPage() {
 
       <div className="text-center mt-6 py-4 border-t border-[#2A2A4A]">
         <p className="text-gray-400 text-sm">¿Tenés más preguntas? Escribí en el Chat del Quilombo</p>
-        <Link href="/locker-room" className="inline-flex items-center gap-2 mt-3 bg-[#22C55E] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#16A34A] transition-all">
+        <Link href="/chat" className="inline-flex items-center gap-2 mt-3 bg-[#22C55E] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#16A34A] transition-all">
           <MessageCircle size={18} />
           Ir al Chat del Quilombo
         </Link>

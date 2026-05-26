@@ -100,7 +100,7 @@ export default function OraclePage() {
     setQuestion('')
     setLoading(true)
     try {
-      const res = await fetch('/api/oracle', {
+      const res = await fetch('/api/ai-picks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: text, userId: user.id }),
