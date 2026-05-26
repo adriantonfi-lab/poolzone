@@ -94,7 +94,7 @@ export default function LandingPage() {
           <p style={{ fontSize: '12px', fontWeight: 700, color: '#00C896', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px' }}>
             {es ? 'El Mundial Arranca En' : 'World Cup Kicks Off In'}
           </p>
-          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '24px' }}>
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', marginBottom: '24px', fontWeight: '600' }}>
             {es ? '11 Jun · 3:00 PM ET · Estadio Azteca' : 'Jun 11 · 3:00 PM ET · Estadio Azteca'}
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
