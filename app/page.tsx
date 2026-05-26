@@ -1,9 +1,69 @@
-// app/page.tsx — Landing page pública de PoolZone
 'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Trophy, Users, Zap, Shield, Star, ChevronRight, DollarSign } from 'lucide-react'
+
+const TEXTS = {
+  en: {
+    nav_signin: 'Sign In',
+    nav_join: 'Join Now',
+    countdown_label: 'World Cup Kicks Off In',
+    days: 'DAYS', hrs: 'HRS', min: 'MIN', sec: 'SEC',
+    pot_label: 'Prize Pool',
+    pot_sub: 'Growing every day · Paid out to top 3 players',
+    cta_join: 'Join the Pool — $30',
+    cta_how: 'How It Works',
+    cta_sub: '$30 entry · 60% goes to 1st place · Secure payments',
+    how_title: 'How It Works',
+    how_sub: 'Simple. Fun. Real prizes.',
+    step1_title: 'Join for $30',
+    step1_desc: "Pay once and you're in for the entire World Cup. All 104 matches.",
+    step2_title: 'Predict Matches',
+    step2_desc: 'Pick winners, exact scores, and goal times. More detail = more points.',
+    step3_title: 'Win Real Money',
+    step3_desc: 'Top 3 players split the pot. 1st gets 60%, 2nd 30%, 3rd 10%.',
+    prizes_title: 'Prize Distribution',
+    prize1: '1st Place', prize2: '2nd Place', prize3: '3rd Place',
+    features: [
+      { title: 'For Families & Friends', desc: 'Play with your crew. Latino community in USA.' },
+      { title: 'Safe & Transparent', desc: 'Every payment tracked. Prize visible to all players.' },
+      { title: 'Live Updates', desc: 'Real-time scores. Push notifications for every goal.' },
+    ],
+    final_title: 'Ready to Play?',
+    final_sub: 'Join hundreds of players competing for real prizes this World Cup.',
+    final_cta: 'Join Now for $30',
+  },
+  es: {
+    nav_signin: 'Iniciar sesión',
+    nav_join: 'Únete',
+    countdown_label: 'El Mundial Arranca En',
+    days: 'DÍAS', hrs: 'HRS', min: 'MIN', sec: 'SEG',
+    pot_label: 'Pozo de Premios',
+    pot_sub: 'Crece cada día · Se reparte entre los 3 primeros',
+    cta_join: 'Únete al Pozo — $30',
+    cta_how: 'Cómo Funciona',
+    cta_sub: '$30 de inscripción · 60% para el 1° · Pagos seguros',
+    how_title: 'Cómo Funciona',
+    how_sub: 'Simple. Divertido. Premios reales.',
+    step1_title: 'Inscribite por $30',
+    step1_desc: 'Un solo pago y jugás todo el Mundial. Los 104 partidos.',
+    step2_title: 'Predecí los Partidos',
+    step2_desc: 'Elegí ganadores, marcadores exactos y goles por tiempo. Más detalle = más puntos.',
+    step3_title: 'Ganá Dinero Real',
+    step3_desc: 'Los 3 primeros se reparten el pozo. 1° lleva 60%, 2° 30%, 3° 10%.',
+    prizes_title: 'Distribución de Premios',
+    prize1: '1° Lugar', prize2: '2° Lugar', prize3: '3° Lugar',
+    features: [
+      { title: 'Para Familias y Amigos', desc: 'Jugá con tu gente. Comunidad latina en USA.' },
+      { title: 'Seguro y Transparente', desc: 'Cada pago registrado. El pozo visible para todos.' },
+      { title: 'Actualizaciones en Vivo', desc: 'Resultados en tiempo real. Notificaciones por cada gol.' },
+    ],
+    final_title: '¿Listo para Jugar?',
+    final_sub: 'Sumate a cientos de jugadores compitiendo por premios reales en este Mundial.',
+    final_cta: 'Únete por $30',
+  }
+}
 
 function useCountdown(targetDate: string) {
   const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -25,149 +85,197 @@ function useCountdown(targetDate: string) {
   return t
 }
 
-function BigClock({ targetDate }: { targetDate: string }) {
-  const t = useCountdown(targetDate)
+function ClockBox({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex items-center justify-center gap-3">
-      {[{v:t.days,l:'DAYS'},{v:t.hours,l:'HRS'},{v:t.minutes,l:'MIN'},{v:t.seconds,l:'SEC'}].map(({v,l},i)=>(
-        <div key={l} className="flex items-center gap-3">
-          {i > 0 && <span className="text-[#00C896] text-4xl font-bold">:</span>}
-          <div className="flex flex-col items-center">
-            <div className="bg-black/50 border-2 border-[#00C896]/50 rounded-2xl px-4 py-3 min-w-[72px] text-center">
-              <span className="text-5xl font-black text-[#00C896] leading-none">{String(v).padStart(2,'0')}</span>
-            </div>
-            <span className="text-xs font-bold text-white/60 mt-1 tracking-widest">{l}</span>
-          </div>
-        </div>
-      ))}
+    <div className="flex flex-col items-center">
+      <div style={{
+        width: '80px',
+        height: '80px',
+        background: 'rgba(0,0,0,0.5)',
+        border: '2px solid rgba(0,200,150,0.4)',
+        borderRadius: '16px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+      }}>
+        <span style={{
+          fontFamily: 'monospace',
+          fontSize: '36px',
+          fontWeight: '900',
+          color: '#00C896',
+          lineHeight: 1,
+          display: 'block',
+          width: '2ch',
+          textAlign: 'center',
+        }}>
+          {String(value).padStart(2, '0')}
+        </span>
+      </div>
+      <span style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginTop: '6px', letterSpacing: '2px' }}>
+        {label}
+      </span>
     </div>
   )
 }
 
 export default function LandingPage() {
-  const [pot, setPot] = useState(0)
-  const [players, setPlayers] = useState(0)
-
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        const res = await fetch('/api/game/stats')
-        const data = await res.json()
-        setPot(data.pot || 0)
-        setPlayers(data.players || 0)
-      } catch {
-        setPot(2280)
-        setPlayers(100)
-      }
-    }
-    fetchStats()
-  }, [])
+  const [lang, setLang] = useState<'en' | 'es'>('es')
+  const t = TEXTS[lang]
+  const clock = useCountdown('2026-06-11T20:00:00Z')
 
   return (
-    <div className="min-h-screen bg-[#0D0D1A] text-white">
+    <div style={{ minHeight: '100vh', background: '#0D0D1A', color: 'white', fontFamily: 'system-ui, sans-serif' }}>
 
       {/* NAV */}
-      <nav className="flex items-center justify-between px-4 md:px-8 py-4 border-b border-white/10">
-        <img src="/poolzone-logo.png" alt="PoolZone" className="h-10 object-contain" />
-        <div className="flex items-center gap-3">
-          <Link href="/login" className="text-sm font-bold text-white/70 hover:text-white transition-colors">
-            Sign In
+      <nav style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '16px 24px', borderBottom: '1px solid rgba(255,255,255,0.08)',
+        position: 'sticky', top: 0, background: 'rgba(13,13,26,0.95)',
+        backdropFilter: 'blur(10px)', zIndex: 50,
+      }}>
+        <img src="/poolzone-logo.png" alt="PoolZone" style={{ height: '44px', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button
+            onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
+            style={{
+              background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
+              color: 'white', fontWeight: 700, fontSize: '13px',
+              padding: '6px 12px', borderRadius: '8px', cursor: 'pointer',
+            }}>
+            {lang === 'en' ? '🇲🇽 ES' : '🇺🇸 EN'}
+          </button>
+          <Link href="/login" style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
+            {t.nav_signin}
           </Link>
-          <Link href="/register" className="bg-[#00C896] text-black font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#00b085] transition-all">
-            Join Now
+          <Link href="/register" style={{
+            background: '#00C896', color: 'black', fontWeight: 800,
+            padding: '8px 18px', borderRadius: '12px', fontSize: '14px', textDecoration: 'none',
+          }}>
+            {t.nav_join}
           </Link>
         </div>
       </nav>
 
       {/* HERO */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#00C896]/5 to-transparent pointer-events-none" />
-        
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+      <div style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 20px 0', textAlign: 'center' }}>
+
+        {/* BANNER */}
+        <div style={{ borderRadius: '20px', overflow: 'hidden', marginBottom: '40px', border: '1px solid rgba(0,200,150,0.2)' }}>
           <img src="/poolzone-banner.png" alt="PoolZone World Cup 2026"
-            className="w-full max-w-3xl mx-auto rounded-2xl mb-8 object-cover"
-            style={{maxHeight: '340px'}} />
-
-          {/* COUNTDOWN */}
-          <p className="text-[#00C896] font-bold text-sm tracking-widest mb-4 uppercase">World Cup Starts In</p>
-          <BigClock targetDate="2026-06-11T20:00:00Z" />
-
-          {/* POT */}
-          <div className="mt-8 bg-gradient-to-r from-[#FFD700]/10 to-[#00C896]/10 border border-[#FFD700]/30 rounded-2xl p-6 inline-block min-w-[280px]">
-            <p className="text-sm font-bold text-white/60 uppercase tracking-widest mb-1">Current Prize Pool</p>
-            <p className="text-6xl font-black text-[#FFD700]">${pot.toLocaleString()}</p>
-            <p className="text-sm text-white/60 mt-1">{players} players · Growing every day</p>
-          </div>
-
-          {/* CTA */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/register"
-              className="w-full sm:w-auto bg-[#00C896] text-black font-black text-lg px-8 py-4 rounded-2xl hover:bg-[#00b085] transition-all flex items-center justify-center gap-2">
-              Join the Pool — $30 <ChevronRight size={20} />
-            </Link>
-            <Link href="/how-to-play"
-              className="w-full sm:w-auto border-2 border-white/20 text-white font-bold text-lg px-8 py-4 rounded-2xl hover:border-[#00C896] transition-all text-center">
-              How It Works
-            </Link>
-          </div>
-          <p className="text-xs text-white/40 mt-3">$30 entry · 60% goes to the winner · Secure payments</p>
+            style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: '420px' }} />
         </div>
+
+        {/* COUNTDOWN */}
+        <p style={{ color: '#00C896', fontWeight: 700, fontSize: '13px', letterSpacing: '3px', marginBottom: '20px', textTransform: 'uppercase' }}>
+          {t.countdown_label}
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '40px' }}>
+          <ClockBox value={clock.days} label={t.days} />
+          <span style={{ color: '#00C896', fontSize: '36px', fontWeight: 900, marginBottom: '20px' }}>:</span>
+          <ClockBox value={clock.hours} label={t.hrs} />
+          <span style={{ color: '#00C896', fontSize: '36px', fontWeight: 900, marginBottom: '20px' }}>:</span>
+          <ClockBox value={clock.minutes} label={t.min} />
+          <span style={{ color: '#00C896', fontSize: '36px', fontWeight: 900, marginBottom: '20px' }}>:</span>
+          <ClockBox value={clock.seconds} label={t.sec} />
+        </div>
+
+        {/* POT */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(255,215,0,0.08), rgba(0,200,150,0.08))',
+          border: '1px solid rgba(255,215,0,0.25)',
+          borderRadius: '24px', padding: '32px', marginBottom: '36px', display: 'inline-block', minWidth: '300px',
+        }}>
+          <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px' }}>
+            {t.pot_label}
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '8px' }}>
+            <Trophy size={32} color="#FFD700" />
+            <span style={{ fontSize: '20px', fontWeight: 800, color: '#FFD700' }}>Real Money Prizes</span>
+          </div>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>{t.pot_sub}</p>
+        </div>
+
+        {/* CTAs */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+          <Link href="/register" style={{
+            background: '#00C896', color: 'black', fontWeight: 900,
+            fontSize: '18px', padding: '18px 40px', borderRadius: '16px',
+            textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px',
+          }}>
+            {t.cta_join} →
+          </Link>
+          <Link href="/how-to-play" style={{
+            border: '2px solid rgba(255,255,255,0.15)', color: 'white', fontWeight: 700,
+            fontSize: '16px', padding: '14px 32px', borderRadius: '16px', textDecoration: 'none',
+          }}>
+            {t.cta_how}
+          </Link>
+        </div>
+        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', marginBottom: '60px' }}>{t.cta_sub}</p>
       </div>
 
       {/* HOW IT WORKS */}
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        <h2 className="text-center font-black text-3xl mb-2">How It Works</h2>
-        <p className="text-center text-white/50 mb-10">Simple. Fun. Real prizes.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div style={{ maxWidth: '960px', margin: '0 auto', padding: '0 20px 60px' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '32px', fontWeight: 900, marginBottom: '8px' }}>{t.how_title}</h2>
+        <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', marginBottom: '40px' }}>{t.how_sub}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
           {[
-            { n: '1', icon: <DollarSign size={28} className="text-[#00C896]" />, title: 'Join for $30', desc: 'Pay once and you\'re in for the entire World Cup. All 104 matches.' },
-            { n: '2', icon: <Star size={28} className="text-[#FFD700]" />, title: 'Predict Matches', desc: 'Pick winners, exact scores, and goal times. More detail = more points.' },
-            { n: '3', icon: <Trophy size={28} className="text-[#FFD700]" />, title: 'Win the Prize', desc: 'Top 3 players split the pot. 1st gets 60%, 2nd 30%, 3rd 10%.' },
-          ].map(({n, icon, title, desc}) => (
-            <div key={n} className="bg-[#1A1A2E] border border-white/10 rounded-2xl p-6 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-                {icon}
-              </div>
-              <h3 className="font-black text-lg mb-2">{title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{desc}</p>
+            { icon: <DollarSign size={32} color="#00C896" />, title: t.step1_title, desc: t.step1_desc },
+            { icon: <Star size={32} color="#FFD700" />, title: t.step2_title, desc: t.step2_desc },
+            { icon: <Trophy size={32} color="#FFD700" />, title: t.step3_title, desc: t.step3_desc },
+          ].map(({icon, title, desc}, i) => (
+            <div key={i} style={{
+              background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: '20px', padding: '28px', textAlign: 'center',
+            }}>
+              <div style={{ marginBottom: '16px' }}>{icon}</div>
+              <h3 style={{ fontSize: '18px', fontWeight: 800, marginBottom: '8px' }}>{title}</h3>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>{desc}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* PRIZES */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h2 className="text-center font-black text-3xl mb-2">Prize Distribution</h2>
-        <p className="text-center text-white/50 mb-10">Based on {players} players — pot grows as more join</p>
-        <div className="grid grid-cols-3 gap-4">
+      <div style={{ maxWidth: '960px', margin: '0 auto', padding: '0 20px 60px' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '32px', fontWeight: 900, marginBottom: '40px' }}>{t.prizes_title}</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
           {[
-            { place: '1st Place', pct: '60%', amount: Math.round(pot * 0.6), color: 'text-[#FFD700]', border: 'border-[#FFD700]/40', bg: 'bg-[#FFD700]/5' },
-            { place: '2nd Place', pct: '30%', amount: Math.round(pot * 0.3), color: 'text-gray-300', border: 'border-gray-500/30', bg: 'bg-gray-500/5' },
-            { place: '3rd Place', pct: '10%', amount: Math.round(pot * 0.1), color: 'text-amber-600', border: 'border-amber-600/30', bg: 'bg-amber-600/5' },
-          ].map(({place, pct, amount, color, border, bg}) => (
-            <div key={place} className={`${bg} border ${border} rounded-2xl p-4 text-center`}>
-              <Trophy size={24} className={`${color} mx-auto mb-2`} />
-              <p className={`font-black text-3xl ${color}`}>{pct}</p>
-              <p className={`font-black text-xl ${color} mt-1`}>${amount.toLocaleString()}</p>
-              <p className="text-xs text-white/40 mt-1">{place}</p>
+            { place: t.prize1, pct: '60%', color: '#FFD700', border: 'rgba(255,215,0,0.3)' },
+            { place: t.prize2, pct: '30%', color: '#C0C0C0', border: 'rgba(192,192,192,0.2)' },
+            { place: t.prize3, pct: '10%', color: '#CD7F32', border: 'rgba(205,127,50,0.2)' },
+          ].map(({place, pct, color, border}) => (
+            <div key={place} style={{
+              background: `rgba(255,255,255,0.02)`, border: `1px solid ${border}`,
+              borderRadius: '20px', padding: '28px', textAlign: 'center',
+            }}>
+              <Trophy size={28} color={color} style={{ margin: '0 auto 12px' }} />
+              <p style={{ fontSize: '36px', fontWeight: 900, color }}>{pct}</p>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>{place}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* FEATURES */}
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[
-            { icon: <Users size={20} className="text-[#00C896]" />, title: 'For Families & Friends', desc: 'Play together with your crew. Latino community in USA.' },
-            { icon: <Shield size={20} className="text-[#00C896]" />, title: 'Safe & Transparent', desc: 'Every payment tracked. Prize pot visible to all players.' },
-            { icon: <Zap size={20} className="text-[#00C896]" />, title: 'Live Updates', desc: 'Real-time scores, push notifications for every goal.' },
-          ].map(({icon, title, desc}) => (
-            <div key={title} className="flex items-start gap-3 bg-[#1A1A2E] border border-white/10 rounded-xl p-4">
-              <div className="w-9 h-9 rounded-xl bg-[#00C896]/10 flex items-center justify-center shrink-0">{icon}</div>
+      <div style={{ maxWidth: '960px', margin: '0 auto', padding: '0 20px 60px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+          {t.features.map(({title, desc}, i) => (
+            <div key={i} style={{
+              display: 'flex', gap: '14px', alignItems: 'flex-start',
+              background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: '16px', padding: '20px',
+            }}>
+              <div style={{
+                width: '40px', height: '40px', borderRadius: '12px',
+                background: 'rgba(0,200,150,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              }}>
+                {i === 0 ? <Users size={20} color="#00C896" /> : i === 1 ? <Shield size={20} color="#00C896" /> : <Zap size={20} color="#00C896" />}
+              </div>
               <div>
-                <p className="font-bold text-sm text-white">{title}</p>
-                <p className="text-xs text-white/50 mt-0.5">{desc}</p>
+                <p style={{ fontWeight: 700, fontSize: '14px', marginBottom: '4px' }}>{title}</p>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>{desc}</p>
               </div>
             </div>
           ))}
@@ -175,14 +283,22 @@ export default function LandingPage() {
       </div>
 
       {/* FINAL CTA */}
-      <div className="max-w-4xl mx-auto px-4 py-12 text-center border-t border-white/10">
-        <h2 className="font-black text-4xl mb-4">Ready to Play?</h2>
-        <p className="text-white/50 mb-8">Join {players}+ players competing for ${pot.toLocaleString()} in prizes</p>
-        <Link href="/register"
-          className="inline-flex items-center gap-2 bg-[#00C896] text-black font-black text-xl px-10 py-5 rounded-2xl hover:bg-[#00b085] transition-all">
-          Join Now for $30 <ChevronRight size={24} />
+      <div style={{
+        maxWidth: '960px', margin: '0 auto', padding: '60px 20px',
+        textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.08)',
+      }}>
+        <h2 style={{ fontSize: '40px', fontWeight: 900, marginBottom: '12px' }}>{t.final_title}</h2>
+        <p style={{ color: 'rgba(255,255,255,0.4)', marginBottom: '32px', fontSize: '16px' }}>{t.final_sub}</p>
+        <Link href="/register" style={{
+          display: 'inline-flex', alignItems: 'center', gap: '8px',
+          background: '#00C896', color: 'black', fontWeight: 900,
+          fontSize: '20px', padding: '20px 48px', borderRadius: '20px', textDecoration: 'none',
+        }}>
+          {t.final_cta} →
         </Link>
-        <p className="text-xs text-white/30 mt-4">poolzone.app · World Cup 2026 · Secure Payments</p>
+        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)', marginTop: '20px' }}>
+          poolzone.app · World Cup 2026 · Secure Payments
+        </p>
       </div>
 
     </div>
