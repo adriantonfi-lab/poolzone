@@ -1,1 +1,235 @@
-<!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="content-security-policy" content="default-src &#39;none&#39;; script-src &#39;nonce-44ReUnmOdy5JWv2J0YiM6v&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-src-attr &#39;none&#39;; style-src &#39;unsafe-inline&#39;; img-src &#39;self&#39; https://challenges.cloudflare.com; connect-src &#39;self&#39; https://challenges.cloudflare.com; frame-src &#39;self&#39; https://challenges.cloudflare.com blob:; child-src &#39;self&#39; https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri &#39;self&#39;"><style>*{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width <= 720px){.main-content{margin-top:4rem}}#challenge-error-text{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI0IyMEYwMyIgZD0iTTE2IDNhMTMgMTMgMCAxIDAgMTMgMTNBMTMuMDE1IDEzLjAxNSAwIDAgMCAxNiAzbTAgMjRhMTEgMTEgMCAxIDEgMTEtMTEgMTEuMDEgMTEuMDEgMCAwIDEtMTEgMTEiLz48cGF0aCBmaWxsPSIjQjIwRjAzIiBkPSJNMTcuMDM4IDE4LjYxNUgxNC44N0wxNC41NjMgOS41aDIuNzgzem0tMS4wODQgMS40MjdxLjY2IDAgMS4wNTcuMzg4LjQwNy4zODkuNDA3Ljk5NCAwIC41OTYtLjQwNy45ODQtLjM5Ny4zOS0xLjA1Ny4zODktLjY1IDAtMS4wNTYtLjM4OS0uMzk4LS4zODktLjM5OC0uOTg0IDAtLjU5Ny4zOTgtLjk4NS40MDYtLjM5NyAxLjA1Ni0uMzk3Ii8+PC9zdmc+");background-repeat:no-repeat;background-size:contain;padding-left:34px}</style><meta http-equiv="refresh" content="360"></head><body><div class="main-wrapper" role="main"><div class="main-content"><noscript><div class="h2"><span id="challenge-error-text">Enable JavaScript and cookies to continue</span></div></noscript></div></div><script nonce="44ReUnmOdy5JWv2J0YiM6v">(function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'nWQZGpCaX2hRgFfHAdCj0UyceZ4o1_jRgb3SUMm8V48-1779837699-1.2.1.1-fxjtdTTK3kjSafKISq95WKdmKcX_NKwBJV9O6GjoXEh08VeK64KsxY9uBdYMZ_RP',cITimeS: '1779837699',cN: '44ReUnmOdy5JWv2J0YiM6v',cRay: 'a0208474b95370a3',cTplB: '0',cTplC:0,cTplO:0,cTplV:5,cType: 'managed',cUPMDTk:"/api/artifacts/landing-v3?__cf_chl_tk=2L9av1Cj6gGaVWgqoLuz9VnmY08YlZ7L0m77JUqlyxU-1779837699-1.0.1.1-oPeBIpQ8vI6BbumQX83KMiIbnaOhoHsMdGx05JSCaeQ",cvId: '3',cZone: 'claude.ai',fa:"/api/artifacts/landing-v3?__cf_chl_f_tk=2L9av1Cj6gGaVWgqoLuz9VnmY08YlZ7L0m77JUqlyxU-1779837699-1.0.1.1-oPeBIpQ8vI6BbumQX83KMiIbnaOhoHsMdGx05JSCaeQ",md: 'uFrlGGy736qaRlF5kzE1C61r8F3baa0k0U_6RFVhWhs-1779837699-1.2.1.1-EcSCNCyrogjt7pICyuQ3Y9zsaRACxeR_dlLfK_SrlZfWLQmOLIYM_Ohz13IU4EyoOHAdZsX0OREHpAzNjNFX8ZHSEKix9q246hvHQlKoN0Zp6YRs2A0SqIrGaTWSIOnWxzPsMJxf4Q1wM21wEyc2EW.zsgSmTwGYQBrJDp5lrMHWmvDKei18poHkPk_WtE8CtG04RHeAO5BbHhFHsiru3Jg8ZfTwDR7HCnCntiz5jMHmSQLg3O_DRltd5wWMbUxmBsJLAkqHeqwlBKn8BC_Bsq0dzMUgtpCxf_kmHvxWWM3Oansr0E2w8eR.8o1u20czaQOhXOeZmV5AUCPYZE3oJ5rU50CFg6mp0K9V932ZIYhi5Xl9aTH8p6C5mcIPhdzK2Tc97EJnGHsErih.Z3Q18WwOVhhMNE_MxYP80jUED0m2H1ERMr.gc5.CQBmwwV4cPZEOyBxYIrXaj_2zUNhbE2h7Tov9lG4x05PSNpZ24sd9o_Dtyv4t39aWH1UnuqV9rlM4N.O.JQOXDAnUe3vQIyRnSCWy.wcj_6Y62O5t7VBKTrlCEKtTTYqbXJY1rEgLSkV0WLQ.6lp0eobw0YQw1SejttEBNE90WJBXgim3nLPel9GPOToLtqwSozNiWoSWmKfnI1b51eSqyyYzSahjhf0xerLFvbqIICH0UtwwGLCtFsLsQQtACp5Re2DuekH1lASB3efbMLmCjUjxFyMLAmpJEDLfDkqty74VTZB1CBFNiurgeA0.Bia_DmR_GFX6nvQ6i4hK3M4.17eLSp4r53CzU98Jro5FJcazwvQYGaWe_3ZE4UkNdctjxUdr0RqYuDmouv31zw7FdRrRoKlBNFi7_vkYojy5.jhUB22_0xbs8fVDNZZLMOZBKMzf89OOpbL5fEpzofLUuuBp86AbGHzE7zfxKbE22Xq3Nyx0Hcx1yOc5rDxlbp5ArNPWE5t.nmIs2Y0TB0s_2I1NQC_2mNkYS6N9GcxyNb2WE5xdMDiLZ1kxqRqVuyXrr0Z0Eqm4gHEH5_37k2SFGfSX711POAapjSNkJwleqzXxJp1gMq00cHlewpjOuf_3tM0HyjJ71M77a.I3_tweuDRSockJDCHmM9M3viBlCc.JjOtNiyI',mdrd: 'oN.62UM7Iz4C2Gwo5vAq5YxBWDcWrV1xjBXbVWSIeNM-1779837699-1.2.1.1-7r1jfN12xkuNFVcOpKqPzk_LbfvZq9X3p9sILfEwy8LbQOmmSSlapP65M0cVAvbEddPFAXb4k5DQ_VPE18iD1gTrhg4NoyU2tk0jfnYeDMRGwImlfgItb2STJetPlFQziRytX.lx0GwCFWka4rVjpcVx0heP0JbVQlSbZH19FOeKTcTsKDc2SOxw3MJ.z5t2eCLVXlARUOQWTn8e.YU4oQ',};var a = document.createElement('script');a.nonce = '44ReUnmOdy5JWv2J0YiM6v';a.src = '/cdn-cgi/challenge-platform/h/b/orchestrate/chl_page/v1?ray=a0208474b95370a3';window._cf_chl_opt.cOgUHash = location.hash === '' && location.href.indexOf('#') !== -1 ? '#' : location.hash;window._cf_chl_opt.cOgUQuery = location.search === '' && location.href.slice(0, location.href.length - window._cf_chl_opt.cOgUHash.length).indexOf('?') !== -1 ? '?' : location.search;if (window.history && window.history.replaceState) {var ogU = location.pathname + window._cf_chl_opt.cOgUQuery + window._cf_chl_opt.cOgUHash;history.replaceState(null, null,"/api/artifacts/landing-v3?__cf_chl_rt_tk=2L9av1Cj6gGaVWgqoLuz9VnmY08YlZ7L0m77JUqlyxU-1779837699-1.0.1.1-oPeBIpQ8vI6BbumQX83KMiIbnaOhoHsMdGx05JSCaeQ"+ window._cf_chl_opt.cOgUHash);a.onload = function() {history.replaceState(null, null, ogU);}}document.getElementsByTagName('head')[0].appendChild(a);}());</script></body></html>
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Trophy, Users, Zap, Shield, ChevronDown, DollarSign, Star, Globe } from 'lucide-react'
+
+function useTime() {
+  const [now, setNow] = useState(new Date())
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+  return now
+}
+
+function ClockZone({ label, timezone, color }: { label: string; timezone: string; color: string }) {
+  const now = useTime()
+  const timeStr = now.toLocaleTimeString('en-US', { timeZone: timezone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
+  const [time, ampm] = timeStr.split(' ')
+  const [hh, mm, ss] = time.split(':')
+  return (
+    <div style={{ textAlign: 'center', flex: 1 }}>
+      <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>{label}</div>
+      <div style={{ background: 'rgba(0,0,0,0.5)', border: `2px solid ${color}40`, borderRadius: '16px', padding: '12px 8px' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: '32px', fontWeight: 900, color, lineHeight: 1 }}>{hh}:{mm}</div>
+        <div style={{ fontFamily: 'monospace', fontSize: '18px', fontWeight: 700, color: `${color}90`, marginTop: '2px' }}>:{ss} <span style={{ fontSize: '14px' }}>{ampm}</span></div>
+      </div>
+    </div>
+  )
+}
+
+function useCountdown() {
+  const target = new Date('2026-06-11T19:00:00Z').getTime()
+  const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 })
+  useEffect(() => {
+    function calc() {
+      const diff = target - Date.now()
+      if (diff <= 0) return
+      setT({ d: Math.floor(diff/86400000), h: Math.floor((diff%86400000)/3600000), m: Math.floor((diff%3600000)/60000), s: Math.floor((diff%60000)/1000) })
+    }
+    calc(); const id = setInterval(calc, 1000); return () => clearInterval(id)
+  }, [])
+  return t
+}
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+      <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '12px' }}>
+        <span style={{ fontSize: '15px', fontWeight: 700, color: 'white' }}>{q}</span>
+        <ChevronDown size={18} color="#00C896" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }} />
+      </button>
+      {open && <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, paddingBottom: '16px', margin: 0 }}>{a}</p>}
+    </div>
+  )
+}
+
+const FAQS_ES = [
+  { q: '¿Cuánto cuesta inscribirse?', a: '$30 por persona. Pago único para todo el Mundial.' },
+  { q: '¿Cómo cobro si gano?', a: 'Pagamos por Zelle (USA), Wise (internacional) o PayPal. Dentro de las 48hs de terminado el torneo.' },
+  { q: '¿Cuándo cierra la inscripción?', a: 'Podés inscribirte hasta el inicio del primer partido el 11 de junio.' },
+  { q: '¿Puedo cambiar mis predicciones?', a: 'Sí, pero cambiar con menos de 24hs antes del partido tiene un cargo pequeño ($2-5) que va al pozo.' },
+  { q: '¿Qué es el Oráculo IA?', a: 'Nuestro Oráculo de IA te da análisis y predicciones para que hagas mejores picks. 12 consultas gratis incluidas.' },
+  { q: '¿Es legal?', a: 'PoolZone es un juego de habilidad y predicción para entretenimiento entre amigos y familia.' },
+]
+
+const FAQS_EN = [
+  { q: 'How much does it cost to join?', a: '$30 per person. One-time payment for the entire World Cup.' },
+  { q: 'How do I get paid if I win?', a: 'We pay via Zelle (USA), Wise (international), or PayPal. Within 48 hours after the tournament ends.' },
+  { q: 'When is the deadline to join?', a: 'You can join up to the start of the first match on June 11.' },
+  { q: 'Can I change my predictions?', a: 'Yes, but changing less than 24 hours before kickoff incurs a small fee ($2-5) that goes to the prize pool.' },
+  { q: 'What is the AI Oracle?', a: 'Our AI Oracle gives you match insights to help you make better picks. 12 free queries included.' },
+  { q: 'Is this legal?', a: 'PoolZone is a skill-based prediction game for entertainment among friends and family.' },
+]
+
+export default function LandingPage() {
+  const [lang, setLang] = useState<'en'|'es'>('es')
+  const cd = useCountdown()
+  const [players, setPlayers] = useState(0)
+
+  useEffect(() => {
+    fetch('/api/game/stats').then(r => r.json()).then(d => setPlayers(d.players || 0)).catch(() => {})
+  }, [])
+
+  const es = lang === 'es'
+  const faqs = es ? FAQS_ES : FAQS_EN
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#0D0D1A', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+
+      {/* NAV */}
+      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 24px', borderBottom: '1px solid rgba(255,255,255,0.07)', position: 'sticky', top: 0, background: 'rgba(13,13,26,0.97)', backdropFilter: 'blur(12px)', zIndex: 50 }}>
+        <img src="/poolzone-logo.png" alt="PoolZone" style={{ height: '40px', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={() => setLang(lang === 'en' ? 'es' : 'en')} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: 'white', fontWeight: 700, fontSize: '13px', padding: '6px 12px', borderRadius: '10px', cursor: 'pointer' }}>
+            <Globe size={14} />{lang === 'en' ? 'ES' : 'EN'}
+          </button>
+          <Link href="/login" style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(255,255,255,0.55)', textDecoration: 'none' }}>{es ? 'Iniciar sesión' : 'Sign In'}</Link>
+          <Link href="/register" style={{ background: '#00C896', color: 'black', fontWeight: 800, padding: '8px 18px', borderRadius: '12px', fontSize: '14px', textDecoration: 'none' }}>{es ? 'Únete' : 'Join Now'}</Link>
+        </div>
+      </nav>
+
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
+
+        {/* BANNER */}
+        <div style={{ margin: '32px 0 28px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.15)', boxShadow: '0 0 60px rgba(0,200,150,0.08)' }}>
+          <img src="/poolzone-banner.png" alt="PoolZone World Cup 2026" style={{ width: '100%', display: 'block' }} />
+        </div>
+
+        {/* COUNTDOWN */}
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <p style={{ fontSize: '12px', fontWeight: 700, color: '#00C896', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px' }}>
+            {es ? 'El Mundial Arranca En' : 'World Cup Kicks Off In'}
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
+            {[{v:cd.d,l:es?'DÍAS':'DAYS'},{v:cd.h,l:'HRS'},{v:cd.m,l:'MIN'},{v:cd.s,l:es?'SEG':'SEC'}].map(({v,l},i)=>(
+              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                {i > 0 && <span style={{ color: '#00C896', fontSize: '32px', fontWeight: 900, lineHeight: 1, marginBottom: '20px' }}>:</span>}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ background: 'rgba(0,0,0,0.5)', border: '2px solid rgba(0,200,150,0.35)', borderRadius: '14px', width: '72px', height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: '34px', fontWeight: 900, color: '#00C896', display: 'block', width: '2ch', textAlign: 'center' }}>{String(v).padStart(2,'0')}</span>
+                  </div>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.45)', letterSpacing: '2px', marginTop: '6px', display: 'block' }}>{l}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 3 CLOCKS */}
+        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '20px 24px', marginBottom: '32px' }}>
+          <div style={{ display: 'flex', gap: '16px' }}>
+            <ClockZone label="Eastern" timezone="America/New_York" color="#00C896" />
+            <ClockZone label="Central" timezone="America/Chicago" color="#FFD700" />
+            <ClockZone label="Pacific" timezone="America/Los_Angeles" color="#74C0FC" />
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+          {players > 0 && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '100px', padding: '6px 16px', marginBottom: '20px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00C896', display: 'inline-block' }} />
+              <span style={{ fontSize: '13px', fontWeight: 700, color: '#00C896' }}>{players} {es ? 'jugadores inscriptos' : 'players joined'}</span>
+            </div>
+          )}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+            <Link href="/register" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#00C896', color: 'black', fontWeight: 900, fontSize: '20px', padding: '18px 48px', borderRadius: '18px', textDecoration: 'none' }}>
+              {es ? 'Únete al Pozo — $30' : 'Join the Pool — $30'} →
+            </Link>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: 0 }}>
+              {es ? '$30 de inscripción · Pagos seguros · Premios reales' : '$30 entry · Secure payments · Real prizes'}
+            </p>
+          </div>
+        </div>
+
+        {/* HOW IT WORKS */}
+        <div style={{ marginBottom: '60px' }}>
+          <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '6px' }}>{es ? 'Cómo Funciona' : 'How It Works'}</h2>
+          <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', marginBottom: '32px' }}>{es ? 'Simple. Divertido. Dinero real.' : 'Simple. Fun. Real money.'}</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+            {[
+              { icon: <DollarSign size={28} color="#00C896" />, title: es ? 'Inscribite por $30' : 'Join for $30', desc: es ? 'Un pago. Jugás todos los 104 partidos del Mundial.' : "One payment. You're in for all 104 World Cup matches." },
+              { icon: <Star size={28} color="#FFD700" />, title: es ? 'Predecí los Partidos' : 'Predict Matches', desc: es ? 'Elegí ganadores, marcadores exactos, goles por tiempo.' : 'Pick winners, exact scores, goal times. More detail = more points.' },
+              { icon: <Trophy size={28} color="#FFD700" />, title: es ? 'Ganá Dinero Real' : 'Win Real Money', desc: es ? 'Los 3 primeros se reparten el pozo. 1° lleva 60%.' : 'Top 3 split the pot. 1st gets 60%, 2nd 30%, 3rd 10%.' },
+            ].map(({ icon, title, desc }, i) => (
+              <div key={i} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '28px 20px', textAlign: 'center' }}>
+                <div style={{ marginBottom: '14px' }}>{icon}</div>
+                <h3 style={{ fontSize: '17px', fontWeight: 800, marginBottom: '8px' }}>{title}</h3>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.65, margin: 0 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* PRIZES */}
+        <div style={{ marginBottom: '60px' }}>
+          <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '32px' }}>{es ? 'Distribución de Premios' : 'Prize Distribution'}</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+            {[
+              { place: es ? '1° Lugar' : '1st Place', pct: '60%', color: '#FFD700', border: 'rgba(255,215,0,0.25)' },
+              { place: es ? '2° Lugar' : '2nd Place', pct: '30%', color: '#C0C0C0', border: 'rgba(192,192,192,0.15)' },
+              { place: es ? '3° Lugar' : '3rd Place', pct: '10%', color: '#CD7F32', border: 'rgba(205,127,50,0.15)' },
+            ].map(({ place, pct, color, border }) => (
+              <div key={place} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${border}`, borderRadius: '20px', padding: '24px 12px', textAlign: 'center' }}>
+                <Trophy size={24} color={color} style={{ margin: '0 auto 10px' }} />
+                <div style={{ fontSize: '36px', fontWeight: 900, color }}>{pct}</div>
+                <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>{place}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* FEATURES */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '60px' }}>
+          {[
+            { icon: <Users size={20} color="#00C896" />, title: es ? 'Para Familias y Amigos' : 'For Families & Friends', desc: es ? 'Jugá con tu gente. Hecho para la comunidad latina en USA.' : 'Play with your crew. Made for the Latino community in USA.' },
+            { icon: <Shield size={20} color="#00C896" />, title: es ? 'Seguro y Transparente' : 'Safe & Transparent', desc: es ? 'Cada pago registrado. El pozo visible para todos.' : 'Every payment tracked. Prize pot visible to all players.' },
+            { icon: <Zap size={20} color="#00C896" />, title: es ? 'Actualizaciones en Vivo' : 'Live Updates', desc: es ? 'Resultados en tiempo real. Notificaciones por cada gol.' : 'Real-time scores. Push notifications for every goal.' },
+          ].map(({ icon, title, desc }, i) => (
+            <div key={i} style={{ display: 'flex', gap: '14px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: '18px' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(0,200,150,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
+              <div>
+                <p style={{ fontWeight: 700, fontSize: '14px', margin: '0 0 4px' }}>{title}</p>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.55, margin: 0 }}>{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* FAQ */}
+        <div style={{ marginBottom: '60px' }}>
+          <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '32px' }}>{es ? 'Preguntas Frecuentes' : 'FAQ'}</h2>
+          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '8px 24px' }}>
+            {faqs.map((f, i) => <FAQItem key={i} q={f.q} a={f.a} />)}
+          </div>
+        </div>
+
+        {/* FINAL CTA */}
+        <div style={{ textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.07)', padding: '60px 0 40px' }}>
+          <h2 style={{ fontSize: '38px', fontWeight: 900, marginBottom: '12px' }}>{es ? '¡No Te Quedés Afuera!' : "Don't Miss Out!"}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.45)', marginBottom: '32px', fontSize: '16px' }}>
+            {es ? 'El Mundial arranca el 11 de junio. Inscribite ahora y competí por premios reales.' : 'The World Cup starts June 11. Join now and compete for real prizes.'}
+          </p>
+          <Link href="/register" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#00C896', color: 'black', fontWeight: 900, fontSize: '20px', padding: '20px 52px', borderRadius: '20px', textDecoration: 'none' }}>
+            {es ? 'Únete por $30' : 'Join Now for $30'} →
+          </Link>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)', marginTop: '20px' }}>poolzone.app · World Cup 2026</p>
+        </div>
+
+      </div>
+    </div>
+  )
+}
