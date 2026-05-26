@@ -4,29 +4,17 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Trophy, Users, Zap, Shield, ChevronDown, DollarSign, Star, Globe } from 'lucide-react'
 
-function ClockZone({ label, timezone, color, targetDate }: { label: string; timezone: string; color: string; targetDate: string }) {
+function useCountdown(target: string) {
   const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 })
   useEffect(() => {
     function calc() {
-      const diff = new Date(targetDate).getTime() - Date.now()
+      const diff = new Date(target).getTime() - Date.now()
       if (diff <= 0) return
       setT({ d: Math.floor(diff/86400000), h: Math.floor((diff%86400000)/3600000), m: Math.floor((diff%3600000)/60000), s: Math.floor((diff%60000)/1000) })
     }
     calc(); const id = setInterval(calc, 1000); return () => clearInterval(id)
-  }, [targetDate])
-  const kickoff = new Date(targetDate).toLocaleTimeString('en-US', { timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: true })
-  return (
-    <div style={{ textAlign: 'center', flex: 1 }}>
-      <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', marginBottom: '4px', textTransform: 'uppercase' }}>{label}</div>
-      <div style={{ fontSize: '11px', color, marginBottom: '8px', fontWeight: 600 }}>Kickoff {kickoff}</div>
-      <div style={{ background: 'rgba(0,0,0,0.5)', border: `2px solid ${color}40`, borderRadius: '16px', padding: '14px 6px' }}>
-        <div style={{ fontFamily: 'monospace', fontWeight: 900, color, lineHeight: 1.4 }}>
-          <div style={{ fontSize: '26px' }}>{String(t.d).padStart(2,'0')}d {String(t.h).padStart(2,'0')}h</div>
-          <div style={{ fontSize: '20px', marginTop: '4px' }}>{String(t.m).padStart(2,'0')}m {String(t.s).padStart(2,'0')}s</div>
-        </div>
-      </div>
-    </div>
-  )
+  }, [target])
+  return t
 }
 
 function FAQItem({ q, a }: { q: string; a: string }) {
@@ -65,12 +53,20 @@ const TARGET = '2026-06-11T19:00:00Z'
 export default function LandingPage() {
   const [lang, setLang] = useState<'en'|'es'>('es')
   const [players, setPlayers] = useState(0)
+  const cd = useCountdown(TARGET)
   const es = lang === 'es'
   const faqs = es ? FAQS_ES : FAQS_EN
 
   useEffect(() => {
     fetch('/api/game/stats').then(r => r.json()).then(d => setPlayers(d.players || 0)).catch(() => {})
   }, [])
+
+  const cdItems = [
+    { v: cd.d, l: es ? 'DÍAS' : 'DAYS' },
+    { v: cd.h, l: 'HRS' },
+    { v: cd.m, l: 'MIN' },
+    { v: cd.s, l: es ? 'SEG' : 'SEC' },
+  ]
 
   return (
     <div style={{ minHeight: '100vh', background: '#0D0D1A', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -88,21 +84,46 @@ export default function LandingPage() {
 
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
 
-        <div style={{ margin: '32px 0 28px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.15)', boxShadow: '0 0 60px rgba(0,200,150,0.08)' }}>
+        {/* BANNER */}
+        <div style={{ margin: '32px 0 36px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(0,200,150,0.15)', boxShadow: '0 0 60px rgba(0,200,150,0.08)' }}>
           <img src="/poolzone-banner.png" alt="PoolZone World Cup 2026" style={{ width: '100%', display: 'block' }} />
         </div>
 
-        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '24px', marginBottom: '32px' }}>
-          <p style={{ textAlign: 'center', fontSize: '12px', fontWeight: 700, color: '#00C896', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '20px' }}>
+        {/* COUNTDOWN */}
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+          <p style={{ fontSize: '12px', fontWeight: 700, color: '#00C896', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px' }}>
             {es ? 'El Mundial Arranca En' : 'World Cup Kicks Off In'}
           </p>
-          <div style={{ display: 'flex', gap: '16px' }}>
-            <ClockZone label="Eastern" timezone="America/New_York" color="#00C896" targetDate={TARGET} />
-            <ClockZone label="Central" timezone="America/Chicago" color="#FFD700" targetDate={TARGET} />
-            <ClockZone label="Pacific" timezone="America/Los_Angeles" color="#74C0FC" targetDate={TARGET} />
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '24px' }}>
+            {es ? '11 Jun · 3:00 PM ET · Estadio Azteca' : 'Jun 11 · 3:00 PM ET · Estadio Azteca'}
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
+            {cdItems.map(({ v, l }, i) => (
+              <div key={l} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                {i > 0 && <span style={{ color: '#00C896', fontSize: '40px', fontWeight: 900, lineHeight: 1, paddingBottom: '22px' }}>:</span>}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{
+                    background: 'rgba(0,0,0,0.6)',
+                    border: '2px solid rgba(0,200,150,0.4)',
+                    borderRadius: '16px',
+                    width: '80px',
+                    height: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: '38px', fontWeight: 900, color: '#00C896', display: 'block', width: '2ch', textAlign: 'center', lineHeight: 1 }}>
+                      {String(v).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.45)', letterSpacing: '2px', marginTop: '8px', display: 'block' }}>{l}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* CTA */}
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
           {players > 0 && (
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '100px', padding: '6px 16px', marginBottom: '20px' }}>
@@ -120,6 +141,7 @@ export default function LandingPage() {
           </div>
         </div>
 
+        {/* HOW IT WORKS */}
         <div style={{ marginBottom: '60px' }}>
           <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '6px' }}>{es ? 'Cómo Funciona' : 'How It Works'}</h2>
           <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', marginBottom: '32px' }}>{es ? 'Simple. Divertido. Dinero real.' : 'Simple. Fun. Real money.'}</p>
@@ -138,6 +160,7 @@ export default function LandingPage() {
           </div>
         </div>
 
+        {/* PRIZES */}
         <div style={{ marginBottom: '60px' }}>
           <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '32px' }}>{es ? 'Distribución de Premios' : 'Prize Distribution'}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
@@ -155,6 +178,7 @@ export default function LandingPage() {
           </div>
         </div>
 
+        {/* FEATURES */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '60px' }}>
           {[
             { icon: <Users size={20} color="#00C896" />, title: es ? 'Para Familias y Amigos' : 'For Families & Friends', desc: es ? 'Jugá con tu gente. Hecho para la comunidad latina en USA.' : 'Play with your crew. Made for the Latino community in USA.' },
@@ -171,6 +195,7 @@ export default function LandingPage() {
           ))}
         </div>
 
+        {/* FAQ */}
         <div style={{ marginBottom: '60px' }}>
           <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 900, marginBottom: '32px' }}>{es ? 'Preguntas Frecuentes' : 'FAQ'}</h2>
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '8px 24px' }}>
@@ -178,6 +203,7 @@ export default function LandingPage() {
           </div>
         </div>
 
+        {/* FINAL CTA */}
         <div style={{ textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.07)', padding: '60px 0 40px' }}>
           <h2 style={{ fontSize: '38px', fontWeight: 900, marginBottom: '12px' }}>{es ? '¡No Te Quedés Afuera!' : "Don't Miss Out!"}</h2>
           <p style={{ color: 'rgba(255,255,255,0.45)', marginBottom: '32px', fontSize: '16px' }}>
