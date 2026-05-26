@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import PaymentsTab from './PaymentsTab'
 import Link from 'next/link'
 import { ArrowLeft, Users, Trophy, Settings, CheckCircle, Key, Search, Shield, Trash2, VolumeX, Ban, Flag, RefreshCw } from 'lucide-react'
 
@@ -57,7 +58,7 @@ type Ban = {
   profiles: { username: string; avatar_url: string | null }
 }
 
-type Tab = 'usuarios' | 'resultados' | 'codigos' | 'moderacion'
+type Tab = 'usuarios' | 'resultados' | 'codigos' | 'moderacion' | 'pagos'
 
 function FlagImg({ code, size = 20 }: { code: string; size?: number }) {
   return (
@@ -313,6 +314,9 @@ export default function AdminClient({ currentUser, users, matches, predictions }
         <button className={`${btnBase} ${tab === 'moderacion' ? btnActive : btnInactive}`} onClick={() => setTab('moderacion')}>
           <Shield size={14} className="inline mr-1" />Moderación
           {reports.length > 0 && <span className="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5">{reports.length}</span>}
+        </button>
+        <button className={`${btnBase} ${tab === 'pagos' ? btnActive : btnInactive}`} onClick={() => setTab('pagos')}>
+          💰 Pagos
         </button>
       </div>
 
@@ -577,6 +581,10 @@ export default function AdminClient({ currentUser, users, matches, predictions }
             )}
           </div>
         </div>
+      )}
+
+      {tab === 'pagos' && (
+        <PaymentsTab adminUserId={currentUser.id} />
       )}
     </div>
   )
