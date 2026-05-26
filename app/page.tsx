@@ -104,10 +104,10 @@ export default function LandingPage() {
                 <div style={{ textAlign: 'center' }}>
                   <div style={{
                     background: 'rgba(0,0,0,0.6)',
-                    border: '2px solid rgba(0,200,150,0.4)',
+                    border: "3px solid rgba(0,200,150,0.5)",
                     borderRadius: '16px',
-                    width: '80px',
-                    height: '80px',
+                    width: "96px",
+                    height: "96px",
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
