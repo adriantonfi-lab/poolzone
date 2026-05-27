@@ -134,7 +134,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
     setDepositLoading(false)
   }
 
-  async function handleRe-entry() {
+  async function handleReenganche() {
     if (!profile?.id) return
     setReengancheLoading(true)
     setReengancheMsg('')
@@ -426,7 +426,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                 {reengancheMsg}
               </div>
             )}
-            <button onClick={handleRe-entry} disabled={reengancheLoading || credits < 250}
+            <button onClick={handleReenganche} disabled={reengancheLoading || credits < 250}
               className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all hover:opacity-90 flex items-center justify-center gap-2">
               {reengancheLoading
                 ? <><Loader2 size={18} className="animate-spin" />Procesando...</>
