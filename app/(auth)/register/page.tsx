@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Trophy, Eye, EyeOff, Loader2, Camera, Check } from 'lucide-react'
+import { Trophy, Eye, EyeOff, Loader2, Camera, Check, CreditCard, Lock, Gift } from 'lucide-react'
 
 const COUNTRIES = [
   { code: 'AR', name: 'Argentina' },
@@ -28,36 +28,22 @@ const COUNTRIES = [
   { code: 'CU', name: 'Cuba' },
   { code: 'ES', name: 'España' },
   { code: 'PT', name: 'Portugal' },
-  { code: 'FR', name: 'Francia' },
-  { code: 'DE', name: 'Alemania' },
-  { code: 'IT', name: 'Italia' },
   { code: 'CA', name: 'Canadá' },
   { code: 'OTHER', name: 'Otro' },
 ]
 
 const TEAMS = [
-  // CONMEBOL
   'Argentina', 'Brasil', 'Uruguay', 'Colombia', 'Ecuador',
   'Paraguay', 'Venezuela', 'Bolivia', 'Perú', 'Chile',
-  // CONCACAF
   'Estados Unidos', 'México', 'Canadá', 'Costa Rica', 'Panamá',
-  'Honduras', 'Jamaica', 'Guatemala', 'Trinidad y Tobago', 'El Salvador',
-  'Cuba', 'Haití',
-  // UEFA
+  'Honduras', 'Jamaica', 'Haití',
   'España', 'Francia', 'Alemania', 'Portugal', 'Inglaterra',
-  'Países Bajos', 'Bélgica', 'Italia', 'Croacia', 'Serbia',
-  'Suiza', 'Dinamarca', 'Austria', 'Escocia', 'Hungría',
-  'Eslovenia', 'Rumania', 'Albania', 'Turquía', 'Eslovaquia',
-  'República Checa', 'Georgia', 'Polonia', 'Ucrania', 'Grecia',
-  // CAF
+  'Países Bajos', 'Bélgica', 'Croacia', 'Suiza', 'Austria',
+  'Escocia', 'República Checa', 'Polonia', 'Turquía',
   'Marruecos', 'Senegal', 'Egipto', 'Nigeria', 'Camerún',
-  'Costa de Marfil', 'Ghana', 'Mali', 'Sudáfrica', 'Argelia',
-  'Túnez', 'Guinea',
-  // AFC
+  'Costa de Marfil', 'Ghana', 'Mali', 'Sudáfrica', 'Argelia', 'Túnez',
   'Japón', 'Corea del Sur', 'Arabia Saudita', 'Australia', 'Irán',
-  'Qatar', 'Iraq', 'Uzbekistán', 'Jordania', 'Omán',
-  // OFC
-  'Nueva Zelanda',
+  'Qatar', 'Irak', 'Uzbekistán', 'Jordania', 'Nueva Zelanda',
 ]
 
 async function compressImage(file: File): Promise<File> {
@@ -70,24 +56,14 @@ async function compressImage(file: File): Promise<File> {
       canvas.width = img.width * ratio
       canvas.height = img.height * ratio
       const ctx = canvas.getContext('2d')
-      if (!ctx) {
-        reject(new Error('No se pudo obtener el contexto del canvas'))
-        return
-      }
+      if (!ctx) { reject(new Error('Canvas error')); return }
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       canvas.toBlob(
-        (blob) => {
-          if (blob) {
-            resolve(new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
-          } else {
-            reject(new Error('Error al comprimir la imagen'))
-          }
-        },
-        'image/jpeg',
-        0.8
+        (blob) => blob ? resolve(new File([blob], 'avatar.jpg', { type: 'image/jpeg' })) : reject(new Error('Blob error')),
+        'image/jpeg', 0.8
       )
     }
-    img.onerror = () => reject(new Error('Error al cargar la imagen'))
+    img.onerror = () => reject(new Error('Image load error'))
     img.src = URL.createObjectURL(file)
   })
 }
@@ -98,16 +74,26 @@ export default function RegisterPage() {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // Step 1
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [username, setUsername] = useState('')
   const [fullName, setFullName] = useState('')
+
+  // Step 2
   const [country, setCountry] = useState('')
   const [favoriteTeam, setFavoriteTeam] = useState('')
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
   const [compressing, setCompressing] = useState(false)
+
+  // Step 3 — Payment
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'transfer'>('card')
+  const [cardName, setCardName] = useState('')
+  const [agreed, setAgreed] = useState(false)
+  const [paymentLoading, setPaymentLoading] = useState(false)
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -119,65 +105,98 @@ export default function RegisterPage() {
       setAvatarFile(compressed)
       setAvatarPreview(URL.createObjectURL(compressed))
     } catch {
-      setError('No se pudo procesar la imagen. Probá con otra foto.')
+      setError('No se pudo procesar la imagen.')
     } finally {
       setCompressing(false)
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleStep1(e: React.FormEvent) {
     e.preventDefault()
-    if (step === 1) { setStep(2); return }
-    if (!avatarFile) { setError('La foto es obligatoria'); return }
-    if (!country || !favoriteTeam) { setError('Seleccioná tu país y equipo'); return }
+    if (!email || !password || !username) { setError('Completá todos los campos'); return }
+    setError('')
+    setStep(2)
+  }
 
-    setLoading(true)
+  async function handleStep2(e: React.FormEvent) {
+    e.preventDefault()
+    if (!country || !favoriteTeam) { setError('Seleccioná tu país y equipo'); return }
+    setError('')
+    setStep(3)
+  }
+
+  async function handlePayment(e: React.FormEvent) {
+    e.preventDefault()
+    if (!agreed) { setError('Aceptá los términos y condiciones'); return }
+
+    setPaymentLoading(true)
     setError('')
 
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('password', password)
-    formData.append('username', username.toLowerCase().replace(/[^a-z0-9_]/g, ''))
-    formData.append('fullName', fullName)
-    formData.append('country', country)
-    formData.append('favoriteTeam', favoriteTeam)
-    formData.append('avatar', avatarFile)
-
     try {
-      const res = await fetch('/api/register', { method: 'POST', body: formData })
-      let data
-      try {
-        data = await res.json()
-      } catch {
-        setError('Error del servidor. Intentá de nuevo.')
-        setLoading(false)
+      // 1. Crear cuenta primero
+      const formData = new FormData()
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('username', username.toLowerCase().replace(/[^a-z0-9_]/g, ''))
+      formData.append('fullName', fullName)
+      formData.append('country', country)
+      formData.append('favoriteTeam', favoriteTeam)
+      if (avatarFile) formData.append('avatar', avatarFile)
+
+      const regRes = await fetch('/api/register', { method: 'POST', body: formData })
+      const regData = await regRes.json()
+
+      if (!regRes.ok) {
+        setError(regData.error || 'Error al crear la cuenta')
+        setPaymentLoading(false)
         return
       }
-      if (!res.ok) {
-        setError(data.error || 'Error al registrarse')
-        setLoading(false)
-        return
+
+      const userId = regData.userId
+
+      // 2. Crear sesión de pago Stripe
+      if (paymentMethod === 'card') {
+        const stripeRes = await fetch('/api/payments/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, email }),
+        })
+        const stripeData = await stripeRes.json()
+
+        if (stripeData.url) {
+          window.location.href = stripeData.url
+        } else {
+          setError(stripeData.error || 'Error al procesar el pago')
+          setPaymentLoading(false)
+        }
+      } else {
+        // Transferencia manual
+        router.push(`/join/transfer?userId=${userId}`)
       }
-      router.push('/login')
     } catch {
       setError('Error de conexión. Intentá de nuevo.')
-      setLoading(false)
+      setPaymentLoading(false)
     }
   }
 
+  const inputClass = "w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#00C896]"
+
   return (
-    <div className="min-h-dvh bg-[#0D0D0D] flex items-center justify-center p-4">
+    <div className="min-h-dvh bg-[#0D0D1A] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Trophy size={40} className="text-[#FFD700] mx-auto mb-3" />
-          <h1 className="font-bebas text-4xl text-white tracking-wider">POOLZONE</h1>
-          <p className="text-gray-400 mt-1">Creá tu cuenta mundialera</p>
+        <div className="text-center mb-6">
+          <img src="/poolzone-logo.png" alt="PoolZone" className="h-12 mx-auto mb-3 object-contain" />
+          <p className="text-gray-400 text-sm">
+            {step === 1 ? 'Creá tu cuenta' : step === 2 ? 'Tu perfil' : 'Inscripción — $30'}
+          </p>
         </div>
 
         <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-6">
+          {/* Progress */}
           <div className="flex gap-2 mb-6">
-            <div className={`flex-1 h-1 rounded-full ${step >= 1 ? 'bg-[#FFD700]' : 'bg-[#2A2A4A]'}`} />
-            <div className={`flex-1 h-1 rounded-full ${step >= 2 ? 'bg-[#FFD700]' : 'bg-[#2A2A4A]'}`} />
+            {[1,2,3].map(s => (
+              <div key={s} className={`flex-1 h-1.5 rounded-full transition-all ${step >= s ? 'bg-[#00C896]' : 'bg-[#2A2A4A]'}`} />
+            ))}
           </div>
 
           {error && (
@@ -186,104 +205,160 @@ export default function RegisterPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {step === 1 && (
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Email *</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="tu@email.com"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#FFD700]" />
+          {/* STEP 1 */}
+          {step === 1 && (
+            <form onSubmit={handleStep1} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Email *</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="tu@email.com" className={inputClass} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Usuario *</label>
+                <input type="text" value={username} onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))} required minLength={3} placeholder="tu_usuario" className={inputClass} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Nombre completo</label>
+                <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Tu nombre" className={inputClass} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Contraseña *</label>
+                <div className="relative">
+                  <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Mínimo 6 caracteres" className={`${inputClass} pr-12`} />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Usuario *</label>
-                  <input type="text" value={username} onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))} required minLength={3} placeholder="tu_usuario"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#FFD700]" />
+              </div>
+              <button type="submit" className="w-full bg-[#00C896] text-black font-bold py-3 rounded-xl text-base">
+                Siguiente →
+              </button>
+              <p className="text-center text-sm text-gray-400">
+                ¿Ya tenés cuenta? <Link href="/login" className="text-[#00C896] hover:underline">Entrá acá</Link>
+              </p>
+            </form>
+          )}
+
+          {/* STEP 2 */}
+          {step === 2 && (
+            <form onSubmit={handleStep2} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Foto de perfil</label>
+                <div onClick={() => !compressing && fileRef.current?.click()}
+                  className="relative cursor-pointer flex flex-col items-center justify-center h-28 border-2 border-dashed border-[#2A2A4A] hover:border-[#00C896]/50 rounded-xl overflow-hidden">
+                  {compressing ? (
+                    <div className="flex flex-col items-center gap-2">
+                      <Loader2 size={24} className="text-[#00C896] animate-spin" />
+                      <p className="text-gray-400 text-sm">Comprimiendo...</p>
+                    </div>
+                  ) : avatarPreview ? (
+                    <>
+                      <img src={avatarPreview} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <Check size={32} className="text-white" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Camera size={28} className="text-gray-500 mb-2" />
+                      <p className="text-gray-400 text-sm">Tocá para subir tu foto</p>
+                    </>
+                  )}
                 </div>
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Nombre completo</label>
-                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Tu nombre"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#FFD700]" />
-                </div>
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Contraseña *</label>
-                  <div className="relative">
-                    <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Mínimo 6 caracteres"
-                      className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 pr-12 text-white text-base focus:outline-none focus:border-[#FFD700]" />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                  </div>
-                </div>
-                <button type="submit" className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base">
+                <input ref={fileRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Tu país *</label>
+                <select value={country} onChange={e => setCountry(e.target.value)} required className={inputClass}>
+                  <option value="">Seleccioná tu país</option>
+                  {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Equipo del corazón *</label>
+                <select value={favoriteTeam} onChange={e => setFavoriteTeam(e.target.value)} required className={inputClass}>
+                  <option value="">¿A quién bancás?</option>
+                  {TEAMS.map(t => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="flex gap-3">
+                <button type="button" onClick={() => setStep(1)} className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] text-gray-300 font-medium py-3 rounded-xl text-base">
+                  ← Atrás
+                </button>
+                <button type="submit" className="flex-1 bg-[#00C896] text-black font-bold py-3 rounded-xl text-base">
                   Siguiente →
                 </button>
               </div>
-            )}
+            </form>
+          )}
 
-            {step === 2 && (
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Foto de perfil *</label>
-                  <div onClick={() => !compressing && fileRef.current?.click()}
-                    className="relative cursor-pointer flex flex-col items-center justify-center h-32 border-2 border-dashed border-[#2A2A4A] hover:border-[#FFD700]/50 rounded-xl overflow-hidden">
-                    {compressing ? (
-                      <div className="flex flex-col items-center gap-2">
-                        <Loader2 size={24} className="text-[#FFD700] animate-spin" />
-                        <p className="text-gray-400 text-sm">Comprimiendo...</p>
-                      </div>
-                    ) : avatarPreview ? (
-                      <>
-                        <img src={avatarPreview} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <Check size={32} className="text-white" />
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <Camera size={28} className="text-gray-500 mb-2" />
-                        <p className="text-gray-400 text-base">Tocá para subir tu foto</p>
-                        <p className="text-gray-600 text-sm mt-1">Se comprime automáticamente</p>
-                      </>
-                    )}
-                  </div>
-                  <input ref={fileRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+          {/* STEP 3 — PAYMENT */}
+          {step === 3 && (
+            <form onSubmit={handlePayment} className="space-y-4">
+
+              {/* Resumen */}
+              <div className="bg-[#0D0D0D] border border-[#00C896]/20 rounded-xl p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-bold text-white">Inscripción Mundial 2026</span>
+                  <span className="font-bold text-[#00C896] text-lg">$30</span>
                 </div>
-
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Tu país *</label>
-                  <select value={country} onChange={e => setCountry(e.target.value)} required
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#FFD700]">
-                    <option value="">Seleccioná tu país</option>
-                    {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
-                  </select>
+                <div className="flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/20 rounded-lg px-3 py-2">
+                  <Gift size={16} className="text-[#00C896] shrink-0" />
+                  <p className="text-xs text-[#00C896] font-semibold">
+                    Incluye $5 en créditos para usar en el Oráculo, modificaciones y batallas*
+                  </p>
                 </div>
+              </div>
 
-                <div>
-                  <label className="block text-base font-medium text-gray-300 mb-2">Equipo del corazón *</label>
-                  <select value={favoriteTeam} onChange={e => setFavoriteTeam(e.target.value)} required
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#FFD700]">
-                    <option value="">¿A quién bancás?</option>
-                    {TEAMS.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                </div>
-
-                <div className="flex gap-3">
-                  <button type="button" onClick={() => setStep(1)}
-                    className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] text-gray-300 font-medium py-3 rounded-xl text-base">
-                    ← Atrás
+              {/* Método de pago */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Método de pago</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button type="button" onClick={() => setPaymentMethod('card')}
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all ${paymentMethod === 'card' ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-[#2A2A4A] text-white'}`}>
+                    <CreditCard size={16} />Tarjeta
                   </button>
-                  <button type="submit" disabled={loading || compressing}
-                    className="flex-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-50 flex items-center justify-center gap-2">
-                    {loading ? <Loader2 size={16} className="animate-spin" /> : '¡A jugar!'}
+                  <button type="button" onClick={() => setPaymentMethod('transfer')}
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all ${paymentMethod === 'transfer' ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-[#2A2A4A] text-white'}`}>
+                    💸 Transferencia
                   </button>
                 </div>
               </div>
-            )}
-          </form>
 
-          <p className="text-center text-sm text-gray-400 mt-5">
-            ¿Ya tenés cuenta? <Link href="/login" className="text-[#FFD700] hover:underline font-medium">Entrá acá</Link>
-          </p>
+              {paymentMethod === 'card' && (
+                <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3 flex items-center gap-2">
+                  <Lock size={14} className="text-[#00C896]" />
+                  <p className="text-xs text-gray-400">Serás redirigido a Stripe — pago 100% seguro con SSL</p>
+                </div>
+              )}
+
+              {paymentMethod === 'transfer' && (
+                <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3">
+                  <p className="text-xs text-gray-400">Pagarás por Zelle, Nequi o transferencia. Te daremos los datos en el próximo paso.</p>
+                </div>
+              )}
+
+              {/* Términos */}
+              <div className="flex items-start gap-3">
+                <input type="checkbox" id="terms" checked={agreed} onChange={e => setAgreed(e.target.checked)}
+                  className="mt-1 accent-[#00C896]" />
+                <label htmlFor="terms" className="text-xs text-gray-400 leading-relaxed cursor-pointer">
+                  Acepto los <Link href="/terms" className="text-[#00C896] hover:underline">términos y condiciones</Link> de PoolZone. *Los créditos son exclusivos para uso dentro de la plataforma y no son canjeables por dinero.
+                </label>
+              </div>
+
+              <div className="flex gap-3">
+                <button type="button" onClick={() => setStep(2)} className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] text-gray-300 font-medium py-3 rounded-xl text-sm">
+                  ← Atrás
+                </button>
+                <button type="submit" disabled={paymentLoading || !agreed}
+                  className="flex-1 bg-[#00C896] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 flex items-center justify-center gap-2">
+                  {paymentLoading
+                    ? <><Loader2 size={16} className="animate-spin" />Procesando...</>
+                    : paymentMethod === 'card' ? '💳 Pagar $30' : '💸 Continuar'}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>
