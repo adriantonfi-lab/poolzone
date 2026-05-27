@@ -377,11 +377,11 @@ export default function LockerRoomPage() {
         </div>
       )}
 
-      {/* Mensajes */}
+      {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-[#0A0A18]">
         {loading && (
           <div className="flex items-center justify-center h-32">
-            <p className="text-white font-sans text-xl animate-pulse">Loading mensajes...</p>
+            <p className="text-white font-sans text-xl animate-pulse">Loading messages...</p>
           </div>
         )}
 
@@ -457,14 +457,14 @@ export default function LockerRoomPage() {
                             <button onClick={() => reportMessage(msg.id)}
                               className="w-full flex items-center gap-2 px-3 py-2 text-sm text-orange-400 hover:bg-orange-500/10 rounded-lg transition-colors">
                               <Flag size={14} />
-                              {wasReported ? '¡Reportado!' : 'Reportar mensaje'}
+                              {wasReported ? '¡Reported!' : 'Report message'}
                             </button>
                           )}
                           {(isAdmin || isMe) && (
                             <button onClick={() => deleteMessage(msg.id)}
                               className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                               <Trash2 size={14} />
-                              Eliminar mensaje
+                              Delete message
                             </button>
                           )}
                         </div>
@@ -560,7 +560,7 @@ export default function LockerRoomPage() {
 
         {isBanned ? (
           <div className="text-center py-2">
-            <p className="text-red-400 text-sm font-bold">🚫 No podés enviar mensajes</p>
+            <p className="text-red-400 text-sm font-bold">🚫 You cannot send messages</p>
           </div>
         ) : isMuted ? (
           <div className="text-center py-2">
@@ -582,7 +582,7 @@ export default function LockerRoomPage() {
             <input ref={inputRef} value={input}
               onChange={e => { setInput(e.target.value); handleTyping() }}
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Escribí algo al Chat del Quilombo..."
+              placeholder="Type something al Chat del Quilombo..."
               className="flex-1 bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#22C55E] transition-colors"
             />
             <button onClick={sendMessage} disabled={sending || (!input.trim() && !imageFile)}
