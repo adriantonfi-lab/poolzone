@@ -210,10 +210,10 @@ function MatchPredictionCard({
           {/* Nivel 1: Ganador */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              Nivel 1 — Ganador <span className="text-[#FFD700]">(+{BASE_POINTS.winner} pts)</span>
+              Level 1 — Winner <span className="text-[#FFD700]">(+{BASE_POINTS.winner} pts)</span>
             </p>
             <div className="flex gap-2">
-              {[match.home_team, 'Empate', match.away_team].map(opt => (
+              {[match.home_team, 'Draw', match.away_team].map(opt => (
                 <button key={opt} onClick={() => setWinner(opt)}
                   className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border text-sm font-bold transition-all ${
                     winner === opt
@@ -222,7 +222,7 @@ function MatchPredictionCard({
                   }`}>
                   {opt === match.home_team && <FlagImg code={match.home_team_code} size={18} />}
                   {opt === match.away_team && <FlagImg code={match.away_team_code} size={18} />}
-                  {opt === 'Empate' ? 'Empate' : translateTeam(opt, locale)}
+                  {opt === 'Draw' ? 'Draw' : translateTeam(opt, locale)}
                 </button>
               ))}
             </div>
@@ -231,7 +231,7 @@ function MatchPredictionCard({
           {/* Nivel 2: Marcador */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              Nivel 2 — Marcador exacto <span className="text-[#A855F7]">(+{BASE_POINTS.score} pts)</span>
+              Level 2 — Exact score <span className="text-[#A855F7]">(+{BASE_POINTS.score} pts)</span>
             </p>
             <div className="flex items-center gap-3">
               <div className="flex-1">
@@ -253,17 +253,17 @@ function MatchPredictionCard({
           {/* Nivel 3: Goles por tiempo (antes era nivel 4) */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              Nivel 3 — Goles por tiempo <span className="text-orange-400">(+{BASE_POINTS.halves} pts)</span>
+              Level 3 — Goals by half <span className="text-orange-400">(+{BASE_POINTS.halves} pts)</span>
             </p>
             <div className="flex gap-3">
               <div className="flex-1">
-                <p className="text-xs text-gray-400 mb-1">Primer tiempo</p>
+                <p className="text-xs text-gray-400 mb-1">First half</p>
                 <input type="number" min="0" max="20" value={firstHalf}
                   onChange={e => setFirstHalf(e.target.value)}
                   className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-lg font-bebas text-white focus:outline-none focus:border-orange-400" />
               </div>
               <div className="flex-1">
-                <p className="text-xs text-gray-400 mb-1">Segundo tiempo</p>
+                <p className="text-xs text-gray-400 mb-1">Second half</p>
                 <input type="number" min="0" max="20" value={secondHalf}
                   onChange={e => setSecondHalf(e.target.value)}
                   className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-lg font-bebas text-white focus:outline-none focus:border-orange-400" />
@@ -275,7 +275,7 @@ function MatchPredictionCard({
           {isElim && (
             <div>
               <p className="text-sm font-bold text-white mb-2">
-                Nivel 4 — Penales <span className="text-red-400">(+{BASE_POINTS.penalties} pts)</span>
+                Level 4 — Penalty winner <span className="text-red-400">(+{BASE_POINTS.penalties} pts)</span>
               </p>
               <div className="flex gap-3">
                 {[true, false].map(v => (
@@ -296,8 +296,8 @@ function MatchPredictionCard({
           <button onClick={handleSave} disabled={!winner || saving}
             className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
             {saving ? 'Guardando...' : window.fee > 0
-              ? `💰 $Guardar polla — $${window.fee} — +${earnablePoints} pts`
-              : `$Guardar polla — +${earnablePoints} pts`}
+              ? `💰 $Save picks — $${window.fee} — +${earnablePoints} pts`
+              : `$Save picks — +${earnablePoints} pts`}
           </button>
         </div>
       )}
@@ -381,7 +381,7 @@ export default function PredictionsPage() {
     })
     const data = await res.json()
     if (data.success) {
-      setOracleMsg(locale === 'en' ? '✅ Oracle filled your picks! Refresh to see them.' : '✅ ¡El Oráculo llenó tu polla! Recargá para ver las predicciones.')
+      setOracleMsg(locale === 'en' ? '✅ Oracle filled your picks! Refresh to see them.' : '✅ ¡El Oracle filled your picks!')
       const supabase = (await import('@/lib/supabase/client')).createClient()
       const { data: predsRes } = await supabase.from('predictions').select('*').eq('user_id', userId)
       const predsMap: Record<string, any> = {}
@@ -419,7 +419,7 @@ export default function PredictionsPage() {
   return (
     <div className="px-4 py-6 max-w-3xl mx-auto pb-24 md:pb-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver
+        <ArrowLeft size={20} />Back
       </Link>
 
       {/* Header */}
@@ -471,11 +471,11 @@ export default function PredictionsPage() {
           <button onClick={handleOracleFill} disabled={oracleFilling}
             className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all flex items-center justify-center gap-2">
             {oracleFilling
-              ? (locale === 'en' ? '🔮 Oracle is analyzing all matches...' : '🔮 El Oráculo está analizando todos los partidos...')
+              ? (locale === 'en' ? '🔮 Oracle is analyzing all matches...' : '🔮 El Oracle is analyzing all matches...')
               : (locale === 'en' ? '🔮 Let the Oracle fill my picks — $5' : '🔮 Que el Oráculo llene mi polla — $5')}
           </button>
           <p className="text-xs text-gray-400 text-center mt-2">
-            {locale === 'en' ? '🔮 AI-powered predictions for all matches' : '🔮 Predicciones con IA para todos los partidos'}
+            {locale === 'en' ? '🔮 AI-powered predictions for all matches' : '🔮 AI-powered predictions for all matches'}
           </p>
         </div>
       </div>
