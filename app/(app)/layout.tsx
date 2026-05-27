@@ -11,17 +11,17 @@ import LanguageSwitcher from '@/app/components/LanguageSwitcher'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/schedule', label: 'Fixture', icon: Calendar },
-  { href: '/my-picks', label: 'Mi Polla', icon: Trophy },
-  { href: '/leaderboard', label: 'Ranking', icon: BarChart2 },
-  { href: '/challenges', label: 'Batallas', icon: Zap },
+  { href: '/schedule', label: 'Schedule', icon: Calendar },
+  { href: '/my-picks', label: 'My Picks', icon: Trophy },
+  { href: '/leaderboard', label: 'Leaderboard', icon: BarChart2 },
+  { href: '/challenges', label: 'Challenges', icon: Zap },
   { href: '/chat', label: 'Chat', icon: MessageCircle },
-  { href: '/ai-picks', label: 'Oráculo', icon: Sparkles },
+  { href: '/ai-picks', label: 'Oracle', icon: Sparkles },
   { href: '/wallet', label: 'Wallet', icon: Wallet },
-  { href: '/join', label: 'Inscripción', icon: DollarSign },
-  { href: '/grupos', label: 'Grupos', icon: LayoutGrid },
-  { href: '/bracket', label: 'Eliminatorias', icon: GitBranch },
-  { href: '/how-to-play', label: 'Reglas', icon: BookOpen },
+  { href: '/join', label: 'Join', icon: DollarSign },
+  { href: '/grupos', label: 'Groups', icon: LayoutGrid },
+  { href: '/bracket', label: 'Bracket', icon: GitBranch },
+  { href: '/how-to-play', label: 'Rules', icon: BookOpen },
 ]
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
