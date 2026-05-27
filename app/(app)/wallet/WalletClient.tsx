@@ -16,7 +16,7 @@ type Transaction = {
 const PAYMENT_METHODS = [
   { id: 'zelle', label: 'Zelle', flag: '🇺🇸', detail: 'adrian.tonfi@gmail.com' },
   { id: 'nequi', label: 'Nequi', flag: '🇨🇴', detail: '+57 300 000 0000' },
-  { id: 'transferencia', label: 'Transferencia', flag: '🇦🇷', detail: 'CVU: 0000000000000000000000' },
+  { id: 'zelle', label: 'Zelle', flag: '🇺🇸', detail: 'Contact us for details' },
   { id: 'paypal', label: 'PayPal', flag: '🌎', detail: 'paypal.me/chebacano' },
 ]
 
@@ -104,7 +104,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
     const amount = customAmount ? parseFloat(customAmount) : depositAmount
     if (!amount || amount < 5) { setDepositMsg('El mínimo es $5'); return }
     if (!selectedMethod) { setDepositMsg('Elegí un método de pago'); return }
-    if (!proofImage) { setDepositMsg('Subí el comprobante de pago'); return }
+    if (!proofImage) { setDepositMsg('Please upload your payment proof'); return }
 
     setDepositLoading(true)
     setDepositMsg('')
@@ -126,7 +126,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
         setDepositMsg(data.error)
       } else {
         setDepositSuccess(true)
-        setDepositMsg('✅ Comprobante enviado. El admin lo revisará y acreditará los créditos en breve.')
+        setDepositMsg('✅ Proof sent. Admin will review and credit your account shortly.')
       }
     } catch {
       setDepositMsg('Error de conexión')
@@ -173,7 +173,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
       {/* Saldo principal */}
       <div className="bg-gradient-to-br from-[#1A1A2E] to-[#0D0D1A] border border-[#00C896]/30 rounded-2xl p-6 mb-6">
-        <p className="text-sm font-bold text-white uppercase tracking-wider mb-1">Saldo disponible</p>
+        <p className="text-sm font-bold text-white uppercase tracking-wider mb-1">Available Balance</p>
         <p className="font-sans text-7xl text-[#00C896] leading-none">{credits}</p>
         <p className="text-base font-bold text-white mt-1">créditos · ${(credits / 10).toFixed(2)}</p>
         <div className="grid grid-cols-3 gap-3 mt-5 border-t border-white/10 pt-5">
@@ -211,7 +211,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             {depositSuccess ? (
               <div className="p-8 text-center">
                 <CheckCircle size={48} className="text-[#22C55E] mx-auto mb-4" />
-                <p className="font-sans text-2xl text-white mb-2">¡Comprobante enviado!</p>
+                <p className="font-sans text-2xl text-white mb-2">Proof sent!</p>
                 <p className="text-sm text-gray-400">El admin lo revisará y acreditará los créditos en breve. Te llegará una notificación cuando esté listo.</p>
                 <button onClick={() => { setShowDeposit(false); setDepositSuccess(false); setProofImage(null) }}
                   className="mt-6 bg-[#00C896] text-black font-bold px-6 py-3 rounded-xl">
@@ -278,7 +278,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
                 {/* Subir comprobante */}
                 <div>
-                  <p className="text-sm font-bold text-white mb-2">Comprobante de pago</p>
+                  <p className="text-sm font-bold text-white mb-2">Payment proof</p>
                   <input
                     type="file"
                     ref={fileRef}
@@ -288,7 +288,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                   />
                   {proofImage ? (
                     <div className="relative">
-                      <img src={proofImage} alt="Comprobante" className="w-full rounded-xl object-cover max-h-48" />
+                      <img src={proofImage} alt="Proof" className="w-full rounded-xl object-cover max-h-48" />
                       <button onClick={() => { setProofImage(null); setProofFileName('') }}
                         className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
                         ✕
@@ -299,7 +299,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                     <button onClick={() => fileRef.current?.click()}
                       className="w-full border-2 border-dashed border-white/10 hover:border-[#00C896]/40 rounded-xl p-6 flex flex-col items-center gap-2 transition-all">
                       <Camera size={24} className="text-gray-500" />
-                      <p className="text-sm text-gray-400">Tocá para subir la foto del comprobante</p>
+                      <p className="text-sm text-gray-400">Tap to upload payment proof</p>
                       <p className="text-xs text-gray-600">JPG, PNG — máx 5MB</p>
                     </button>
                   )}
@@ -312,7 +312,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                     type="text"
                     value={depositNotes}
                     onChange={e => setDepositNotes(e.target.value)}
-                    placeholder="Ej: Transferencia del 25/05"
+                    placeholder="e.g. Zelle transfer May 25"
                     className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]"
                   />
                 </div>
@@ -334,7 +334,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                 >
                   {depositLoading
                     ? <><Loader2 size={18} className="animate-spin" />Enviando...</>
-                    : <><Upload size={18} />Enviar comprobante</>}
+                    : <><Upload size={18} />Send proof</>}
                 </button>
               </div>
             )}
@@ -438,10 +438,10 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
         )}
       </div>
 
-      {/* Historial */}
+      {/* History */}
       <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
         <div className="px-4 py-3 border-b border-white/10">
-          <p className="font-sans text-xl text-white tracking-wider">Historial</p>
+          <p className="font-sans text-xl text-white tracking-wider">History</p>
         </div>
         {transactions.length === 0 ? (
           <div className="px-4 py-12 text-center">
@@ -463,7 +463,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                   <p className={`font-sans text-xl ${tx.amount > 0 ? 'text-[#22C55E]' : 'text-red-400'}`}>
                     {tx.amount > 0 ? '+' : ''}{tx.amount} CR
                   </p>
-                  <p className="text-xs text-gray-500">Saldo: {tx.balance_after}</p>
+                  <p className="text-xs text-gray-500">Balance: {tx.balance_after}</p>
                 </div>
               </div>
             ))}
