@@ -105,7 +105,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
       <div className="bg-[#0D0D1A] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-white/10 max-h-[90dvh] flex flex-col">
         <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
-          <span className="font-sans text-2xl text-[#00C896] tracking-wider">Nueva Batalla</span>
+          <span className="font-sans text-2xl text-[#00C896] tracking-wider">Nueva Challenge</span>
           <button onClick={onClose} className="text-white hover:text-[#00C896]"><X size={22} /></button>
         </div>
         <div className="overflow-y-auto flex-1 p-4 space-y-4">
@@ -175,7 +175,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
         <div className="p-4 border-t border-white/10 shrink-0">
           <button onClick={handleCreate} disabled={loading || !selectedMatch || !prediction || !amount}
             className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
-            {loading ? '...' : `Abrir batalla por $${amount || '0'}`}
+            {loading ? '...' : `Abrir challenge por $${amount || '0'}`}
           </button>
         </div>
       </div>
@@ -214,7 +214,7 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
       <div className="bg-[#0D0D1A] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-white/10 max-h-[90dvh] flex flex-col">
         <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
-          <span className="font-sans text-2xl text-[#00C896] tracking-wider">Entrar a la batalla</span>
+          <span className="font-sans text-2xl text-[#00C896] tracking-wider">Entrar a la challenge</span>
           <button onClick={onClose} className="text-white hover:text-[#00C896]"><X size={22} /></button>
         </div>
         <div className="p-4 space-y-4">
@@ -283,7 +283,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
                 <span className="text-xs font-bold text-gray-400 bg-gray-400/10 border border-gray-400/20 px-2 py-0.5 rounded-full">CERRADA</span>
               )}
               {isCreator && (
-                <span className="text-xs font-bold text-[#A855F7] bg-[#A855F7]/10 border border-[#A855F7]/20 px-2 py-0.5 rounded-full">Tu batalla</span>
+                <span className="text-xs font-bold text-[#A855F7] bg-[#A855F7]/10 border border-[#A855F7]/20 px-2 py-0.5 rounded-full">Tu challenge</span>
               )}
             </div>
             <p className="text-lg font-bold text-white">{battle.title}</p>
@@ -301,7 +301,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
           </div>
           <div className="bg-[#080812] rounded-xl p-3 text-center">
             <p className="text-xl font-sans text-white">{battle.current_participants}</p>
-            <p className="text-xs font-semibold text-white">Jugadores</p>
+            <p className="text-xs font-semibold text-white">Players</p>
           </div>
         </div>
         <div className="flex items-center justify-between gap-2">
@@ -364,7 +364,7 @@ export default function BattlesPage() {
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto md:max-w-4xl">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver
+        <ArrowLeft size={20} />Back
       </Link>
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -381,20 +381,20 @@ export default function BattlesPage() {
           Abiertas ({todasBattles.length})
         </button>
         <button className={`${btnBase} ${tab === 'mis' ? btnActive : btnInactive}`} onClick={() => setTab('mis')}>
-          Mis batallas ({misBattles.length})
+          Mis challenges ({misBattles.length})
         </button>
       </div>
       {loading ? (
-        <div className="flex items-center justify-center h-32 text-white">Cargando...</div>
+        <div className="flex items-center justify-center h-32 text-white">Loading...</div>
       ) : tab === 'todas' ? (
         todasBattles.length === 0 ? (
           <div className="text-center py-16">
             <Zap size={40} className="text-[#00C896] mx-auto mb-3" />
-            <p className="text-xl font-bold text-white mb-2">No hay batallas abiertas</p>
+            <p className="text-xl font-bold text-white mb-2">No hay challenges abiertas</p>
             <p className="text-base text-white mb-4">¡Sé el primero en desafiar!</p>
             <button onClick={() => setShowCreate(true)}
               className="bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-6 py-3 rounded-xl text-base">
-              + Nueva batalla
+              + Nueva challenge
             </button>
           </div>
         ) : (
@@ -404,10 +404,10 @@ export default function BattlesPage() {
         misBattles.length === 0 ? (
           <div className="text-center py-16">
             <Trophy size={40} className="text-[#00C896] mx-auto mb-3" />
-            <p className="text-xl font-bold text-white mb-2">No tenés batallas todavía</p>
+            <p className="text-xl font-bold text-white mb-2">No tenés challenges todavía</p>
             <button onClick={() => setShowCreate(true)}
               className="bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-6 py-3 rounded-xl text-base mt-2">
-              + Nueva batalla
+              + Nueva challenge
             </button>
           </div>
         ) : (

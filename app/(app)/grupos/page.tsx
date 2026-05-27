@@ -79,7 +79,7 @@ function GroupCard({group,matches}:{group:string;matches:Match[]}) {
         </table>
       </div>
       <button onClick={()=>setShowMatches(o=>!o)} className="w-full px-4 py-2.5 text-xs text-gray-400 hover:text-white border-t border-white/10 transition-colors flex items-center justify-center gap-1">
-        {showMatches?'▲ Ocultar partidos':'▼ Ver partidos del grupo'}
+        {showMatches?'▲ Ocultar matches':'▼ Ver matches del grupo'}
       </button>
       {showMatches&&(
         <div className="px-3 pb-3 space-y-2 border-t border-white/10">
@@ -123,7 +123,7 @@ export default function GruposPage() {
   const groups=Object.keys(byGroup).sort()
   return (
     <div className="px-4 py-6 max-w-4xl mx-auto">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4"><ArrowLeft size={20}/>Volver</Link>
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4"><ArrowLeft size={20}/>Back</Link>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-sans text-4xl text-white tracking-wider leading-none">FASE DE GRUPOS</h1>

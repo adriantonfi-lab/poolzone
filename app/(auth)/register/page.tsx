@@ -120,7 +120,7 @@ export default function RegisterPage() {
 
   async function handleStep2(e: React.FormEvent) {
     e.preventDefault()
-    if (!country || !favoriteTeam) { setError('Seleccioná tu país y equipo'); return }
+    if (!country || !favoriteTeam) { setError('Select tu país y equipo'); return }
     setError('')
     setStep(3)
   }
@@ -192,7 +192,7 @@ export default function RegisterPage() {
         <div className="text-center mb-6">
           <img src="/poolzone-logo.png" alt="PoolZone" className="h-12 mx-auto mb-3 object-contain" />
           <p className="text-gray-400 text-sm">
-            {step === 1 ? 'Creá tu cuenta' : step === 2 ? 'Tu perfil' : 'Inscripción — $30'}
+            {step === 1 ? 'Creá tu cuenta' : step === 2 ? 'Tu perfil' : 'Registration — $30'}
           </p>
         </div>
 
@@ -226,7 +226,7 @@ export default function RegisterPage() {
                 <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Tu nombre" className={inputClass} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1.5">Contraseña *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Password *</label>
                 <div className="relative">
                   <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Mínimo 6 caracteres" className={`${inputClass} pr-12`} />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -235,7 +235,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               <button type="submit" className="w-full bg-[#00C896] text-black font-bold py-3 rounded-xl text-base">
-                Siguiente →
+                Next →
               </button>
               <p className="text-center text-sm text-gray-400">
                 ¿Ya tenés cuenta? <Link href="/login" className="text-[#00C896] hover:underline">Entrá acá</Link>
@@ -274,7 +274,7 @@ export default function RegisterPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">Tu país *</label>
                 <select value={country} onChange={e => setCountry(e.target.value)} required className={inputClass}>
-                  <option value="">Seleccioná tu país</option>
+                  <option value="">Select tu país</option>
                   {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
                 </select>
               </div>
@@ -287,10 +287,10 @@ export default function RegisterPage() {
               </div>
               <div className="flex gap-3">
                 <button type="button" onClick={() => setStep(1)} className="flex-1 bg-[#080812] border border-white/10 text-gray-300 font-medium py-3 rounded-xl text-base">
-                  ← Atrás
+                  ← Back
                 </button>
                 <button type="submit" className="flex-1 bg-[#00C896] text-black font-bold py-3 rounded-xl text-base">
-                  Siguiente →
+                  Next →
                 </button>
               </div>
             </form>
@@ -303,13 +303,13 @@ export default function RegisterPage() {
               {/* Resumen */}
               <div className="bg-[#080812] border border-[#00C896]/20 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-bold text-white">Inscripción Mundial 2026</span>
+                  <span className="text-sm font-bold text-white">Registration Mundial 2026</span>
                   <span className="font-bold text-[#00C896] text-lg">$30</span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#00C896]/10 border border-[#00C896]/20 rounded-lg px-3 py-2">
                   <Gift size={16} className="text-[#00C896] shrink-0" />
                   <p className="text-xs text-[#00C896] font-semibold">
-                    Incluye $5 en créditos para usar en el Oráculo, modificaciones y batallas*
+                    Incluye $5 en créditos para usar en el Oracle, modificaciones y challenges*
                   </p>
                 </div>
               </div>
@@ -353,7 +353,7 @@ export default function RegisterPage() {
 
               <div className="flex gap-3">
                 <button type="button" onClick={() => setStep(2)} className="flex-1 bg-[#080812] border border-white/10 text-gray-300 font-medium py-3 rounded-xl text-sm">
-                  ← Atrás
+                  ← Back
                 </button>
                 <button type="submit" disabled={paymentLoading || !agreed}
                   className="flex-1 bg-[#00C896] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 flex items-center justify-center gap-2">

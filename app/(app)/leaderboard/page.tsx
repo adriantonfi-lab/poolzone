@@ -11,7 +11,7 @@ export default async function RankingPage() {
 
   const { data: profiles } = await supabase
     .from('profiles')
-    .select('id, username, avatar_url, favorite_team, credits, country_of_residence, base_points, reenganche_used, reenganche_points, inscription_status')
+    .select('id, username, avatar_url, favorite_team, credits, country_of_residence, base_points, re-entry_used, re-entry_points, inscription_status')
     .order('username', { ascending: true })
 
   const { data: predPoints } = await supabase
@@ -33,10 +33,10 @@ export default async function RankingPage() {
     .filter(p => p.inscription_status === 'paid' || p.inscription_status === 'approved')
     .map(p => ({
       ...p,
-      // Puntos totales = puntos de predicciones + puntos base (100 inicio o 50 reenganche)
-      totalPoints: (pointsMap[p.id] || 0) + (p.base_points || 100) + (p.reenganche_points || 0),
+      // Points totales = puntos de predictions + puntos base (100 inicio o 50 re-entry)
+      totalPoints: (pointsMap[p.id] || 0) + (p.base_points || 100) + (p.re-entry_points || 0),
       predCount: predCountMap[p.id] || 0,
-      reenganche: p.reenganche_used || false,
+      re-entry: p.re-entry_used || false,
     }))
     .sort((a, b) => b.totalPoints - a.totalPoints)
 

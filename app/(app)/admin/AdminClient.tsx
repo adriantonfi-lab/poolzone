@@ -289,7 +289,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
         <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 text-center">
           <Trophy size={18} className="text-[#00C896] mx-auto mb-1" />
           <p className="font-sans text-3xl text-[#00C896]">{totalPredictions}</p>
-          <p className="text-xs font-bold text-white">Predicciones</p>
+          <p className="text-xs font-bold text-white">Predictions</p>
         </div>
         <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 text-center">
           <CheckCircle size={18} className="text-[#A855F7] mx-auto mb-1" />
@@ -393,20 +393,20 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                   className="w-16 bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-xl font-sans text-white focus:outline-none focus:border-[#00C896]" />
                 <button onClick={() => handleSaveResult(m.id)} disabled={saving}
                   className="ml-auto bg-[#00C896] text-black font-bold px-4 py-2 rounded-xl text-sm disabled:opacity-40 hover:bg-[#FFA500] transition-all">
-                  Guardar resultado
+                  Save resultado
                 </button>
                 <span className="text-xs text-gray-400">{predsByMatch[m.id] || 0} pred.</span>
               </div>
             </div>
           ))}
-          {upcomingMatches.length === 0 && <p className="text-center text-white py-8">No hay partidos pendientes.</p>}
+          {upcomingMatches.length === 0 && <p className="text-center text-white py-8">No hay matches pendientes.</p>}
         </div>
       )}
 
       {/* TAB: CODIGOS */}
       {tab === 'codigos' && isSuperAdmin && (
         <div className="space-y-3">
-          <p className="text-sm font-bold text-white mb-3">Generá códigos de un solo uso para modificar predicciones después del cierre.</p>
+          <p className="text-sm font-bold text-white mb-3">Generá códigos de un solo uso para modificar predictions después del cierre.</p>
           {upcomingMatches.map(m => (
             <div key={m.id} className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
               <div className="flex items-center gap-2 mb-3">

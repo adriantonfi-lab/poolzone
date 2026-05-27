@@ -61,15 +61,15 @@ export default function ForgotPasswordPage() {
               </p>
               <Link href="/login" className="inline-flex items-center gap-2 text-[#00C896] hover:underline text-sm font-medium">
                 <ArrowLeft size={16} />
-                Volver al login
+                Back al login
               </Link>
             </div>
           ) : (
             /* Estado: formulario */
             <>
-              <h2 className="text-xl font-semibold text-white mb-1">¿Olvidaste tu contraseña?</h2>
+              <h2 className="text-xl font-semibold text-white mb-1">¿Forgot password?</h2>
               <p className="text-gray-400 text-sm mb-6">
-                Ingresá tu email y te mandamos un link para resetearla.
+                Sign in tu email y te mandamos un link para resetearla.
               </p>
 
               {error && (
@@ -105,7 +105,7 @@ export default function ForgotPasswordPage() {
               <p className="text-center text-sm text-gray-400 mt-5">
                 <Link href="/login" className="inline-flex items-center gap-1 text-[#00C896] hover:underline font-medium">
                   <ArrowLeft size={14} />
-                  Volver al login
+                  Back al login
                 </Link>
               </p>
             </>

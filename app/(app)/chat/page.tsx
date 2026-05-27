@@ -381,7 +381,7 @@ export default function LockerRoomPage() {
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-[#0A0A18]">
         {loading && (
           <div className="flex items-center justify-center h-32">
-            <p className="text-white font-sans text-xl animate-pulse">Cargando mensajes...</p>
+            <p className="text-white font-sans text-xl animate-pulse">Loading mensajes...</p>
           </div>
         )}
 

@@ -22,7 +22,7 @@ export function PushNotificationButton({ variant = 'full', className = '' }: Pro
       if (ok) {
         // Pequeña notificación de bienvenida
         new Notification('¡PoolZone activado! 🏆', {
-          body: 'Te vamos a avisar de goles, batallas y todo lo importante',
+          body: 'Te vamos a avisar de goles, challenges y todo lo importante',
           icon: '/icon-192.png',
         })
       }

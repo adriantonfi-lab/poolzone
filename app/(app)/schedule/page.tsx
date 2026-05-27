@@ -177,7 +177,7 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
               </div>
               {teamLoading ? (
                 <div className="flex items-center gap-2 text-white text-base py-4">
-                  <Loader2 size={16} className="animate-spin" />Cargando...
+                  <Loader2 size={16} className="animate-spin" />Loading...
                 </div>
               ) : (
                 <div className="text-base text-white leading-relaxed whitespace-pre-wrap mb-4">{teamInfo}</div>
@@ -298,7 +298,7 @@ const stageLabels: Record<string, string> = {
   'Final': 'Gran Final 🏆',
 }
 
-export default function FixturePage() {
+export default function SchedulePage() {
   const [matches, setMatches] = useState<Match[]>([])
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState<ViewMode>('dia')
@@ -345,7 +345,7 @@ export default function FixturePage() {
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto md:max-w-4xl">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver
+        <ArrowLeft size={20} />Back
       </Link>
       <h1 className="font-sans text-5xl text-white tracking-wider mb-1">FIXTURE</h1>
       <p className="text-sm font-semibold text-[#86EFAC] mb-5">Horarios ARG 🇦🇷 · COL 🇨🇴 · ET 🇺🇸 · CT · PT</p>
@@ -401,7 +401,7 @@ export default function FixturePage() {
       )}
 
       {matches.length === 0 && (
-        <div className="text-center py-12 text-white text-lg">No hay partidos cargados aún.</div>
+        <div className="text-center py-12 text-white text-lg">No hay matches cargados aún.</div>
       )}
     </div>
   )

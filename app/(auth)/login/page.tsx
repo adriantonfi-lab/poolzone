@@ -30,7 +30,7 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
 
-    // Guardar o borrar email según checkbox
+    // Save o borrar email según checkbox
     if (rememberMe) {
       localStorage.setItem('rememberedEmail', email)
       localStorage.setItem('rememberMe', 'true')

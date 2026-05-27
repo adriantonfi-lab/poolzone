@@ -77,7 +77,7 @@ export default function ResetPasswordPage() {
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
                 <CheckCircle size={28} className="text-green-400" />
               </div>
-              <h2 className="text-xl font-semibold text-white mb-2">¡Contraseña actualizada!</h2>
+              <h2 className="text-xl font-semibold text-white mb-2">¡Password actualizada!</h2>
               <p className="text-gray-400 text-sm">Te redirigimos al dashboard en unos segundos...</p>
             </div>
           ) : (
@@ -134,7 +134,7 @@ export default function ResetPasswordPage() {
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
                 >
-                  {loading ? <><Loader2 size={18} className="animate-spin" />Guardando...</> : 'Guardar nueva contraseña'}
+                  {loading ? <><Loader2 size={18} className="animate-spin" />Guardando...</> : 'Save nueva contraseña'}
                 </button>
               </form>
             </>

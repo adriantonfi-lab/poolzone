@@ -106,7 +106,7 @@ export default function BracketPage() {
 
   return (
     <div className="px-4 py-6 max-w-full mx-auto">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5"><ArrowLeft size={16}/>Volver</Link>
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5"><ArrowLeft size={16}/>Back</Link>
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-xl bg-[#00C896]/20 flex items-center justify-center"><Trophy size={20} className="text-[#00C896]" /></div>
         <div><h1 className="font-sans text-3xl text-white tracking-wider leading-none">CUADRO ELIMINATORIO</h1><p className="text-xs text-[#86EFAC] font-semibold">FIFA World Cup 2026™</p></div>

@@ -127,7 +127,7 @@ export default function OraclePage() {
   return (
     <div className="flex flex-col h-[calc(100dvh-80px)] md:h-[calc(100dvh-0px)] max-w-2xl mx-auto px-4 py-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#A855F7] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver
+        <ArrowLeft size={20} />Back
       </Link>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
@@ -160,7 +160,7 @@ export default function OraclePage() {
             <div className="bg-gradient-to-br from-[#7C3AED]/20 to-[#A855F7]/10 border border-[#7C3AED]/30 rounded-2xl p-5">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles size={18} className="text-[#A855F7]" />
-                <span className="text-base font-bold text-[#A855F7]">El Oráculo</span>
+                <span className="text-base font-bold text-[#A855F7]">El Oracle</span>
               </div>
               <p className="text-base text-white leading-relaxed">
                 {locale === 'en' ? 'Welcome! Ask me anything about the World Cup. You have' : '¡Bienvenido! Preguntame lo que quieras sobre el Mundial. Tenés'}{' '}

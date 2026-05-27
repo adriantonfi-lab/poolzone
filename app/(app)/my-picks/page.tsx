@@ -292,7 +292,7 @@ function MatchPredictionCard({
             </div>
           )}
 
-          {/* Guardar */}
+          {/* Save */}
           <button onClick={handleSave} disabled={!winner || saving}
             className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
             {saving ? 'Guardando...' : window.fee > 0
@@ -412,7 +412,7 @@ export default function PredictionsPage() {
 
   if (loading) return (
     <div className="flex items-center justify-center h-64">
-      <div className="text-white font-sans text-2xl animate-pulse">{locale === 'en' ? 'Loading...' : 'Cargando...'}</div>
+      <div className="text-white font-sans text-2xl animate-pulse">{locale === 'en' ? 'Loading...' : 'Loading...'}</div>
     </div>
   )
 
@@ -442,7 +442,7 @@ export default function PredictionsPage() {
           </div>
           <div className="text-right shrink-0">
             <p className="font-sans text-5xl text-[#00C896]">{totalPoints}</p>
-            <p className="text-xs font-bold text-white uppercase tracking-wider">Puntos</p>
+            <p className="text-xs font-bold text-white uppercase tracking-wider">Points</p>
           </div>
         </div>
         <div className="flex gap-4 mt-4 border-t border-white/10 pt-3">
@@ -472,7 +472,7 @@ export default function PredictionsPage() {
             className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all flex items-center justify-center gap-2">
             {oracleFilling
               ? (locale === 'en' ? '🔮 Oracle is analyzing all matches...' : '🔮 El Oracle is analyzing all matches...')
-              : (locale === 'en' ? '🔮 Let the Oracle fill my picks — $5' : '🔮 Que el Oráculo llene mi polla — $5')}
+              : (locale === 'en' ? '🔮 Let the Oracle fill my picks — $5' : '🔮 Que el Oracle llene mi picks — $5')}
           </button>
           <p className="text-xs text-gray-400 text-center mt-2">
             {locale === 'en' ? '🔮 AI-powered predictions for all matches' : '🔮 AI-powered predictions for all matches'}

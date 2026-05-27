@@ -89,7 +89,7 @@ export default function SuperAdminClient({
   return (
     <div className="px-4 py-6 max-w-5xl mx-auto pb-24 md:pb-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5">
-        <ArrowLeft size={16} /> Volver al Dashboard
+        <ArrowLeft size={16} /> Back to Dashboard
       </Link>
 
       {/* Header */}
@@ -132,8 +132,8 @@ export default function SuperAdminClient({
             {[
               { label: 'Participantes', value: totalUsers, sub: `${paidUsers} pagaron`, color: 'text-white', icon: Users, iconColor: 'text-blue-400', border: 'border-blue-400/20' },
               { label: 'Pozo total', value: `$${totalPot}`, sub: `${paidUsers} × $25`, color: 'text-[#00C896]', icon: DollarSign, iconColor: 'text-[#00C896]', border: 'border-[#00C896]/20' },
-              { label: 'Predicciones', value: totalPredictions, sub: `${totalUsers} usuarios`, color: 'text-[#A855F7]', icon: TrendingUp, iconColor: 'text-[#A855F7]', border: 'border-[#A855F7]/20' },
-              { label: 'Oráculo', value: `$${oracleRevenue}`, sub: `${oracleQueries.length} consultas`, color: 'text-[#22C55E]', icon: Sparkles, iconColor: 'text-[#22C55E]', border: 'border-[#22C55E]/20' },
+              { label: 'Predictions', value: totalPredictions, sub: `${totalUsers} usuarios`, color: 'text-[#A855F7]', icon: TrendingUp, iconColor: 'text-[#A855F7]', border: 'border-[#A855F7]/20' },
+              { label: 'Oracle', value: `$${oracleRevenue}`, sub: `${oracleQueries.length} consultas`, color: 'text-[#22C55E]', icon: Sparkles, iconColor: 'text-[#22C55E]', border: 'border-[#22C55E]/20' },
             ].map(k => (
               <div key={k.label} className={`bg-[#0D0D1A] border ${k.border} rounded-2xl p-4`}>
                 <div className="flex items-center justify-between mb-3">
@@ -184,7 +184,7 @@ export default function SuperAdminClient({
                 {profiles.filter(p => (predByUser[p.id] || 0) === 0).length > 0 && (
                   <div className="flex items-center gap-2 text-sm text-blue-400 font-semibold bg-blue-500/5 rounded-xl px-3 py-2">
                     <AlertTriangle size={14} />
-                    {profiles.filter(p => (predByUser[p.id] || 0) === 0).length} usuarios sin predicciones
+                    {profiles.filter(p => (predByUser[p.id] || 0) === 0).length} usuarios sin predictions
                   </div>
                 )}
               </div>
@@ -308,9 +308,9 @@ export default function SuperAdminClient({
               <p className="font-sans text-xl text-[#00C896] tracking-wider">NUEVO DESAFÍO</p>
             </div>
             <div className="space-y-3">
-              <div><p className="text-sm font-bold text-white mb-1.5">Partido</p>
+              <div><p className="text-sm font-bold text-white mb-1.5">Match</p>
                 <select value={challengeMatch} onChange={e => setChallengeMatch(e.target.value)} className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]">
-                  <option value="">Seleccioná un partido</option>
+                  <option value="">Select un partido</option>
                   {matches.filter(m => m.status === 'scheduled').map(m => <option key={m.id} value={m.id}>{m.home_team} vs {m.away_team}</option>)}
                 </select>
               </div>
@@ -318,7 +318,7 @@ export default function SuperAdminClient({
               <div><p className="text-sm font-bold text-white mb-1.5">Descripción (opcional)</p><textarea value={challengeDesc} onChange={e => setChallengeDesc(e.target.value)} rows={2} placeholder="Detalles..." className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896] resize-none" /></div>
               <div className="grid grid-cols-2 gap-3">
                 <div><p className="text-sm font-bold text-white mb-1.5">Premio USD</p><input type="number" value={challengePrize} onChange={e => setChallengePrize(e.target.value)} placeholder="100" className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]" /></div>
-                <div><p className="text-sm font-bold text-white mb-1.5">Puntos bonus</p><input type="number" value={challengePoints} onChange={e => setChallengePoints(e.target.value)} placeholder="50" className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]" /></div>
+                <div><p className="text-sm font-bold text-white mb-1.5">Points bonus</p><input type="number" value={challengePoints} onChange={e => setChallengePoints(e.target.value)} placeholder="50" className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]" /></div>
               </div>
               <button onClick={handleCreateChallenge} disabled={saving} className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-sm disabled:opacity-40 hover:opacity-90 transition-all flex items-center justify-center gap-2">
                 <Zap size={16} />{saving ? 'Creando...' : 'Crear Desafío'}

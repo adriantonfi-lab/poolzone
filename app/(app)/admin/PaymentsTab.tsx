@@ -111,7 +111,7 @@ export default function PaymentsTab({ adminUserId }: { adminUserId: string }) {
 
       {loading ? (
         <div className="flex items-center justify-center py-12 gap-2 text-white">
-          <Loader2 size={20} className="animate-spin" />Cargando pagos...
+          <Loader2 size={20} className="animate-spin" />Loading pagos...
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-12">

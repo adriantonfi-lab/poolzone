@@ -118,7 +118,7 @@ export default function InscriptionPage() {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
-  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-white font-sans text-2xl animate-pulse">Cargando...</p></div>
+  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-white font-sans text-2xl animate-pulse">Loading...</p></div>
 
   const fee = calcFee(profile?.referrals_count || 0, !!profile?.referred_by)
   const discount = calcDiscount(profile?.referrals_count || 0, !!profile?.referred_by)
@@ -133,10 +133,10 @@ export default function InscriptionPage() {
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto pb-24 md:pb-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver
+        <ArrowLeft size={20} />Back
       </Link>
 
-      <h1 className="font-sans text-5xl text-white tracking-wider mb-1">{locale === 'en' ? 'Registration' : 'Inscripción'}</h1>
+      <h1 className="font-sans text-5xl text-white tracking-wider mb-1">{locale === 'en' ? 'Registration' : 'Registration'}</h1>
       <p className="text-sm font-semibold text-[#86EFAC] mb-6">Mundial 2026 · PoolZone</p>
 
       {/* Estado */}
@@ -150,7 +150,7 @@ export default function InscriptionPage() {
               {isPaid ? (locale === 'en' ? 'Registered!' : '¡Inscripto!') : isReview ? (locale === 'en' ? 'Under review' : 'En revisión') : (locale === 'en' ? 'Payment pending' : 'Pendiente de pago')}
             </p>
             <p className="text-sm font-semibold text-white">
-              {isPaid ? (locale === 'en' ? 'You can participate in the pool' : 'Ya podés participar en la polla') :
+              {isPaid ? (locale === 'en' ? 'You can participate in the pool' : 'Ya podés participar en la picks') :
                isReview ? (locale === 'en' ? 'An admin is reviewing your receipt' : 'Un admin está revisando tu comprobante') :
                (locale === 'en' ? `Pay $${fee} to participate` : `Pagá $${fee} para participar`)}
             </p>

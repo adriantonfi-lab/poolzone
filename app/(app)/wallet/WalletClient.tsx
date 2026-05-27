@@ -23,12 +23,12 @@ const PAYMENT_METHODS = [
 const AMOUNTS = [25, 50, 100]
 
 function getIcon(type: string) {
-  if (type.includes('battle') || type.includes('batalla')) return <Zap size={16} className="text-orange-400" />
+  if (type.includes('battle') || type.includes('challenge')) return <Zap size={16} className="text-orange-400" />
   if (type.includes('oracle') || type.includes('oraculo')) return <Sparkles size={16} className="text-[#A855F7]" />
   if (type.includes('inscription') || type.includes('inscripcion')) return <DollarSign size={16} className="text-blue-400" />
   if (type.includes('referral') || type.includes('referido')) return <Gift size={16} className="text-[#22C55E]" />
   if (type.includes('prize') || type.includes('premio')) return <Trophy size={16} className="text-[#00C896]" />
-  if (type.includes('reenganche')) return <RefreshCw size={16} className="text-[#A855F7]" />
+  if (type.includes('re-entry')) return <RefreshCw size={16} className="text-[#A855F7]" />
   if (type.includes('late_fee')) return <TrendingDown size={16} className="text-orange-400" />
   if (type.includes('win') || type.includes('ganancia')) return <TrendingUp size={16} className="text-[#22C55E]" />
   if (type.includes('fee') || type.includes('cargo')) return <TrendingDown size={16} className="text-red-400" />
@@ -42,9 +42,9 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
   oracleSpent: number
   estimatedPot: number
 }) {
-  const [reengancheLoading, setReengancheLoading] = useState(false)
-  const [reengancheMsg, setReengancheMsg] = useState('')
-  const [reengancheUsed, setReengancheUsed] = useState(profile?.reenganche_used || false)
+  const [re-entryLoading, setRe-entryLoading] = useState(false)
+  const [re-entryMsg, setRe-entryMsg] = useState('')
+  const [re-entryUsed, setRe-entryUsed] = useState(profile?.re-entry_used || false)
   const [credits, setCredits] = useState(profile?.credits || 0)
 
   // Carga de créditos
@@ -70,17 +70,17 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
   function getTypeLabel(type: string): string {
     const labels: Record<string, string> = {
-      'battle_win': '🏆 Victoria en batalla',
-      'battle_loss': '⚔️ Derrota en batalla',
-      'battle_refund': '↩️ Devolución batalla',
-      'oracle_fee': '🔮 Consulta al Oráculo',
-      'inscription': '🎫 Inscripción',
+      'battle_win': '🏆 Victoria en challenge',
+      'battle_loss': '⚔️ Derrota en challenge',
+      'battle_refund': '↩️ Devolución challenge',
+      'oracle_fee': '🔮 Consulta al Oracle',
+      'inscription': '🎫 Registration',
       'referral_bonus': '🌟 Bonus referidos',
       'late_fee': '⏰ Fee por modificación tardía',
       'prize': '🥇 Premio del torneo',
       'admin_credit': '⭐ Crédito admin',
       'admin_debit': '📉 Débito admin',
-      'reenganche': '🔄 Re-enganche',
+      're-entry': '🔄 Re-enganche',
     }
     return labels[type] || type
   }
@@ -134,28 +134,28 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
     setDepositLoading(false)
   }
 
-  async function handleReenganche() {
+  async function handleRe-entry() {
     if (!profile?.id) return
-    setReengancheLoading(true)
-    setReengancheMsg('')
+    setRe-entryLoading(true)
+    setRe-entryMsg('')
     try {
-      const res = await fetch('/api/reenganche', {
+      const res = await fetch('/api/re-entry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: profile.id }),
       })
       const data = await res.json()
       if (data.error) {
-        setReengancheMsg(data.error)
+        setRe-entryMsg(data.error)
       } else {
-        setReengancheUsed(true)
+        setRe-entryUsed(true)
         setCredits((c: number) => c - 250)
-        setReengancheMsg('¡Re-enganche activado! +50 puntos sumados al ranking 🎉')
+        setRe-entryMsg('¡Re-enganche activado! +50 puntos sumados al ranking 🎉')
       }
     } catch {
-      setReengancheMsg('Error de conexión')
+      setRe-entryMsg('Error de conexión')
     }
-    setReengancheLoading(false)
+    setRe-entryLoading(false)
   }
 
   const totalIn = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0)
@@ -165,7 +165,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto pb-24 md:pb-6">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver
+        <ArrowLeft size={20} />Back
       </Link>
 
       <h1 className="font-sans text-5xl text-white tracking-wider mb-1">WALLET</h1>
@@ -187,7 +187,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
           </div>
           <div className="text-center">
             <p className="font-sans text-3xl text-[#A855F7]">{battlesCount}</p>
-            <p className="text-xs font-bold text-white">Batallas</p>
+            <p className="text-xs font-bold text-white">Challenges</p>
           </div>
         </div>
         <button
@@ -347,7 +347,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
         <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <Sparkles size={16} className="text-[#A855F7]" />
-            <p className="text-xs font-bold text-white">Oráculo gastado</p>
+            <p className="text-xs font-bold text-white">Oracle gastado</p>
           </div>
           <p className="font-sans text-3xl text-[#A855F7]">${oracleSpent.toFixed(0)}</p>
         </div>
@@ -371,8 +371,8 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
           <div>
             <p className="text-base font-bold text-white">
               {profile?.inscription_status === 'paid' || profile?.inscription_status === 'approved'
-                ? '✅ Inscripción paga'
-                : '⏳ Inscripción pendiente'}
+                ? '✅ Registration paga'
+                : '⏳ Registration pendiente'}
             </p>
             <p className="text-xs text-gray-400">Fee: ${profile?.inscription_fee || 25}</p>
           </div>
@@ -386,7 +386,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
       {/* RE-ENGANCHE */}
       <div className={`rounded-2xl p-5 mb-6 border ${
-        reengancheUsed
+        re-entryUsed
           ? 'bg-[#A855F7]/10 border-[#A855F7]/30'
           : 'bg-gradient-to-br from-[#1A1A2E] to-[#1A0A2E] border-[#A855F7]/40'
       }`}>
@@ -399,7 +399,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs text-[#A855F7] font-semibold">Fase Eliminatoria — Una sola vez</p>
           </div>
         </div>
-        {reengancheUsed ? (
+        {re-entryUsed ? (
           <div className="bg-[#A855F7]/10 rounded-xl p-3 text-center">
             <p className="text-base font-bold text-[#A855F7]">✅ Re-enganche activado</p>
             <p className="text-xs text-gray-400 mt-1">+50 puntos sumados a tu ranking</p>
@@ -413,22 +413,22 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
               </div>
               <div className="bg-black/30 rounded-xl p-3 text-center">
                 <p className="font-sans text-2xl text-[#A855F7]">+50</p>
-                <p className="text-xs font-bold text-white">Puntos al ranking</p>
+                <p className="text-xs font-bold text-white">Points al ranking</p>
               </div>
             </div>
             <p className="text-xs text-gray-400 mb-4">
               ¿Quedaste lejos en el ranking? Pagá $25 y sumá 50 puntos para meterte en la pelea durante la fase eliminatoria.
             </p>
-            {reengancheMsg && (
+            {re-entryMsg && (
               <div className={`rounded-xl p-3 mb-3 text-sm font-semibold text-center ${
-                reengancheMsg.includes('activado') ? 'bg-[#22C55E]/10 text-[#22C55E]' : 'bg-red-500/10 text-red-400'
+                re-entryMsg.includes('activado') ? 'bg-[#22C55E]/10 text-[#22C55E]' : 'bg-red-500/10 text-red-400'
               }`}>
-                {reengancheMsg}
+                {re-entryMsg}
               </div>
             )}
-            <button onClick={handleReenganche} disabled={reengancheLoading || credits < 250}
+            <button onClick={handleRe-entry} disabled={re-entryLoading || credits < 250}
               className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all hover:opacity-90 flex items-center justify-center gap-2">
-              {reengancheLoading
+              {re-entryLoading
                 ? <><Loader2 size={18} className="animate-spin" />Procesando...</>
                 : credits < 250
                 ? `Necesitás $25 — Tenés $${(credits/10).toFixed(2)}`

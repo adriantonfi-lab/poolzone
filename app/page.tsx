@@ -34,8 +34,8 @@ const FAQS_ES = [
   { q: '¿Cuánto cuesta inscribirse?', a: '$30 por persona. Pago único para todo el Mundial.' },
   { q: '¿Cómo cobro si gano?', a: 'Pagamos por Zelle (USA), Wise (internacional) o PayPal. Dentro de las 48hs de terminado el torneo.' },
   { q: '¿Cuándo cierra la inscripción?', a: 'Podés inscribirte hasta el inicio del primer partido el 11 de junio.' },
-  { q: '¿Puedo cambiar mis predicciones?', a: 'Sí, pero cambiar con menos de 24hs antes del partido tiene un cargo pequeño ($2-5) que va al pozo.' },
-  { q: '¿Qué es el Oráculo IA?', a: 'Nuestro Oráculo de IA te da análisis y predicciones. 12 consultas gratis incluidas.' },
+  { q: '¿Puedo cambiar mis predictions?', a: 'Sí, pero cambiar con menos de 24hs antes del partido tiene un cargo pequeño ($2-5) que va al pozo.' },
+  { q: '¿Qué es el Oracle IA?', a: 'Nuestro Oracle de IA te da análisis y predictions. 12 consultas gratis incluidas.' },
   { q: '¿Es legal?', a: 'PoolZone es un juego de habilidad y predicción para entretenimiento entre amigos y familia.' },
 ]
 
@@ -128,7 +128,7 @@ export default function LandingPage() {
           {players > 0 && (
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: '100px', padding: '6px 16px', marginBottom: '20px' }}>
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00C896', display: 'inline-block' }} />
-              <span style={{ fontSize: '13px', fontWeight: 700, color: '#00C896' }}>{players} {es ? 'jugadores inscriptos' : 'players joined'}</span>
+              <span style={{ fontSize: '13px', fontWeight: 700, color: '#00C896' }}>{players} {es ? 'players inscriptos' : 'players joined'}</span>
             </div>
           )}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
@@ -147,8 +147,8 @@ export default function LandingPage() {
           <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', marginBottom: '32px' }}>{es ? 'Simple. Divertido. Dinero real.' : 'Simple. Fun. Real money.'}</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
             {[
-              { icon: <DollarSign size={28} color="#00C896" />, title: es ? 'Inscribite por $30' : 'Join for $30', desc: es ? 'Un pago. Jugás todos los 104 partidos del Mundial.' : "One payment. You're in for all 104 World Cup matches." },
-              { icon: <Star size={28} color="#FFD700" />, title: es ? 'Predecí los Partidos' : 'Predict Matches', desc: es ? 'Elegí ganadores, marcadores exactos, goles por tiempo.' : 'Pick winners, exact scores, goal times. More detail = more points.' },
+              { icon: <DollarSign size={28} color="#00C896" />, title: es ? 'Join por $30' : 'Join for $30', desc: es ? 'Un pago. Jugás todos los 104 matches del Mundial.' : "One payment. You're in for all 104 World Cup matches." },
+              { icon: <Star size={28} color="#FFD700" />, title: es ? 'Predecí los Matchs' : 'Predict Matches', desc: es ? 'Elegí ganadores, marcadores exactos, goles por tiempo.' : 'Pick winners, exact scores, goal times. More detail = more points.' },
               { icon: <Trophy size={28} color="#FFD700" />, title: es ? 'Ganá Dinero Real' : 'Win Real Money', desc: es ? 'Los 3 primeros se reparten el pozo. 1° lleva 60%.' : 'Top 3 split the pot. 1st gets 60%, 2nd 30%, 3rd 10%.' },
             ].map(({ icon, title, desc }, i) => (
               <div key={i} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '28px 20px', textAlign: 'center' }}>
@@ -207,7 +207,7 @@ export default function LandingPage() {
         <div style={{ textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.07)', padding: '60px 0 40px' }}>
           <h2 style={{ fontSize: '38px', fontWeight: 900, marginBottom: '12px' }}>{es ? '¡No Te Quedés Afuera!' : "Don't Miss Out!"}</h2>
           <p style={{ color: 'rgba(255,255,255,0.45)', marginBottom: '32px', fontSize: '16px' }}>
-            {es ? 'El Mundial arranca el 11 de junio. Inscribite ahora y competí por premios reales.' : 'The World Cup starts June 11. Join now and compete for real prizes.'}
+            {es ? 'El Mundial arranca el 11 de junio. Join ahora y competí por premios reales.' : 'The World Cup starts June 11. Join now and compete for real prizes.'}
           </p>
           <Link href="/register" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#00C896', color: 'black', fontWeight: 900, fontSize: '20px', padding: '20px 52px', borderRadius: '20px', textDecoration: 'none' }}>
             {es ? 'Únete por $30' : 'Join Now for $30'} →
