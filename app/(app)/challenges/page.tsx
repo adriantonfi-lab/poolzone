@@ -135,11 +135,11 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
                   <FlagImg code={selectedMatch.home_team_code} size={24} />
                   {selectedMatch.home_team}
                 </button>
-                <button onClick={() => setPrediction('empate')}
+                <button onClick={() => setPrediction('draw')}
                   className={`px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-white/10 bg-[#080812] text-white hover:border-[#86EFAC]/40'
+                    prediction === 'draw' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-white/10 bg-[#080812] text-white hover:border-[#86EFAC]/40'
                   }`}>
-                  Empate
+                  Draw
                 </button>
                 <button onClick={() => setPrediction(selectedMatch.away_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
@@ -234,11 +234,11 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
                   }`}>
                   <FlagImg code={match.home_team_code} size={24} />{match.home_team}
                 </button>
-                <button onClick={() => setPrediction('empate')}
+                <button onClick={() => setPrediction('draw')}
                   className={`px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-white/10 bg-[#080812] text-white'
+                    prediction === 'draw' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-white/10 bg-[#080812] text-white'
                   }`}>
-                  Empate
+                  Draw
                 </button>
                 <button onClick={() => setPrediction(match.away_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
@@ -355,7 +355,7 @@ export default function BattlesPage() {
     })
   }, [])
 
-  const todasBattles = battles.filter(b => b.status === 'open')
+  const allChallenges = battles.filter(b => b.status === 'open')
   const misBattles = battles.filter(b => b.created_by === userId)
   const btnBase = 'px-4 py-2 rounded-xl text-base font-bold transition-all'
   const btnActive = 'bg-[#00C896] text-black'
@@ -378,7 +378,7 @@ export default function BattlesPage() {
       </div>
       <div className="flex gap-2 mb-6">
         <button className={`${btnBase} ${tab === 'todas' ? btnActive : btnInactive}`} onClick={() => setTab('todas')}>
-          Abiertas ({todasBattles.length})
+          Open ({allChallenges.length})
         </button>
         <button className={`${btnBase} ${tab === 'mis' ? btnActive : btnInactive}`} onClick={() => setTab('mis')}>
           Mis challenges ({misBattles.length})
@@ -387,10 +387,10 @@ export default function BattlesPage() {
       {loading ? (
         <div className="flex items-center justify-center h-32 text-white">Loading...</div>
       ) : tab === 'todas' ? (
-        todasBattles.length === 0 ? (
+        allChallenges.length === 0 ? (
           <div className="text-center py-16">
             <Zap size={40} className="text-[#00C896] mx-auto mb-3" />
-            <p className="text-xl font-bold text-white mb-2">No hay challenges abiertas</p>
+            <p className="text-xl font-bold text-white mb-2">No open challenges yet</p>
             <p className="text-base text-white mb-4">¡Sé el primero en desafiar!</p>
             <button onClick={() => setShowCreate(true)}
               className="bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-6 py-3 rounded-xl text-base">
@@ -398,7 +398,7 @@ export default function BattlesPage() {
             </button>
           </div>
         ) : (
-          todasBattles.map(b => <BattleCard key={b.id} battle={b} userId={userId} onRefresh={() => loadBattles(userId)} />)
+          allChallenges.map(b => <BattleCard key={b.id} battle={b} userId={userId} onRefresh={() => loadBattles(userId)} />)
         )
       ) : (
         misBattles.length === 0 ? (
