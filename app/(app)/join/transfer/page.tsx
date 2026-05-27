@@ -79,7 +79,7 @@ function TransferContent() {
 
         <button onClick={handleConfirm} disabled={loading}
           className="w-full bg-[#00C896] text-black font-black py-4 rounded-2xl text-lg disabled:opacity-50 flex items-center justify-center gap-2">
-          {loading ? <><Loader2 size={20} className="animate-spin" />Processing...</> : "✅ I've sent the payment"}
+          {loading ? <><Loader2 size={20} className="animate-spin" />Processing...</> : "I sent the payment"}
         </button>
 
         <p className="text-center text-xs text-gray-500 mt-4">Your account will be activated within 24 houmkdir -p ~/Desktop/poolzone/app/\(app\)/join/transfer && cat > ~/Desktop/poolzone/app/\(app\)/join/transfer/page.tsx << 'ENDOFFILE'
@@ -164,7 +164,7 @@ function TransferContent() {
 
         <button onClick={handleConfirm} disabled={loading}
           className="w-full bg-[#00C896] text-black font-black py-4 rounded-2xl text-lg disabled:opacity-50 flex items-center justify-center gap-2">
-          {loading ? <><Loader2 size={20} className="animate-spin" />Processing...</> : "✅ I've sent the payment"}
+          {loading ? <><Loader2 size={20} className="animate-spin" />Processing...</> : "I sent the payment"}
         </button>
 
         <p className="text-center text-xs text-gray-500 mt-4">Your account will be activated within 24 hours after payment verification.</p>
