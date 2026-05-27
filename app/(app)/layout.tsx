@@ -50,11 +50,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-dvh flex bg-[#0D0D0D]" suppressHydrationWarning>
-      <aside className="hidden md:flex flex-col w-56 bg-[#1A1A2E] border-r border-[#2A2A4A] fixed h-full z-40">
-        <div className="px-4 py-4 border-b border-[#2A2A4A]">
+    <div className="min-h-dvh flex bg-[#080812]" suppressHydrationWarning>
+      <aside className="hidden md:flex flex-col w-56 bg-[#0D0D1A] border-r border-white/10 fixed h-full z-40">
+        <div className="px-4 py-4 border-b border-white/10">
           <div className="flex items-center justify-between mb-1">
-            <p className="font-bebas text-2xl text-[#FFD700] tracking-wider">POOLZONE</p>
+            <p className="font-bebas text-2xl text-[#00C896] tracking-wider">POOLZONE</p>
             <LanguageSwitcher />
           </div>
           <p className="text-xs text-gray-500">WORLD CUP 2026</p>
@@ -64,12 +64,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link key={href} href={href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 pathname === href
-                  ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                  : 'text-gray-400 hover:text-[#FFD700] hover:bg-[#FFD700]/10'
+                  ? 'bg-[#00C896]/10 text-[#00C896] border border-[#00C896]/20'
+                  : 'text-gray-400 hover:text-[#00C896] hover:bg-[#00C896]/10'
               }`}>
               <Icon size={18} />
               {label}
-              {pathname === href && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
+              {pathname === href && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#00C896]" />}
             </Link>
           ))}
         </nav>
@@ -77,30 +77,30 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Link href="/admin"
             className={`flex items-center gap-3 px-3 py-2.5 mx-2 mb-1 rounded-xl text-sm font-medium transition-all ${
               pathname === '/admin'
-                ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                : 'text-gray-400 hover:text-[#FFD700] hover:bg-[#FFD700]/10'
+                ? 'bg-[#00C896]/10 text-[#00C896] border border-[#00C896]/20'
+                : 'text-gray-400 hover:text-[#00C896] hover:bg-[#00C896]/10'
             }`}>
             <Shield size={18} />
-            Administrador
-            {pathname === '/admin' && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
+            Admin
+            {pathname === '/admin' && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#00C896]" />}
           </Link>
         )}
         {isSuperAdmin && (
           <Link href="/superadmin"
             className={`flex items-center gap-3 px-3 py-2.5 mx-2 mb-1 rounded-xl text-sm font-medium transition-all ${
               pathname === '/superadmin'
-                ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20'
-                : 'text-gray-400 hover:text-[#FFD700] hover:bg-[#FFD700]/10'
+                ? 'bg-[#00C896]/10 text-[#00C896] border border-[#00C896]/20'
+                : 'text-gray-400 hover:text-[#00C896] hover:bg-[#00C896]/10'
             }`}>
             <Eye size={18} />
-            Super Administrador
-            {pathname === '/superadmin' && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FFD700]" />}
+            Super Admin
+            {pathname === '/superadmin' && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#00C896]" />}
           </Link>
         )}
         <button onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2.5 mx-2 mb-2 rounded-xl text-sm font-bold bg-red-600 text-white hover:bg-red-700 transition-all border-t-0 mt-1">
           <LogOut size={16} />
-          Salir
+          Sign Out
         </button>
       </aside>
 
@@ -108,12 +108,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1A1A2E] border-t border-[#2A2A4A] z-50">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0D0D1A] border-t border-white/10 z-50">
         <div className="flex items-center justify-around px-2 py-2">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href}
               className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded-xl transition-all ${
-                pathname === href ? 'text-[#FFD700]' : 'text-gray-500'
+                pathname === href ? 'text-[#00C896]' : 'text-gray-500'
               }`}>
               <Icon size={20} />
               <span className="text-[10px] font-medium">{label.split(' ')[0]}</span>
