@@ -255,19 +255,19 @@ export default function AdminClient({ currentUser, users, matches, predictions }
   const finishedMatches = matches.filter(m => m.status === 'finished')
 
   const btnBase = 'px-3 py-2 rounded-xl text-sm font-bold transition-all'
-  const btnActive = 'bg-[#FFD700] text-black'
-  const btnInactive = 'bg-[#1A1A2E] text-white border border-[#2A2A4A] hover:border-[#FFD700]'
+  const btnActive = 'bg-[#00C896] text-black'
+  const btnInactive = 'bg-[#0D0D1A] text-white border border-white/10 hover:border-[#00C896]'
 
   return (
     <div className="px-4 py-6 max-w-4xl mx-auto pb-24 md:pb-6">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
         <ArrowLeft size={20} />Dashboard
       </Link>
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-bebas text-4xl text-white tracking-wider">Panel Admin</h1>
-          <p className="text-sm font-semibold text-[#FFD700]">
+          <h1 className="font-sans text-4xl text-white tracking-wider">Panel Admin</h1>
+          <p className="text-sm font-semibold text-[#00C896]">
             {isSuperAdmin ? '⭐ Super Admin' : '🔧 Admin'} — @{currentUser.username}
           </p>
         </div>
@@ -281,19 +281,19 @@ export default function AdminClient({ currentUser, users, matches, predictions }
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 text-center">
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 text-center">
           <Users size={18} className="text-[#22C55E] mx-auto mb-1" />
-          <p className="font-bebas text-3xl text-white">{users.length}</p>
+          <p className="font-sans text-3xl text-white">{users.length}</p>
           <p className="text-xs font-bold text-white">Usuarios</p>
         </div>
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 text-center">
-          <Trophy size={18} className="text-[#FFD700] mx-auto mb-1" />
-          <p className="font-bebas text-3xl text-[#FFD700]">{totalPredictions}</p>
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 text-center">
+          <Trophy size={18} className="text-[#00C896] mx-auto mb-1" />
+          <p className="font-sans text-3xl text-[#00C896]">{totalPredictions}</p>
           <p className="text-xs font-bold text-white">Predicciones</p>
         </div>
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 text-center">
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 text-center">
           <CheckCircle size={18} className="text-[#A855F7] mx-auto mb-1" />
-          <p className="font-bebas text-3xl text-[#A855F7]">{finishedMatches.length}</p>
+          <p className="font-sans text-3xl text-[#A855F7]">{finishedMatches.length}</p>
           <p className="text-xs font-bold text-white">Resultados</p>
         </div>
       </div>
@@ -326,19 +326,19 @@ export default function AdminClient({ currentUser, users, matches, predictions }
           <div className="relative mb-4">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar usuario..."
-              className="w-full bg-[#1A1A2E] border border-[#2A2A4A] rounded-xl pl-9 pr-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]" />
+              className="w-full bg-[#0D0D1A] border border-white/10 rounded-xl pl-9 pr-4 py-2.5 text-base text-white focus:outline-none focus:border-[#00C896]" />
           </div>
           <div className="space-y-2">
             {filteredUsers.map(u => {
               const userPreds = predictions.filter(p => p.user_id === u.id).length
               return (
-                <div key={u.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
+                <div key={u.id} className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
                   <div className="flex items-center gap-3">
                     {u.avatar_url ? (
                       <img src={u.avatar_url} alt={u.username} className="w-10 h-10 rounded-xl object-cover" />
                     ) : (
-                      <div className="w-10 h-10 rounded-xl bg-[#FFD700]/20 flex items-center justify-center">
-                        <span className="font-bebas text-lg text-[#FFD700]">{u.username?.[0]?.toUpperCase()}</span>
+                      <div className="w-10 h-10 rounded-xl bg-[#00C896]/20 flex items-center justify-center">
+                        <span className="font-sans text-lg text-[#00C896]">{u.username?.[0]?.toUpperCase()}</span>
                       </div>
                     )}
                     <div className="flex-1">
@@ -347,11 +347,11 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                     </div>
                     <div className="text-right">
                       <p className="text-xs text-[#86EFAC] font-bold">{userPreds} pred.</p>
-                      <p className="text-xs text-[#FFD700] font-bold">{u.credits} CR</p>
+                      <p className="text-xs text-[#00C896] font-bold">{u.credits} CR</p>
                     </div>
                     {isSuperAdmin && u.id !== currentUser.id && (
                       <select defaultValue={u.role || 'family'} onChange={e => handleRoleChange(u.id, e.target.value)}
-                        className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-[#FFD700]">
+                        className="bg-[#080812] border border-white/10 rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-[#00C896]">
                         <option value="family">Family</option>
                         <option value="admin">Admin</option>
                         <option value="super_admin">Super Admin</option>
@@ -371,11 +371,11 @@ export default function AdminClient({ currentUser, users, matches, predictions }
         <div className="space-y-3">
           <p className="text-sm font-bold text-white mb-3">Cargá el resultado final — el sistema calcula los puntos automáticamente.</p>
           {upcomingMatches.map(m => (
-            <div key={m.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
+            <div key={m.id} className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <FlagImg code={m.home_team_code} size={20} />
                 <span className="text-base font-bold text-white">{m.home_team}</span>
-                <span className="text-[#FFD700] font-bebas">vs</span>
+                <span className="text-[#00C896] font-sans">vs</span>
                 <span className="text-base font-bold text-white">{m.away_team}</span>
                 <FlagImg code={m.away_team_code} size={20} />
                 <span className="text-xs text-gray-400 ml-auto">{formatDate(m.match_date)} · {formatTime(m.match_date)} ET</span>
@@ -385,14 +385,14 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                 <input type="number" min="0" max="20" value={scores[m.id]?.home || ''}
                   onChange={e => setScores(p => ({ ...p, [m.id]: { ...p[m.id], home: e.target.value } }))}
                   placeholder="0"
-                  className="w-16 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-xl font-bebas text-white focus:outline-none focus:border-[#FFD700]" />
-                <span className="font-bebas text-xl text-white">-</span>
+                  className="w-16 bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-xl font-sans text-white focus:outline-none focus:border-[#00C896]" />
+                <span className="font-sans text-xl text-white">-</span>
                 <input type="number" min="0" max="20" value={scores[m.id]?.away || ''}
                   onChange={e => setScores(p => ({ ...p, [m.id]: { ...p[m.id], away: e.target.value } }))}
                   placeholder="0"
-                  className="w-16 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-xl font-bebas text-white focus:outline-none focus:border-[#FFD700]" />
+                  className="w-16 bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-xl font-sans text-white focus:outline-none focus:border-[#00C896]" />
                 <button onClick={() => handleSaveResult(m.id)} disabled={saving}
-                  className="ml-auto bg-[#FFD700] text-black font-bold px-4 py-2 rounded-xl text-sm disabled:opacity-40 hover:bg-[#FFA500] transition-all">
+                  className="ml-auto bg-[#00C896] text-black font-bold px-4 py-2 rounded-xl text-sm disabled:opacity-40 hover:bg-[#FFA500] transition-all">
                   Guardar resultado
                 </button>
                 <span className="text-xs text-gray-400">{predsByMatch[m.id] || 0} pred.</span>
@@ -408,7 +408,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
         <div className="space-y-3">
           <p className="text-sm font-bold text-white mb-3">Generá códigos de un solo uso para modificar predicciones después del cierre.</p>
           {upcomingMatches.map(m => (
-            <div key={m.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
+            <div key={m.id} className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <FlagImg code={m.home_team_code} size={18} />
                 <span className="text-sm font-bold text-white">{m.home_team} vs {m.away_team}</span>
@@ -419,10 +419,10 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                 {users.filter(u => u.role !== 'super_admin').map(u => {
                   const codeKey = `${m.id}-${u.id}`
                   return (
-                    <div key={u.id} className="flex items-center justify-between bg-[#0D0D0D] rounded-xl px-3 py-2">
+                    <div key={u.id} className="flex items-center justify-between bg-[#080812] rounded-xl px-3 py-2">
                       <span className="text-sm text-white font-bold">@{u.username}</span>
                       {codes[codeKey] ? (
-                        <span className="font-bebas text-lg text-[#FFD700] tracking-wider">{codes[codeKey]}</span>
+                        <span className="font-sans text-lg text-[#00C896] tracking-wider">{codes[codeKey]}</span>
                       ) : (
                         <button onClick={() => handleGenerateCode(m.id, u.id)} disabled={saving}
                           className="bg-[#A855F7] text-white font-bold px-3 py-1 rounded-lg text-xs disabled:opacity-40 hover:bg-[#7C3AED] transition-all">
@@ -442,7 +442,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
       {tab === 'moderacion' && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="font-bebas text-2xl text-white tracking-wider">Moderación</h2>
+            <h2 className="font-sans text-2xl text-white tracking-wider">Moderación</h2>
             <button onClick={loadModerationData} className="text-gray-400 hover:text-white transition-colors">
               <RefreshCw size={18} className={loadingMod ? 'animate-spin' : ''} />
             </button>
@@ -450,7 +450,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
 
           {/* REPORTES PENDIENTES */}
           <div>
-            <h3 className="text-sm font-bold text-[#FFD700] mb-3 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-[#00C896] mb-3 flex items-center gap-2">
               <Flag size={14} />REPORTES PENDIENTES ({reports.length})
             </h3>
             {reports.length === 0 ? (
@@ -458,7 +458,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
             ) : (
               <div className="space-y-2">
                 {reports.map(r => (
-                  <div key={r.id} className="bg-[#1A1A2E] border border-red-500/20 rounded-2xl p-4">
+                  <div key={r.id} className="bg-[#0D0D1A] border border-red-500/20 rounded-2xl p-4">
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div>
                         <p className="text-xs text-gray-400">
@@ -468,7 +468,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                           Mensaje de <span className="text-white font-bold">@{r.chat_messages?.profiles?.username}</span>
                         </p>
                         {r.chat_messages?.content && (
-                          <p className="text-sm text-white mt-1 bg-[#0D0D0D] rounded-lg px-3 py-2">
+                          <p className="text-sm text-white mt-1 bg-[#080812] rounded-lg px-3 py-2">
                             "{r.chat_messages.content}"
                           </p>
                         )}
@@ -496,9 +496,9 @@ export default function AdminClient({ currentUser, users, matches, predictions }
             <h3 className="text-sm font-bold text-orange-400 mb-3 flex items-center gap-2">
               <VolumeX size={14} />SILENCIAR USUARIO
             </h3>
-            <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 space-y-3">
+            <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 space-y-3">
               <select value={muteUserId} onChange={e => setMuteUserId(e.target.value)}
-                className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-orange-400">
+                className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-orange-400">
                 <option value="">Seleccionar usuario...</option>
                 {users.filter(u => u.id !== currentUser.id).map(u => (
                   <option key={u.id} value={u.id}>@{u.username}</option>
@@ -506,7 +506,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
               </select>
               <div className="flex gap-2">
                 <select value={muteHours} onChange={e => setMuteHours(e.target.value)}
-                  className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-orange-400">
+                  className="bg-[#080812] border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-orange-400">
                   <option value="1">1 hora</option>
                   <option value="6">6 horas</option>
                   <option value="24">24 horas</option>
@@ -515,7 +515,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                 </select>
                 <input value={muteReason} onChange={e => setMuteReason(e.target.value)}
                   placeholder="Motivo (opcional)"
-                  className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-orange-400" />
+                  className="flex-1 bg-[#080812] border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-orange-400" />
               </div>
               <button onClick={handleMuteUser} disabled={!muteUserId || saving}
                 className="w-full bg-orange-500/20 text-orange-400 border border-orange-500/30 font-bold py-2.5 rounded-xl text-sm disabled:opacity-40 hover:bg-orange-500/30 transition-all flex items-center justify-center gap-2">
@@ -530,9 +530,9 @@ export default function AdminClient({ currentUser, users, matches, predictions }
               <h3 className="text-sm font-bold text-red-400 mb-3 flex items-center gap-2">
                 <Ban size={14} />BANEAR USUARIO
               </h3>
-              <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 space-y-3">
+              <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 space-y-3">
                 <select value={banUserId} onChange={e => setBanUserId(e.target.value)}
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-400">
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-400">
                   <option value="">Seleccionar usuario...</option>
                   {users.filter(u => u.id !== currentUser.id && u.role !== 'super_admin').map(u => (
                     <option key={u.id} value={u.id}>@{u.username}</option>
@@ -540,7 +540,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
                 </select>
                 <input value={banReason} onChange={e => setBanReason(e.target.value)}
                   placeholder="Motivo del ban"
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-400" />
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-400" />
                 <button onClick={handleBanUser} disabled={!banUserId || saving}
                   className="w-full bg-red-500/20 text-red-400 border border-red-500/30 font-bold py-2.5 rounded-xl text-sm disabled:opacity-40 hover:bg-red-500/30 transition-all flex items-center justify-center gap-2">
                   <Ban size={14} />Banear usuario permanentemente
@@ -559,7 +559,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
             ) : (
               <div className="space-y-2">
                 {bans.map(b => (
-                  <div key={b.id} className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 flex items-center gap-3">
+                  <div key={b.id} className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center ${b.type === 'ban' ? 'bg-red-500/20' : 'bg-orange-500/20'}`}>
                       {b.type === 'ban' ? <Ban size={14} className="text-red-400" /> : <VolumeX size={14} className="text-orange-400" />}
                     </div>

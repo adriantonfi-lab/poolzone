@@ -41,14 +41,14 @@ function GroupCard({group,matches}:{group:string;matches:Match[]}) {
   const standings=buildStandings(matches)
   const played=matches.filter(m=>m.status==='finished'||m.status==='FT')
   return (
-    <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-[#2A2A4A] flex items-center justify-between">
-        <h2 className="font-bebas text-xl text-[#FFD700] tracking-wider">GRUPO {group}</h2>
+    <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
+      <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
+        <h2 className="font-sans text-xl text-[#00C896] tracking-wider">GRUPO {group}</h2>
         <span className="text-xs text-gray-400">{played.length}/{matches.length} jugados</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
-          <thead><tr className="border-b border-[#2A2A4A]">
+          <thead><tr className="border-b border-white/10">
             <th className="text-left px-3 py-2 text-gray-500 font-semibold w-6">#</th>
             <th className="text-left px-2 py-2 text-gray-500 font-semibold">Equipo</th>
             <th className="text-center px-2 py-2 text-gray-500 font-semibold">PJ</th>
@@ -58,11 +58,11 @@ function GroupCard({group,matches}:{group:string;matches:Match[]}) {
             <th className="text-center px-2 py-2 text-gray-500 font-semibold">GF</th>
             <th className="text-center px-2 py-2 text-gray-500 font-semibold">GC</th>
             <th className="text-center px-2 py-2 text-gray-500 font-semibold">DIF</th>
-            <th className="text-center px-2 py-2 text-[#FFD700] font-bold">PTS</th>
+            <th className="text-center px-2 py-2 text-[#00C896] font-bold">PTS</th>
           </tr></thead>
           <tbody>
             {standings.map((team,i)=>(
-              <tr key={team.name} className={`border-b border-[#2A2A4A]/50 ${i<2?'bg-[#22C55E]/5':''}`}>
+              <tr key={team.name} className={`border-b border-white/10/50 ${i<2?'bg-[#22C55E]/5':''}`}>
                 <td className="px-3 py-2.5"><span className={`font-bold ${i<2?'text-[#22C55E]':'text-gray-500'}`}>{i+1}</span></td>
                 <td className="px-2 py-2.5"><div className="flex items-center gap-2"><FlagImg code={team.code} size={16}/><span className={`font-semibold truncate max-w-[100px] ${i<2?'text-white':'text-gray-300'}`}>{team.name}</span></div></td>
                 <td className="text-center px-2 py-2.5 text-gray-400">{team.pj}</td>
@@ -72,22 +72,22 @@ function GroupCard({group,matches}:{group:string;matches:Match[]}) {
                 <td className="text-center px-2 py-2.5 text-gray-400">{team.gf}</td>
                 <td className="text-center px-2 py-2.5 text-gray-400">{team.gc}</td>
                 <td className={`text-center px-2 py-2.5 font-semibold ${team.dif>0?'text-[#22C55E]':team.dif<0?'text-red-400':'text-gray-400'}`}>{team.dif>0?'+':''}{team.dif}</td>
-                <td className="text-center px-2 py-2.5 font-bold text-[#FFD700]">{team.pts}</td>
+                <td className="text-center px-2 py-2.5 font-bold text-[#00C896]">{team.pts}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <button onClick={()=>setShowMatches(o=>!o)} className="w-full px-4 py-2.5 text-xs text-gray-400 hover:text-white border-t border-[#2A2A4A] transition-colors flex items-center justify-center gap-1">
+      <button onClick={()=>setShowMatches(o=>!o)} className="w-full px-4 py-2.5 text-xs text-gray-400 hover:text-white border-t border-white/10 transition-colors flex items-center justify-center gap-1">
         {showMatches?'▲ Ocultar partidos':'▼ Ver partidos del grupo'}
       </button>
       {showMatches&&(
-        <div className="px-3 pb-3 space-y-2 border-t border-[#2A2A4A]">
+        <div className="px-3 pb-3 space-y-2 border-t border-white/10">
           {matches.map(m=>{
             const isFinished=m.status==='finished'||m.status==='FT'
             const isLive=m.status==='live'||m.status==='1H'||m.status==='2H'||m.status==='HT'
             return(
-              <div key={m.id} className="flex items-center gap-2 bg-[#0D0D0D] rounded-xl px-3 py-2 mt-2">
+              <div key={m.id} className="flex items-center gap-2 bg-[#080812] rounded-xl px-3 py-2 mt-2">
                 <div className="flex items-center gap-1.5 flex-1 justify-end">
                   <span className="text-xs font-semibold text-white text-right truncate">{m.home_team}</span>
                   <FlagImg code={m.home_team_code} size={16}/>
@@ -95,7 +95,7 @@ function GroupCard({group,matches}:{group:string;matches:Match[]}) {
                 <div className="min-w-[52px] text-center">
                   {isLive?(<span className="flex items-center justify-center gap-1 text-[#22C55E] font-bold text-sm"><span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse"/>{m.home_score}-{m.away_score}</span>)
                   :isFinished?(<span className="font-bold text-sm text-white">{m.home_score}-{m.away_score}</span>)
-                  :(<div className="text-center"><div className="text-[10px] text-[#FFD700] font-bold">{formatTime(m.match_date)}</div><div className="text-[10px] text-gray-500">{formatDate(m.match_date)}</div></div>)}
+                  :(<div className="text-center"><div className="text-[10px] text-[#00C896] font-bold">{formatTime(m.match_date)}</div><div className="text-[10px] text-gray-500">{formatDate(m.match_date)}</div></div>)}
                 </div>
                 <div className="flex items-center gap-1.5 flex-1">
                   <FlagImg code={m.away_team_code} size={16}/>
@@ -117,16 +117,16 @@ export default function GruposPage() {
     const supabase=createClient()
     supabase.from('matches').select('*').eq('stage','Group Stage').order('match_date',{ascending:true}).then(({data})=>{setMatches(data||[]);setLoading(false)})
   },[])
-  if(loading) return <div className="flex items-center justify-center h-64"><Loader2 size={32} className="animate-spin text-[#FFD700]"/></div>
+  if(loading) return <div className="flex items-center justify-center h-64"><Loader2 size={32} className="animate-spin text-[#00C896]"/></div>
   const byGroup: Record<string,Match[]>={}
   for(const m of matches){const g=m.group_name||'X';if(!byGroup[g])byGroup[g]=[];byGroup[g].push(m)}
   const groups=Object.keys(byGroup).sort()
   return (
     <div className="px-4 py-6 max-w-4xl mx-auto">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4"><ArrowLeft size={20}/>Volver</Link>
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4"><ArrowLeft size={20}/>Volver</Link>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-bebas text-4xl text-white tracking-wider leading-none">FASE DE GRUPOS</h1>
+          <h1 className="font-sans text-4xl text-white tracking-wider leading-none">FASE DE GRUPOS</h1>
           <p className="text-sm text-[#86EFAC] font-semibold">FIFA World Cup 2026™</p>
         </div>
         <Link href="/bracket" className="flex items-center gap-2 bg-[#A855F7]/20 border border-[#A855F7]/30 text-[#A855F7] font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#A855F7]/30 transition-all">

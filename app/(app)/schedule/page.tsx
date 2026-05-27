@@ -136,14 +136,14 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
 
   return (
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
-      <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
-        <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
+      <div className="bg-[#0D0D1A] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-white/10 max-h-[90dvh] flex flex-col">
+        <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-2">
             <FlagImg code={homeTeamCode} size={24} />
-            <span className="font-bebas text-xl text-white tracking-wider">{homeTeam} vs {awayTeam}</span>
+            <span className="font-sans text-xl text-white tracking-wider">{homeTeam} vs {awayTeam}</span>
             <FlagImg code={awayTeamCode} size={24} />
           </div>
-          <button onClick={onClose} className="text-white hover:text-[#FFD700]"><X size={22} /></button>
+          <button onClick={onClose} className="text-white hover:text-[#00C896]"><X size={22} /></button>
         </div>
         <div className="overflow-y-auto flex-1 p-4">
           {loading ? (
@@ -155,24 +155,24 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
             <div className="text-base text-white leading-relaxed whitespace-pre-wrap mb-4">{stats}</div>
           )}
           {!loading && !chatMode && (
-            <div className="border-t border-[#2A2A4A] pt-4">
+            <div className="border-t border-white/10 pt-4">
               <p className="text-base font-bold text-white mb-3">¿Querés saber más de algún equipo?</p>
               <div className="flex gap-3 mb-4">
                 <button onClick={() => handleTeamSelect(homeTeam)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#0D0D0D] border border-[#2A2A4A] hover:border-[#FFD700] rounded-xl px-3 py-3 text-base font-bold text-white transition-all">
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#080812] border border-white/10 hover:border-[#00C896] rounded-xl px-3 py-3 text-base font-bold text-white transition-all">
                   <FlagImg code={homeTeamCode} size={24} />{homeTeam}
                 </button>
                 <button onClick={() => handleTeamSelect(awayTeam)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#0D0D0D] border border-[#2A2A4A] hover:border-[#FFD700] rounded-xl px-3 py-3 text-base font-bold text-white transition-all">
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#080812] border border-white/10 hover:border-[#00C896] rounded-xl px-3 py-3 text-base font-bold text-white transition-all">
                   <FlagImg code={awayTeamCode} size={24} />{awayTeam}
                 </button>
               </div>
             </div>
           )}
           {chatMode && (
-            <div className="border-t border-[#2A2A4A] pt-4">
+            <div className="border-t border-white/10 pt-4">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-base font-bold text-[#FFD700]">{selectedTeam}</p>
+                <p className="text-base font-bold text-[#00C896]">{selectedTeam}</p>
                 <span className="text-sm text-white font-semibold">{questionsLeft} preguntas restantes</span>
               </div>
               {teamLoading ? (
@@ -185,7 +185,7 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
               {messages.map((m, i) => (
                 <div key={i} className={`mb-3 ${m.role === 'user' ? 'text-right' : 'text-left'}`}>
                   <div className={`inline-block max-w-[85%] px-3 py-2 rounded-xl text-base ${
-                    m.role === 'user' ? 'bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20' : 'bg-[#0D0D0D] text-white border border-[#2A2A4A]'
+                    m.role === 'user' ? 'bg-[#00C896]/10 text-[#00C896] border border-[#00C896]/20' : 'bg-[#080812] text-white border border-white/10'
                   }`}>{m.content}</div>
                 </div>
               ))}
@@ -198,22 +198,22 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
           )}
         </div>
         {chatMode && questionsLeft > 0 && (
-          <div className="p-4 border-t border-[#2A2A4A] shrink-0">
+          <div className="p-4 border-t border-white/10 shrink-0">
             <div className="flex gap-2">
               <input value={question} onChange={e => setQuestion(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleChat()}
                 placeholder={`Preguntá sobre ${selectedTeam}...`}
-                className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#FFD700]"
+                className="flex-1 bg-[#080812] border border-white/10 rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#00C896]"
               />
               <button onClick={handleChat} disabled={chatLoading || !question.trim()}
-                className="bg-[#FFD700] text-black rounded-xl px-4 py-3 disabled:opacity-50">
+                className="bg-[#00C896] text-black rounded-xl px-4 py-3 disabled:opacity-50">
                 <Send size={18} />
               </button>
             </div>
           </div>
         )}
         {chatMode && questionsLeft === 0 && (
-          <div className="px-4 py-3 border-t border-[#2A2A4A] text-center text-base text-white shrink-0">
+          <div className="px-4 py-3 border-t border-white/10 text-center text-base text-white shrink-0">
             Límite de 3 preguntas alcanzado.
           </div>
         )}
@@ -230,11 +230,11 @@ function MatchCard({ match, locale = 'es' }: { match: Match; locale?: string }) 
 
   return (
     <>
-      <div className="bg-[#0D0D0D] rounded-xl p-4 mb-3">
+      <div className="bg-[#080812] rounded-xl p-4 mb-3">
         <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3">
           <span className="text-base font-bold text-white">🇦🇷 {times.ar}</span>
           <span className="text-base font-bold text-white">🇨🇴 {times.co}</span>
-          <span className="text-base font-bold text-[#FFD700]">🇺🇸 ET {times.et}</span>
+          <span className="text-base font-bold text-[#00C896]">🇺🇸 ET {times.et}</span>
           <span className="text-base font-bold text-white">🇺🇸 CT {times.ct}</span>
           <span className="text-base font-bold text-white">🇺🇸 PT {times.pt}</span>
         </div>
@@ -243,14 +243,14 @@ function MatchCard({ match, locale = 'es' }: { match: Match; locale?: string }) 
             <FlagImg code={match.home_team_code} size={38} />
             <span className="text-xl font-bold text-white">{translateTeam(match.home_team, locale)}</span>
           </div>
-          <div className="px-3 py-1 bg-[#1A1A2E] rounded-lg mx-2 shrink-0 min-w-[64px] text-center">
+          <div className="px-3 py-1 bg-[#0D0D1A] rounded-lg mx-2 shrink-0 min-w-[64px] text-center">
             {isLive ? (
-              <span className="flex items-center justify-center gap-1 text-[#22C55E] font-bebas text-xl">
+              <span className="flex items-center justify-center gap-1 text-[#22C55E] font-sans text-xl">
                 <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
                 {match.home_score ?? 0}-{match.away_score ?? 0}
               </span>
             ) : isFinished ? (
-              <span className="font-bebas text-xl text-white">{match.home_score ?? 0}-{match.away_score ?? 0}</span>
+              <span className="font-sans text-xl text-white">{match.home_score ?? 0}-{match.away_score ?? 0}</span>
             ) : (
               <span className="text-white text-base font-bold">vs</span>
             )}
@@ -263,7 +263,7 @@ function MatchCard({ match, locale = 'es' }: { match: Match; locale?: string }) 
         <div className="mt-3 flex items-center justify-between">
           <span className="text-sm font-semibold text-[#22C55E]">📍 {match.venue} — {match.city}</span>
           <button onClick={() => setShowStats(true)}
-            className="flex items-center gap-1 text-base font-bold text-[#FFD700] hover:text-[#FFD700]/80 transition-colors">
+            className="flex items-center gap-1 text-base font-bold text-[#00C896] hover:text-[#00C896]/80 transition-colors">
             <BarChart2 size={16} />Stats
           </button>
         </div>
@@ -276,9 +276,9 @@ function MatchCard({ match, locale = 'es' }: { match: Match; locale?: string }) 
 function SectionWrapper({ title, color, children }: { title: string; color: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(true)
   return (
-    <div className="mb-6 bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
-      <button onClick={() => setOpen(o => !o)} className="w-full flex items-center justify-between px-4 py-3 border-b border-[#2A2A4A]">
-        <h2 className={`font-bebas text-2xl tracking-wider ${color}`}>{title}</h2>
+    <div className="mb-6 bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
+      <button onClick={() => setOpen(o => !o)} className="w-full flex items-center justify-between px-4 py-3 border-b border-white/10">
+        <h2 className={`font-sans text-2xl tracking-wider ${color}`}>{title}</h2>
         {open ? <ChevronUp size={20} className={color} /> : <ChevronDown size={20} className={color} />}
       </button>
       {open && <div className="p-3">{children}</div>}
@@ -331,7 +331,7 @@ export default function FixturePage() {
 
   if (!mounted || loading) return (
     <div className="flex items-center justify-center h-64">
-      <Loader2 size={32} className="animate-spin text-[#FFD700]" />
+      <Loader2 size={32} className="animate-spin text-[#00C896]" />
     </div>
   )
 
@@ -339,15 +339,15 @@ export default function FixturePage() {
   const knockoutMatches = matches.filter(m => m.stage !== 'Group Stage')
   const stageOrder = ['Octavos de Final', 'Cuartos de Final', 'Semifinal', 'Tercer Puesto', 'Final']
   const btnBase = 'px-4 py-2 rounded-xl text-base font-bold transition-all'
-  const btnActive = 'bg-[#FFD700] text-black'
-  const btnInactive = 'bg-[#1A1A2E] text-white border border-[#2A2A4A] hover:border-[#FFD700]'
+  const btnActive = 'bg-[#00C896] text-black'
+  const btnInactive = 'bg-[#0D0D1A] text-white border border-white/10 hover:border-[#00C896]'
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto md:max-w-4xl">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
         <ArrowLeft size={20} />Volver
       </Link>
-      <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">FIXTURE</h1>
+      <h1 className="font-sans text-5xl text-white tracking-wider mb-1">FIXTURE</h1>
       <p className="text-sm font-semibold text-[#86EFAC] mb-5">Horarios ARG 🇦🇷 · COL 🇨🇴 · ET 🇺🇸 · CT · PT</p>
       <div className="flex gap-2 mb-6">
         <button className={`${btnBase} ${view === 'dia' ? btnActive : btnInactive}`} onClick={() => setView('dia')}>Por Día</button>
@@ -358,7 +358,7 @@ export default function FixturePage() {
       {view === 'grupo' && (
         <>
           {Object.entries(groupBy(groupMatches, m => m.group_name || 'X')).sort(([a], [b]) => a.localeCompare(b)).map(([group, ms]) => (
-            <SectionWrapper key={group} title={`Grupo ${group}`} color="text-[#FFD700]">
+            <SectionWrapper key={group} title={`Grupo ${group}`} color="text-[#00C896]">
               {Object.entries(groupBy(ms, m => formatDay(m.match_date, locale))).map(([day, dms]) => (
                 <div key={day}><DayLabel day={day} />{dms.map(m => <MatchCard key={m.id} match={m} locale={locale} />)}</div>
               ))}
@@ -381,7 +381,7 @@ export default function FixturePage() {
       {view === 'dia' && (
         <>
           {Object.entries(groupBy(matches, m => formatDay(m.match_date, locale))).map(([day, ms]) => (
-            <SectionWrapper key={day} title={day} color="text-[#FFD700]">
+            <SectionWrapper key={day} title={day} color="text-[#00C896]">
               {ms.map(m => <MatchCard key={m.id} match={m} locale={locale} />)}
             </SectionWrapper>
           ))}

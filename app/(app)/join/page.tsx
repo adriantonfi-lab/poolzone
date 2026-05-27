@@ -25,7 +25,7 @@ const PAYMENT_METHODS = [
   { id: 'venmo', label: 'Venmo', icon: Wallet, color: 'text-blue-400' },
   { id: 'paypal', label: 'PayPal', icon: DollarSign, color: 'text-blue-500' },
   { id: 'transferencia', label: 'Wire', icon: Banknote, color: 'text-[#22C55E]' },
-  { id: 'efectivo', label: 'Cash', icon: DollarSign, color: 'text-[#FFD700]' },
+  { id: 'efectivo', label: 'Cash', icon: DollarSign, color: 'text-[#00C896]' },
 ]
 
 function calcFee(referralsCount: number, isInvited: boolean): number {
@@ -118,7 +118,7 @@ export default function InscriptionPage() {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
   }
 
-  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-white font-bebas text-2xl animate-pulse">Cargando...</p></div>
+  if (loading) return <div className="flex items-center justify-center h-64"><p className="text-white font-sans text-2xl animate-pulse">Cargando...</p></div>
 
   const fee = calcFee(profile?.referrals_count || 0, !!profile?.referred_by)
   const discount = calcDiscount(profile?.referrals_count || 0, !!profile?.referred_by)
@@ -127,26 +127,26 @@ export default function InscriptionPage() {
   const isPaid = profile?.inscription_status === 'paid'
   const isReview = payments.some(p => p.status === 'pending')
   const btnBase = 'px-4 py-2 rounded-xl text-sm font-bold transition-all'
-  const btnActive = 'bg-[#FFD700] text-black'
-  const btnInactive = 'bg-[#1A1A2E] text-white border border-[#2A2A4A] hover:border-[#FFD700]'
+  const btnActive = 'bg-[#00C896] text-black'
+  const btnInactive = 'bg-[#0D0D1A] text-white border border-white/10 hover:border-[#00C896]'
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto pb-24 md:pb-6">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
         <ArrowLeft size={20} />Volver
       </Link>
 
-      <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">{locale === 'en' ? 'Registration' : 'Inscripción'}</h1>
+      <h1 className="font-sans text-5xl text-white tracking-wider mb-1">{locale === 'en' ? 'Registration' : 'Inscripción'}</h1>
       <p className="text-sm font-semibold text-[#86EFAC] mb-6">Mundial 2026 · PoolZone</p>
 
       {/* Estado */}
-      <div className={`rounded-2xl p-5 mb-6 border-2 ${isPaid ? 'bg-[#22C55E]/10 border-[#22C55E]/40' : isReview ? 'bg-[#FFD700]/10 border-[#FFD700]/40' : 'bg-[#1A1A2E] border-[#2A2A4A]'}`}>
+      <div className={`rounded-2xl p-5 mb-6 border-2 ${isPaid ? 'bg-[#22C55E]/10 border-[#22C55E]/40' : isReview ? 'bg-[#00C896]/10 border-[#00C896]/40' : 'bg-[#0D0D1A] border-white/10'}`}>
         <div className="flex items-center gap-3">
-          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl ${isPaid ? 'bg-[#22C55E]/20' : isReview ? 'bg-[#FFD700]/20' : 'bg-[#2A2A4A]'}`}>
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl ${isPaid ? 'bg-[#22C55E]/20' : isReview ? 'bg-[#00C896]/20' : 'bg-[#2A2A4A]'}`}>
             {isPaid ? '✅' : isReview ? '⏳' : '⚽'}
           </div>
           <div className="flex-1">
-            <p className="font-bebas text-2xl text-white tracking-wider">
+            <p className="font-sans text-2xl text-white tracking-wider">
               {isPaid ? (locale === 'en' ? 'Registered!' : '¡Inscripto!') : isReview ? (locale === 'en' ? 'Under review' : 'En revisión') : (locale === 'en' ? 'Payment pending' : 'Pendiente de pago')}
             </p>
             <p className="text-sm font-semibold text-white">
@@ -156,7 +156,7 @@ export default function InscriptionPage() {
             </p>
           </div>
           <div className="text-right">
-            <p className="font-bebas text-4xl text-[#FFD700]">${fee}</p>
+            <p className="font-sans text-4xl text-[#00C896]">${fee}</p>
             {discount > 0 && <p className="text-xs text-[#22C55E] font-bold">-${discount} {locale === 'en' ? 'discount' : 'descuento'}</p>}
           </div>
         </div>
@@ -182,8 +182,8 @@ export default function InscriptionPage() {
       {/* TAB ESTADO */}
       {tab === 'estado' && (
         <div className="space-y-4">
-          <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-5">
-            <p className="font-bebas text-lg text-white tracking-wider mb-4">{locale === 'en' ? 'PAYMENT BREAKDOWN' : 'DESGLOSE DE PAGO'}</p>
+          <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-5">
+            <p className="font-sans text-lg text-white tracking-wider mb-4">{locale === 'en' ? 'PAYMENT BREAKDOWN' : 'DESGLOSE DE PAGO'}</p>
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-base text-white">{isInvited ? (locale === 'en' ? 'Guest' : 'Invitado') : (locale === 'en' ? 'Family' : 'Familiar')}</span>
@@ -195,26 +195,26 @@ export default function InscriptionPage() {
                   <span className="text-base font-bold text-[#22C55E]">-${discount}</span>
                 </div>
               )}
-              <div className="border-t border-[#2A2A4A] pt-2 flex justify-between">
+              <div className="border-t border-white/10 pt-2 flex justify-between">
                 <span className="text-base font-bold text-white">{locale === 'en' ? 'Total to pay' : 'Total a pagar'}</span>
-                <span className="font-bebas text-3xl text-[#FFD700]">${fee}</span>
+                <span className="font-sans text-3xl text-[#00C896]">${fee}</span>
               </div>
               {fee === 0 && <p className="text-sm font-bold text-[#22C55E] text-center">🎉 {locale === 'en' ? 'Your registration is free thanks to your referrals!' : '¡Tu inscripción es gratis por tus referidos!'}</p>}
             </div>
           </div>
 
           {payments.length > 0 && (
-            <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
-              <div className="px-4 py-3 border-b border-[#2A2A4A]">
-                <p className="font-bebas text-lg text-white tracking-wider">{locale === 'en' ? 'PAYMENT HISTORY' : 'COMPROBANTES ENVIADOS'}</p>
+            <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-white/10">
+                <p className="font-sans text-lg text-white tracking-wider">{locale === 'en' ? 'PAYMENT HISTORY' : 'COMPROBANTES ENVIADOS'}</p>
               </div>
               {payments.map(p => (
-                <div key={p.id} className="flex items-center justify-between px-4 py-3 border-b border-[#2A2A4A] last:border-0">
+                <div key={p.id} className="flex items-center justify-between px-4 py-3 border-b border-white/10 last:border-0">
                   <div>
                     <p className="text-base font-bold text-white">{p.payment_method} — ${p.amount}</p>
                     <p className="text-xs text-gray-400">{new Date(p.created_at).toLocaleDateString(locale === 'en' ? 'en-US' : 'es-ES')}</p>
                   </div>
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${p.status === 'approved' ? 'bg-[#22C55E]/20 text-[#22C55E]' : p.status === 'pending' ? 'bg-[#FFD700]/20 text-[#FFD700]' : 'bg-red-500/20 text-red-400'}`}>
+                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${p.status === 'approved' ? 'bg-[#22C55E]/20 text-[#22C55E]' : p.status === 'pending' ? 'bg-[#00C896]/20 text-[#00C896]' : 'bg-red-500/20 text-red-400'}`}>
                     {p.status === 'approved' ? (locale === 'en' ? '✅ Approved' : '✅ Aprobado') : p.status === 'pending' ? (locale === 'en' ? '⏳ Under review' : '⏳ En revisión') : (locale === 'en' ? '❌ Rejected' : '❌ Rechazado')}
                   </span>
                 </div>
@@ -223,22 +223,22 @@ export default function InscriptionPage() {
           )}
 
           {/* Premios */}
-          <div className="bg-gradient-to-r from-[#FFD700]/10 to-[#FFA500]/10 border border-[#FFD700]/30 rounded-2xl p-5">
-            <p className="font-bebas text-xl text-[#FFD700] tracking-wider mb-4">{locale === 'en' ? 'TOURNAMENT PRIZES' : 'PREMIOS DEL TORNEO'}</p>
+          <div className="bg-gradient-to-r from-[#00C896]/10 to-[#00b085]/10 border border-[#00C896]/30 rounded-2xl p-5">
+            <p className="font-sans text-xl text-[#00C896] tracking-wider mb-4">{locale === 'en' ? 'TOURNAMENT PRIZES' : 'PREMIOS DEL TORNEO'}</p>
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="bg-[#0D0D0D] rounded-2xl p-4">
-                <Trophy size={32} className="text-[#FFD700] mx-auto mb-2" />
-                <p className="font-bebas text-4xl text-[#FFD700]">60%</p>
+              <div className="bg-[#080812] rounded-2xl p-4">
+                <Trophy size={32} className="text-[#00C896] mx-auto mb-2" />
+                <p className="font-sans text-4xl text-[#00C896]">60%</p>
                 <p className="text-sm font-bold text-white mt-1">{locale === 'en' ? '1st place' : '1° lugar'}</p>
               </div>
-              <div className="bg-[#0D0D0D] rounded-2xl p-4">
+              <div className="bg-[#080812] rounded-2xl p-4">
                 <Trophy size={28} className="text-gray-300 mx-auto mb-2" />
-                <p className="font-bebas text-4xl text-gray-300">30%</p>
+                <p className="font-sans text-4xl text-gray-300">30%</p>
                 <p className="text-sm font-bold text-white mt-1">{locale === 'en' ? '2nd place' : '2° lugar'}</p>
               </div>
-              <div className="bg-[#0D0D0D] rounded-2xl p-4">
+              <div className="bg-[#080812] rounded-2xl p-4">
                 <Trophy size={24} className="text-amber-600 mx-auto mb-2" />
-                <p className="font-bebas text-4xl text-amber-600">10%</p>
+                <p className="font-sans text-4xl text-amber-600">10%</p>
                 <p className="text-sm font-bold text-white mt-1">{locale === 'en' ? '3rd place' : '3° lugar'}</p>
               </div>
             </div>
@@ -249,15 +249,15 @@ export default function InscriptionPage() {
       {/* TAB PAGAR */}
       {tab === 'pagar' && !isPaid && (
         <div className="space-y-4">
-          <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-5">
-            <p className="font-bebas text-lg text-white tracking-wider mb-4">{locale === 'en' ? 'PAYMENT METHOD' : 'MÉTODO DE PAGO'}</p>
+          <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-5">
+            <p className="font-sans text-lg text-white tracking-wider mb-4">{locale === 'en' ? 'PAYMENT METHOD' : 'MÉTODO DE PAGO'}</p>
             <div className="grid grid-cols-3 gap-2 mb-4">
               {PAYMENT_METHODS.map(m => {
                 const Icon = m.icon
                 return (
                   <button key={m.id} onClick={() => setPaymentMethod(m.id)}
-                    className={`flex flex-col items-center gap-2 py-4 rounded-xl border text-sm font-bold transition-all ${paymentMethod === m.id ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'}`}>
-                    <Icon size={24} className={paymentMethod === m.id ? 'text-[#FFD700]' : m.color} />
+                    className={`flex flex-col items-center gap-2 py-4 rounded-xl border text-sm font-bold transition-all ${paymentMethod === m.id ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'}`}>
+                    <Icon size={24} className={paymentMethod === m.id ? 'text-[#00C896]' : m.color} />
                     {m.label}
                   </button>
                 )
@@ -265,8 +265,8 @@ export default function InscriptionPage() {
             </div>
             <div className="mb-4">
               <p className="text-sm font-bold text-white mb-2">{locale === 'en' ? 'Amount' : 'Monto'}</p>
-              <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 flex items-center justify-between">
-                <span className="font-bebas text-4xl text-[#FFD700]">${fee}</span>
+              <div className="bg-[#080812] border border-white/10 rounded-xl px-4 py-3 flex items-center justify-between">
+                <span className="font-sans text-4xl text-[#00C896]">${fee}</span>
                 <span className="text-sm text-gray-400">USD</span>
               </div>
             </div>
@@ -274,16 +274,16 @@ export default function InscriptionPage() {
               <p className="text-sm font-bold text-white mb-2">{locale === 'en' ? 'Notes / Reference (optional)' : 'Notas / Referencia (opcional)'}</p>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder={locale === 'en' ? 'Confirmation number, account name, etc.' : 'Número de confirmación, nombre del titular, etc.'}
-                rows={3} className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#FFD700] resize-none" />
+                rows={3} className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#00C896] resize-none" />
             </div>
-            <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-4 mb-4">
+            <div className="bg-[#080812] border border-white/10 rounded-xl p-4 mb-4">
               <p className="text-sm font-bold text-white mb-2">📍 {locale === 'en' ? 'Payment details' : 'Datos de pago'}</p>
               <p className="text-sm text-[#86EFAC]">Zelle / Venmo: <span className="font-bold text-white">che.bacano2026@gmail.com</span></p>
               <p className="text-sm text-[#86EFAC]">PayPal: <span className="font-bold text-white">@chebacano</span></p>
               <p className="text-xs text-gray-400 mt-2">{locale === 'en' ? 'Send your receipt and an admin will approve it within 24hrs.' : 'Enviá el comprobante y un admin lo aprobará en menos de 24hs.'}</p>
             </div>
             <button onClick={handleSubmitPayment} disabled={!paymentMethod || submitting}
-              className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
+              className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
               {submitting ? '...' : (locale === 'en' ? '✅ Confirm payment made' : '✅ Confirmar pago realizado')}
             </button>
           </div>
@@ -293,11 +293,11 @@ export default function InscriptionPage() {
       {/* TAB REFERIDOS */}
       {tab === 'referidos' && (
         <div className="space-y-4">
-          <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-5">
-            <p className="font-bebas text-lg text-[#FFD700] tracking-wider mb-3">{locale === 'en' ? 'MY REFERRAL CODE' : 'MI CÓDIGO DE REFERIDO'}</p>
-            <div className="flex items-center gap-3 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 mb-3">
-              <span className="font-bebas text-3xl text-[#FFD700] tracking-widest flex-1">{profile?.referral_code || '...'}</span>
-              <button onClick={copyCode} className="text-gray-400 hover:text-[#FFD700] transition-colors">
+          <div className="bg-[#0D0D1A] border border-[#00C896]/30 rounded-2xl p-5">
+            <p className="font-sans text-lg text-[#00C896] tracking-wider mb-3">{locale === 'en' ? 'MY REFERRAL CODE' : 'MI CÓDIGO DE REFERIDO'}</p>
+            <div className="flex items-center gap-3 bg-[#080812] border border-white/10 rounded-xl px-4 py-3 mb-3">
+              <span className="font-sans text-3xl text-[#00C896] tracking-widest flex-1">{profile?.referral_code || '...'}</span>
+              <button onClick={copyCode} className="text-gray-400 hover:text-[#00C896] transition-colors">
                 {copied ? <Check size={20} className="text-[#22C55E]" /> : <Copy size={20} />}
               </button>
             </div>
@@ -306,14 +306,14 @@ export default function InscriptionPage() {
             </button>
           </div>
 
-          <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-5">
-            <p className="font-bebas text-lg text-white tracking-wider mb-3">{locale === 'en' ? 'DISCOUNT SYSTEM' : 'SISTEMA DE DESCUENTOS'}</p>
+          <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-5">
+            <p className="font-sans text-lg text-white tracking-wider mb-3">{locale === 'en' ? 'DISCOUNT SYSTEM' : 'SISTEMA DE DESCUENTOS'}</p>
             <div className="space-y-2">
               {[1,2,3,4,5].map(n => {
                 const desc = Math.min(n * 5, 25)
                 const active = (profile?.referrals_count || 0) >= n
                 return (
-                  <div key={n} className={`flex items-center justify-between px-3 py-2.5 rounded-xl ${active ? 'bg-[#22C55E]/10 border border-[#22C55E]/20' : 'bg-[#0D0D0D] border border-[#2A2A4A]'}`}>
+                  <div key={n} className={`flex items-center justify-between px-3 py-2.5 rounded-xl ${active ? 'bg-[#22C55E]/10 border border-[#22C55E]/20' : 'bg-[#080812] border border-white/10'}`}>
                     <div className="flex items-center gap-2">
                       <UserPlus size={16} className={active ? 'text-[#22C55E]' : 'text-gray-500'} />
                       <span className={`text-sm font-bold ${active ? 'text-[#22C55E]' : 'text-gray-400'}`}>
@@ -337,15 +337,15 @@ export default function InscriptionPage() {
           </div>
 
           {referredUsers.length > 0 && (
-            <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
-              <div className="px-4 py-3 border-b border-[#2A2A4A] flex items-center gap-2">
+            <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-white/10 flex items-center gap-2">
                 <Users size={16} className="text-white" />
-                <p className="font-bebas text-lg text-white tracking-wider">{locale === 'en' ? 'YOUR REFERRALS' : 'TUS REFERIDOS'} ({referredUsers.length})</p>
+                <p className="font-sans text-lg text-white tracking-wider">{locale === 'en' ? 'YOUR REFERRALS' : 'TUS REFERIDOS'} ({referredUsers.length})</p>
               </div>
               {referredUsers.map((u, i) => (
-                <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-[#2A2A4A] last:border-0">
+                <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-white/10 last:border-0">
                   <p className="text-base font-bold text-white">@{u.username}</p>
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${u.inscription_status === 'paid' ? 'bg-[#22C55E]/20 text-[#22C55E]' : 'bg-[#FFD700]/20 text-[#FFD700]'}`}>
+                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${u.inscription_status === 'paid' ? 'bg-[#22C55E]/20 text-[#22C55E]' : 'bg-[#00C896]/20 text-[#00C896]'}`}>
                     {u.inscription_status === 'paid' ? (locale === 'en' ? '✅ Paid' : '✅ Pagado') : (locale === 'en' ? '⏳ Pending' : '⏳ Pendiente')}
                   </span>
                 </div>
@@ -354,14 +354,14 @@ export default function InscriptionPage() {
           )}
 
           {!profile?.referred_by && (
-            <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-5">
-              <p className="font-bebas text-lg text-white tracking-wider mb-3">{locale === 'en' ? 'HAVE A REFERRAL CODE?' : '¿TENÉS UN CÓDIGO DE REFERIDO?'}</p>
+            <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-5">
+              <p className="font-sans text-lg text-white tracking-wider mb-3">{locale === 'en' ? 'HAVE A REFERRAL CODE?' : '¿TENÉS UN CÓDIGO DE REFERIDO?'}</p>
               <div className="flex gap-2">
                 <input value={referralInput} onChange={e => setReferralInput(e.target.value.toUpperCase())}
                   placeholder="Ej: AFTA42"
-                  className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700] uppercase" />
+                  className="flex-1 bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#00C896] uppercase" />
                 <button onClick={handleApplyReferral} disabled={!referralInput.trim() || submitting}
-                  className="bg-[#FFD700] text-black font-bold px-4 py-2.5 rounded-xl text-sm disabled:opacity-40">
+                  className="bg-[#00C896] text-black font-bold px-4 py-2.5 rounded-xl text-sm disabled:opacity-40">
                   {locale === 'en' ? 'Apply' : 'Aplicar'}
                 </button>
               </div>

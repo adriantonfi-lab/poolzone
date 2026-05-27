@@ -184,7 +184,7 @@ export default function RegisterPage() {
     }
   }
 
-  const inputClass = "w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#00C896]"
+  const inputClass = "w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#00C896]"
 
   return (
     <div className="min-h-dvh bg-[#0D0D1A] flex items-center justify-center p-4">
@@ -196,7 +196,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-6">
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-6">
           {/* Progress */}
           <div className="flex gap-2 mb-6">
             {[1,2,3].map(s => (
@@ -249,7 +249,7 @@ export default function RegisterPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">Foto de perfil</label>
                 <div onClick={() => !compressing && fileRef.current?.click()}
-                  className="relative cursor-pointer flex flex-col items-center justify-center h-28 border-2 border-dashed border-[#2A2A4A] hover:border-[#00C896]/50 rounded-xl overflow-hidden">
+                  className="relative cursor-pointer flex flex-col items-center justify-center h-28 border-2 border-dashed border-white/10 hover:border-[#00C896]/50 rounded-xl overflow-hidden">
                   {compressing ? (
                     <div className="flex flex-col items-center gap-2">
                       <Loader2 size={24} className="text-[#00C896] animate-spin" />
@@ -286,7 +286,7 @@ export default function RegisterPage() {
                 </select>
               </div>
               <div className="flex gap-3">
-                <button type="button" onClick={() => setStep(1)} className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] text-gray-300 font-medium py-3 rounded-xl text-base">
+                <button type="button" onClick={() => setStep(1)} className="flex-1 bg-[#080812] border border-white/10 text-gray-300 font-medium py-3 rounded-xl text-base">
                   ← Atrás
                 </button>
                 <button type="submit" className="flex-1 bg-[#00C896] text-black font-bold py-3 rounded-xl text-base">
@@ -301,7 +301,7 @@ export default function RegisterPage() {
             <form onSubmit={handlePayment} className="space-y-4">
 
               {/* Resumen */}
-              <div className="bg-[#0D0D0D] border border-[#00C896]/20 rounded-xl p-4">
+              <div className="bg-[#080812] border border-[#00C896]/20 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-bold text-white">Inscripción Mundial 2026</span>
                   <span className="font-bold text-[#00C896] text-lg">$30</span>
@@ -319,25 +319,25 @@ export default function RegisterPage() {
                 <label className="block text-sm font-medium text-gray-300 mb-2">Método de pago</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button type="button" onClick={() => setPaymentMethod('card')}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all ${paymentMethod === 'card' ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-[#2A2A4A] text-white'}`}>
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all ${paymentMethod === 'card' ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 text-white'}`}>
                     <CreditCard size={16} />Tarjeta
                   </button>
                   <button type="button" onClick={() => setPaymentMethod('transfer')}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all ${paymentMethod === 'transfer' ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-[#2A2A4A] text-white'}`}>
+                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all ${paymentMethod === 'transfer' ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 text-white'}`}>
                     💸 Transferencia
                   </button>
                 </div>
               </div>
 
               {paymentMethod === 'card' && (
-                <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3 flex items-center gap-2">
+                <div className="bg-[#080812] border border-white/10 rounded-xl p-3 flex items-center gap-2">
                   <Lock size={14} className="text-[#00C896]" />
                   <p className="text-xs text-gray-400">Serás redirigido a Stripe — pago 100% seguro con SSL</p>
                 </div>
               )}
 
               {paymentMethod === 'transfer' && (
-                <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3">
+                <div className="bg-[#080812] border border-white/10 rounded-xl p-3">
                   <p className="text-xs text-gray-400">Pagarás por Zelle, Nequi o transferencia. Te daremos los datos en el próximo paso.</p>
                 </div>
               )}
@@ -352,7 +352,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="flex gap-3">
-                <button type="button" onClick={() => setStep(2)} className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] text-gray-300 font-medium py-3 rounded-xl text-sm">
+                <button type="button" onClick={() => setStep(2)} className="flex-1 bg-[#080812] border border-white/10 text-gray-300 font-medium py-3 rounded-xl text-sm">
                   ← Atrás
                 </button>
                 <button type="submit" disabled={paymentLoading || !agreed}

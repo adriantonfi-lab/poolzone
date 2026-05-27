@@ -44,11 +44,11 @@ function TypewriterText({ text }: { text: string }) {
 
   const renderFormatted = (content: string) => {
     return content.split('\n').map((line, i) => {
-      if (line.startsWith('## ')) return <p key={i} className="text-xl font-bebas text-[#FFD700] tracking-wider mt-3 mb-1">{line.replace('## ', '')}</p>
+      if (line.startsWith('## ')) return <p key={i} className="text-xl font-sans text-[#00C896] tracking-wider mt-3 mb-1">{line.replace('## ', '')}</p>
       if (line.startsWith('### ')) return <p key={i} className="text-base font-bold text-[#A855F7] mt-3 mb-1">{line.replace('### ', '')}</p>
       if (line.includes('**')) {
         const parts = line.split(/\*\*(.*?)\*\*/g)
-        return <p key={i} className="text-base text-white leading-relaxed mb-1">{parts.map((part, j) => j % 2 === 1 ? <span key={j} className="font-bold text-[#FFD700]">{part}</span> : part)}</p>
+        return <p key={i} className="text-base text-white leading-relaxed mb-1">{parts.map((part, j) => j % 2 === 1 ? <span key={j} className="font-bold text-[#00C896]">{part}</span> : part)}</p>
       }
       if (line.startsWith('- ')) return <p key={i} className="text-base text-white leading-relaxed mb-1 pl-2">• {line.slice(2)}</p>
       if (line.trim() === '') return <div key={i} className="h-2" />
@@ -135,13 +135,13 @@ export default function OraclePage() {
             <Sparkles size={24} className="text-white" />
           </div>
           <div>
-            <h1 className="font-bebas text-4xl text-white tracking-wider">EL ORÁCULO</h1>
+            <h1 className="font-sans text-4xl text-white tracking-wider">EL ORÁCULO</h1>
             <p className="text-sm font-semibold text-[#A855F7]">{locale === 'en' ? 'AI World Cup Expert' : 'Experto IA del Mundial'}</p>
           </div>
         </div>
         {!loadingQueries && (
           <div className="text-right">
-            <p className="text-3xl font-bebas text-[#FFD700]">{queriesLeft}</p>
+            <p className="text-3xl font-sans text-[#00C896]">{queriesLeft}</p>
             <p className="text-xs font-bold text-[#86EFAC] uppercase tracking-wider">{locale === 'en' ? 'queries left' : 'consultas'}</p>
           </div>
         )}
@@ -164,7 +164,7 @@ export default function OraclePage() {
               </div>
               <p className="text-base text-white leading-relaxed">
                 {locale === 'en' ? 'Welcome! Ask me anything about the World Cup. You have' : '¡Bienvenido! Preguntame lo que quieras sobre el Mundial. Tenés'}{' '}
-                <span className="font-bold text-[#FFD700]">{queriesLeft} {locale === 'en' ? 'queries' : 'consultas'}</span>{' '}
+                <span className="font-bold text-[#00C896]">{queriesLeft} {locale === 'en' ? 'queries' : 'consultas'}</span>{' '}
                 {locale === 'en' ? 'available.' : 'disponibles.'}
               </p>
             </div>
@@ -173,7 +173,7 @@ export default function OraclePage() {
               <div className="grid grid-cols-1 gap-2">
                 {(locale === 'en' ? SUGGESTED_QUESTIONS_EN : SUGGESTED_QUESTIONS_ES).map((q, i) => (
                   <button key={i} onClick={() => handleAsk(q)}
-                    className="text-left px-4 py-3 bg-[#1A1A2E] border border-[#2A2A4A] hover:border-[#A855F7] hover:bg-[#A855F7]/5 rounded-xl text-base text-white font-medium transition-all">
+                    className="text-left px-4 py-3 bg-[#0D0D1A] border border-white/10 hover:border-[#A855F7] hover:bg-[#A855F7]/5 rounded-xl text-base text-white font-medium transition-all">
                     ✦ {q}
                   </button>
                 ))}
@@ -188,7 +188,7 @@ export default function OraclePage() {
                 <Sparkles size={14} className="text-white" />
               </div>
             )}
-            <div className={`max-w-[88%] px-4 py-3 rounded-2xl text-base leading-relaxed ${m.role === 'user' ? 'bg-[#FFD700]/10 text-white border border-[#FFD700]/30 font-semibold' : 'bg-[#1A1A2E] border border-[#7C3AED]/30'}`}>
+            <div className={`max-w-[88%] px-4 py-3 rounded-2xl text-base leading-relaxed ${m.role === 'user' ? 'bg-[#00C896]/10 text-white border border-[#00C896]/30 font-semibold' : 'bg-[#0D0D1A] border border-[#7C3AED]/30'}`}>
               {m.role === 'oracle' ? <TypewriterText text={m.content} /> : <p>{m.content}</p>}
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function OraclePage() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#A855F7] flex items-center justify-center shrink-0 shadow-md shadow-purple-900/40">
               <Sparkles size={14} className="text-white" />
             </div>
-            <div className="bg-[#1A1A2E] border border-[#7C3AED]/30 rounded-2xl px-4 py-3">
+            <div className="bg-[#0D0D1A] border border-[#7C3AED]/30 rounded-2xl px-4 py-3">
               <div className="flex items-center gap-2 text-white">
                 <Loader2 size={16} className="animate-spin text-[#A855F7]" />
                 <span className="text-base">{locale === 'en' ? 'Analyzing...' : 'Analizando...'}</span>
@@ -209,7 +209,7 @@ export default function OraclePage() {
         <div ref={bottomRef} />
       </div>
       {limitReached ? (
-        <div className="bg-[#1A1A2E] border border-[#7C3AED]/30 rounded-2xl p-4 flex items-center gap-3">
+        <div className="bg-[#0D0D1A] border border-[#7C3AED]/30 rounded-2xl p-4 flex items-center gap-3">
           <Lock size={20} className="text-[#A855F7] shrink-0" />
           <p className="text-base text-white font-semibold">{locale === 'en' ? 'Query limit reached.' : 'Límite de consultas alcanzado.'}</p>
         </div>
@@ -217,7 +217,7 @@ export default function OraclePage() {
         <div className="flex gap-2">
           <input value={question} onChange={e => setQuestion(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAsk()}
             placeholder={locale === 'en' ? 'Ask about the World Cup...' : 'Preguntá sobre el Mundial...'}
-            className="flex-1 bg-[#1A1A2E] border border-[#2A2A4A] focus:border-[#A855F7] rounded-xl px-4 py-3 text-base text-white font-medium focus:outline-none placeholder:text-gray-500 transition-all"
+            className="flex-1 bg-[#0D0D1A] border border-white/10 focus:border-[#A855F7] rounded-xl px-4 py-3 text-base text-white font-medium focus:outline-none placeholder:text-gray-500 transition-all"
           />
           <button onClick={() => handleAsk()} disabled={loading || !question.trim()}
             className="bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white rounded-xl px-4 py-3 disabled:opacity-40 transition-all hover:opacity-90">

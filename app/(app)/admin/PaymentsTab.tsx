@@ -83,8 +83,8 @@ export default function PaymentsTab({ adminUserId }: { adminUserId: string }) {
   const pendingCount = payments.filter(p => p.status === 'pending').length
 
   const btnBase = 'px-3 py-1.5 rounded-xl text-sm font-bold transition-all'
-  const btnActive = 'bg-[#FFD700] text-black'
-  const btnInactive = 'bg-[#1A1A2E] text-white border border-[#2A2A4A] hover:border-[#FFD700]'
+  const btnActive = 'bg-[#00C896] text-black'
+  const btnInactive = 'bg-[#0D0D1A] text-white border border-white/10 hover:border-[#00C896]'
 
   return (
     <div>
@@ -121,15 +121,15 @@ export default function PaymentsTab({ adminUserId }: { adminUserId: string }) {
       ) : (
         <div className="space-y-3">
           {filtered.map(payment => (
-            <div key={payment.id} className={`bg-[#1A1A2E] border rounded-2xl p-4 ${
-              payment.status === 'pending' ? 'border-[#FFD700]/30' :
+            <div key={payment.id} className={`bg-[#0D0D1A] border rounded-2xl p-4 ${
+              payment.status === 'pending' ? 'border-[#00C896]/30' :
               payment.status === 'approved' ? 'border-[#22C55E]/30' :
               'border-red-500/30'
             }`}>
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#FFD700]/20 flex items-center justify-center">
-                    <span className="font-bebas text-lg text-[#FFD700]">{payment.profiles?.username?.[0]?.toUpperCase() || '?'}</span>
+                  <div className="w-10 h-10 rounded-xl bg-[#00C896]/20 flex items-center justify-center">
+                    <span className="font-sans text-lg text-[#00C896]">{payment.profiles?.username?.[0]?.toUpperCase() || '?'}</span>
                   </div>
                   <div>
                     <p className="font-bold text-white text-base">@{payment.profiles?.username}</p>
@@ -139,13 +139,13 @@ export default function PaymentsTab({ adminUserId }: { adminUserId: string }) {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-bebas text-2xl text-[#FFD700]">${payment.amount}</p>
+                  <p className="font-sans text-2xl text-[#00C896]">${payment.amount}</p>
                   <p className="text-xs text-gray-400 capitalize">{payment.payment_method}</p>
                 </div>
               </div>
 
               {payment.notes && (
-                <div className="bg-[#0D0D0D] rounded-xl px-3 py-2 mb-3">
+                <div className="bg-[#080812] rounded-xl px-3 py-2 mb-3">
                   <p className="text-xs text-gray-400 mb-1">Notas:</p>
                   <p className="text-sm text-white">{payment.notes}</p>
                 </div>
@@ -167,7 +167,7 @@ export default function PaymentsTab({ adminUserId }: { adminUserId: string }) {
                         type="number"
                         value={creditAmount[payment.id] ?? String(payment.amount * 10)}
                         onChange={e => setCreditAmount(prev => ({ ...prev, [payment.id]: e.target.value }))}
-                        className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-base text-white focus:outline-none focus:border-[#FFD700]"
+                        className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-base text-white focus:outline-none focus:border-[#00C896]"
                       />
                     </div>
                   </div>

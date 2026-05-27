@@ -22,14 +22,14 @@ export default function LanguageSwitcher() {
   }
 
   if (!mounted) return (
-    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1A2E] border border-[#2A2A4A] rounded-xl text-sm font-bold text-white">
+    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0D0D1A] border border-white/10 rounded-xl text-sm font-bold text-white">
       🇦🇷 ES
     </button>
   )
 
   return (
     <button onClick={toggle}
-      className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1A2E] border border-[#2A2A4A] rounded-xl text-sm font-bold text-white hover:border-[#FFD700] transition-all">
+      className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0D0D1A] border border-white/10 rounded-xl text-sm font-bold text-white hover:border-[#00C896] transition-all">
       {locale === 'es' ? '🇦🇷 ES' : '🇺🇸 EN'}
     </button>
   )

@@ -54,21 +54,21 @@ export default function NewsSection() {
   const filtered = tab === 'all' ? news : news.filter(n => n.country === tab)
 
   return (
-    <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
+    <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#2A2A4A]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
         <div className="flex items-center gap-2">
           <span className="text-lg">📰</span>
-          <span className="font-bebas text-lg text-white tracking-wider">Noticias</span>
+          <span className="font-sans text-lg text-white tracking-wider">Noticias</span>
         </div>
         <button onClick={handleRefresh} disabled={refreshing}
-          className="text-gray-400 hover:text-[#FFD700] transition-colors disabled:opacity-40">
+          className="text-gray-400 hover:text-[#00C896] transition-colors disabled:opacity-40">
           <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-[#2A2A4A]">
+      <div className="flex border-b border-white/10">
         {[
           { id: 'all', label: '🌎 Todas' },
           { id: 'argentina', label: '🇦🇷 Argentina' },
@@ -77,7 +77,7 @@ export default function NewsSection() {
           <button key={t.id} onClick={() => setTab(t.id as typeof tab)}
             className={`flex-1 py-2 text-xs font-bold transition-all ${
               tab === t.id
-                ? 'text-[#FFD700] border-b-2 border-[#FFD700] bg-[#FFD700]/5'
+                ? 'text-[#00C896] border-b-2 border-[#00C896] bg-[#00C896]/5'
                 : 'text-gray-400 hover:text-white'
             }`}>
             {t.label}
@@ -107,7 +107,7 @@ export default function NewsSection() {
                 {item.country === 'argentina' ? '🇦🇷' : '🇨🇴'}
               </span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-white leading-snug line-clamp-2 group-hover:text-[#FFD700] transition-colors">
+                <p className="text-sm font-bold text-white leading-snug line-clamp-2 group-hover:text-[#00C896] transition-colors">
                   {item.title}
                 </p>
                 {item.description && (
@@ -115,13 +115,13 @@ export default function NewsSection() {
                 )}
                 <p className="text-xs text-gray-600 mt-0.5">{timeAgo(item.pubDate)}</p>
               </div>
-              <ExternalLink size={14} className="text-gray-600 group-hover:text-[#FFD700] shrink-0 mt-1 transition-colors" />
+              <ExternalLink size={14} className="text-gray-600 group-hover:text-[#00C896] shrink-0 mt-1 transition-colors" />
             </a>
           ))
         )}
       </div>
 
-      <div className="px-4 py-2 border-t border-[#2A2A4A]">
+      <div className="px-4 py-2 border-t border-white/10">
         <p className="text-xs text-gray-600 text-center">Actualizado cada 15 minutos · TyC Sports · El Tiempo</p>
       </div>
     </div>

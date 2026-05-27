@@ -43,10 +43,10 @@ function formatDay(d: string) {
 function Avatar({ url, name, size = 8 }: { url: string | null; name: string; size?: number }) {
   const s = `w-${size} h-${size}`
   return url ? (
-    <img src={url} alt={name} className={`${s} rounded-full object-cover border-2 border-[#2A2A4A] shrink-0`} />
+    <img src={url} alt={name} className={`${s} rounded-full object-cover border-2 border-white/10 shrink-0`} />
   ) : (
-    <div className={`${s} rounded-full bg-[#FFD700]/20 border-2 border-[#FFD700]/30 flex items-center justify-center shrink-0`}>
-      <span className="font-bebas text-sm text-[#FFD700]">{name?.[0]?.toUpperCase()}</span>
+    <div className={`${s} rounded-full bg-[#00C896]/20 border-2 border-[#00C896]/30 flex items-center justify-center shrink-0`}>
+      <span className="font-sans text-sm text-[#00C896]">{name?.[0]?.toUpperCase()}</span>
     </div>
   )
 }
@@ -331,15 +331,15 @@ export default function LockerRoomPage() {
     <div className="flex flex-col h-[calc(100dvh-64px)] md:h-screen" onClick={() => setActiveMenu(null)}>
 
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 bg-[#1A1A2E] border-b border-[#2A2A4A] shrink-0">
-        <Link href="/dashboard" className="text-white hover:text-[#FFD700] transition-colors">
+      <div className="flex items-center gap-3 px-4 py-3 bg-[#0D0D1A] border-b border-white/10 shrink-0">
+        <Link href="/dashboard" className="text-white hover:text-[#00C896] transition-colors">
           <ArrowLeft size={20} />
         </Link>
-        <div className="w-9 h-9 rounded-full bg-[#FFD700]/20 flex items-center justify-center">
+        <div className="w-9 h-9 rounded-full bg-[#00C896]/20 flex items-center justify-center">
           <span className="text-lg">⚽</span>
         </div>
         <div className="flex-1">
-          <p className="font-bebas text-lg text-white tracking-wider leading-none">Chat del Quilombo</p>
+          <p className="font-sans text-lg text-white tracking-wider leading-none">Chat del Quilombo</p>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
             <span className="text-xs text-[#22C55E] font-bold">{onlineUsers.length} online</span>
@@ -351,8 +351,8 @@ export default function LockerRoomPage() {
               {u.avatar_url ? (
                 <img src={u.avatar_url} alt={u.username} className="w-8 h-8 rounded-full object-cover border-2 border-[#1A1A2E]" />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-[#FFD700]/30 border-2 border-[#1A1A2E] flex items-center justify-center">
-                  <span className="font-bebas text-xs text-[#FFD700]">{u.username?.[0]?.toUpperCase()}</span>
+                <div className="w-8 h-8 rounded-full bg-[#00C896]/30 border-2 border-[#1A1A2E] flex items-center justify-center">
+                  <span className="font-sans text-xs text-[#00C896]">{u.username?.[0]?.toUpperCase()}</span>
                 </div>
               )}
             </div>
@@ -381,7 +381,7 @@ export default function LockerRoomPage() {
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-[#0A0A18]">
         {loading && (
           <div className="flex items-center justify-center h-32">
-            <p className="text-white font-bebas text-xl animate-pulse">Cargando mensajes...</p>
+            <p className="text-white font-sans text-xl animate-pulse">Cargando mensajes...</p>
           </div>
         )}
 
@@ -404,7 +404,7 @@ export default function LockerRoomPage() {
               if (msg.is_system) {
                 return (
                   <div key={msg.id} className="flex justify-center my-2">
-                    <span className="text-xs text-gray-500 bg-[#1A1A2E] px-3 py-1 rounded-full">{msg.content}</span>
+                    <span className="text-xs text-gray-500 bg-[#0D0D1A] px-3 py-1 rounded-full">{msg.content}</span>
                   </div>
                 )
               }
@@ -424,12 +424,12 @@ export default function LockerRoomPage() {
                         </p>
                       )}
                       <div
-                        className={`rounded-2xl overflow-hidden cursor-pointer ${isMe ? 'bg-[#1A3A1A] border border-[#22C55E]/20 rounded-br-sm' : 'bg-[#1A1A2E] border border-[#2A2A4A] rounded-bl-sm'}`}
+                        className={`rounded-2xl overflow-hidden cursor-pointer ${isMe ? 'bg-[#1A3A1A] border border-[#22C55E]/20 rounded-br-sm' : 'bg-[#0D0D1A] border border-white/10 rounded-bl-sm'}`}
                         onClick={(e) => { e.stopPropagation(); setActiveMenu(isMenuOpen ? null : msg.id) }}
                       >
                         {msg.media_url && (
                           <a href={msg.media_url} target="_blank" rel="noopener noreferrer">
-                            <img src={msg.media_url} alt="imagen" className="max-w-[260px] max-h-[260px] object-contain bg-[#0D0D0D] w-full" />
+                            <img src={msg.media_url} alt="imagen" className="max-w-[260px] max-h-[260px] object-contain bg-[#080812] w-full" />
                           </a>
                         )}
                         {msg.content && (
@@ -444,10 +444,10 @@ export default function LockerRoomPage() {
 
                       {isMenuOpen && (
                         <div
-                          className={`absolute z-50 bg-[#1A1A2E] border border-[#2A2A4A] rounded-xl shadow-xl p-1 min-w-[160px] ${isMe ? 'right-0' : 'left-0'} top-full mt-1`}
+                          className={`absolute z-50 bg-[#0D0D1A] border border-white/10 rounded-xl shadow-xl p-1 min-w-[160px] ${isMe ? 'right-0' : 'left-0'} top-full mt-1`}
                           onClick={e => e.stopPropagation()}
                         >
-                          <div className="flex gap-1 px-2 py-1 border-b border-[#2A2A4A] mb-1">
+                          <div className="flex gap-1 px-2 py-1 border-b border-white/10 mb-1">
                             {EMOJIS.slice(0, 5).map(emoji => (
                               <button key={emoji} onClick={() => { addReaction(msg.id, emoji); setActiveMenu(null) }}
                                 className="text-lg hover:scale-125 transition-transform">{emoji}</button>
@@ -475,7 +475,7 @@ export default function LockerRoomPage() {
                           {Object.entries(msg.reactions!).map(([emoji, users]) =>
                             users.length > 0 && (
                               <button key={emoji} onClick={() => addReaction(msg.id, emoji)}
-                                className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs border transition-all ${users.includes(userId) ? 'bg-[#FFD700]/20 border-[#FFD700]/40 text-[#FFD700]' : 'bg-[#1A1A2E] border-[#2A2A4A] text-white'}`}>
+                                className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs border transition-all ${users.includes(userId) ? 'bg-[#00C896]/20 border-[#00C896]/40 text-[#00C896]' : 'bg-[#0D0D1A] border-white/10 text-white'}`}>
                                 {emoji} {users.length}
                               </button>
                             )
@@ -495,7 +495,7 @@ export default function LockerRoomPage() {
             <div className="w-8 h-8 rounded-full bg-[#2A2A4A] flex items-center justify-center">
               <span className="text-xs text-gray-400">✍️</span>
             </div>
-            <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl rounded-bl-sm">
+            <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl rounded-bl-sm">
               <div className="px-2">
                 <p className="text-xs text-gray-400 px-1 pt-1">{typingUsers.join(', ')} está escribiendo...</p>
                 <TypingDots />
@@ -507,14 +507,14 @@ export default function LockerRoomPage() {
       </div>
 
       {/* Input */}
-      <div className="shrink-0 bg-[#1A1A2E] border-t border-[#2A2A4A] px-4 py-3">
+      <div className="shrink-0 bg-[#0D0D1A] border-t border-white/10 px-4 py-3">
         {showGifs && (
-          <div className="mb-3 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3">
+          <div className="mb-3 bg-[#080812] border border-white/10 rounded-xl p-3">
             <div className="flex gap-2 mb-3">
               <input value={gifSearch} onChange={e => setGifSearch(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && searchGifs(gifSearch)}
                 placeholder="Buscar GIFs... (Enter)"
-                className="flex-1 bg-[#1A1A2E] border border-[#2A2A4A] rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#22C55E]" />
+                className="flex-1 bg-[#0D0D1A] border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#22C55E]" />
               <button onClick={() => searchGifs(gifSearch)} className="bg-[#22C55E] text-black font-bold px-3 py-2 rounded-xl text-sm">🔍</button>
               <button onClick={() => setShowGifs(false)} className="text-gray-400 hover:text-white px-2"><X size={18} /></button>
             </div>
@@ -524,7 +524,7 @@ export default function LockerRoomPage() {
               <div className="grid grid-cols-4 gap-1.5 max-h-64 overflow-y-auto">
                 {gifs.map((gif: any) => (
                   <button key={gif.id} onClick={() => sendGif(gif.images.original.url)}
-                    className="rounded-lg overflow-hidden hover:opacity-80 transition-opacity bg-[#1A1A2E] aspect-square">
+                    className="rounded-lg overflow-hidden hover:opacity-80 transition-opacity bg-[#0D0D1A] aspect-square">
                     <img
                       src={gif.images.fixed_height_small.url}
                       alt={gif.title}
@@ -542,7 +542,7 @@ export default function LockerRoomPage() {
 
         {imagePreview && (
           <div className="relative inline-block mb-3">
-            <img src={imagePreview} alt="preview" className="h-20 w-20 object-cover rounded-xl border border-[#2A2A4A]" />
+            <img src={imagePreview} alt="preview" className="h-20 w-20 object-cover rounded-xl border border-white/10" />
             <button onClick={cancelImage} className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
               <X size={12} className="text-white" />
             </button>
@@ -568,7 +568,7 @@ export default function LockerRoomPage() {
           </div>
         ) : (
           <div className="flex gap-2 items-center">
-            <button onClick={() => setShowEmojis(p => !p)} className="text-gray-400 hover:text-[#FFD700] transition-colors shrink-0">
+            <button onClick={() => setShowEmojis(p => !p)} className="text-gray-400 hover:text-[#00C896] transition-colors shrink-0">
               <Smile size={22} />
             </button>
             <button onClick={() => fileInputRef.current?.click()} className="text-gray-400 hover:text-[#22C55E] transition-colors shrink-0">
@@ -583,7 +583,7 @@ export default function LockerRoomPage() {
               onChange={e => { setInput(e.target.value); handleTyping() }}
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
               placeholder="Escribí algo al Chat del Quilombo..."
-              className="flex-1 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#22C55E] transition-colors"
+              className="flex-1 bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#22C55E] transition-colors"
             />
             <button onClick={sendMessage} disabled={sending || (!input.trim() && !imageFile)}
               className="bg-[#22C55E] hover:bg-[#16A34A] text-black font-bold px-4 py-2.5 rounded-xl disabled:opacity-40 transition-colors shrink-0">

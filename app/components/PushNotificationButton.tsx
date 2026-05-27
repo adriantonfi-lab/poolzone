@@ -37,7 +37,7 @@ export function PushNotificationButton({ variant = 'full', className = '' }: Pro
         title={isSubscribed ? 'Desactivar notificaciones' : 'Activar notificaciones'}
         className={`relative p-2 rounded-xl transition-all ${
           isSubscribed
-            ? 'text-[#FFD700] bg-[#FFD700]/10 hover:bg-[#FFD700]/20'
+            ? 'text-[#00C896] bg-[#00C896]/10 hover:bg-[#00C896]/20'
             : 'text-white/60 hover:text-white hover:bg-white/10'
         } ${className}`}
       >
@@ -64,7 +64,7 @@ export function PushNotificationButton({ variant = 'full', className = '' }: Pro
           ? 'bg-red-500/10 border border-red-500/20 text-red-400 cursor-not-allowed'
           : isSubscribed
           ? 'bg-[#22C55E]/10 border border-[#22C55E]/20 text-[#22C55E] hover:bg-[#22C55E]/20'
-          : 'bg-[#FFD700]/10 border border-[#FFD700]/20 text-[#FFD700] hover:bg-[#FFD700]/20'
+          : 'bg-[#00C896]/10 border border-[#00C896]/20 text-[#00C896] hover:bg-[#00C896]/20'
       } ${className}`}
     >
       {isLoading ? (

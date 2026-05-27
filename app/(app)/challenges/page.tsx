@@ -103,10 +103,10 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
 
   return (
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
-      <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
-        <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
-          <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">Nueva Batalla</span>
-          <button onClick={onClose} className="text-white hover:text-[#FFD700]"><X size={22} /></button>
+      <div className="bg-[#0D0D1A] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-white/10 max-h-[90dvh] flex flex-col">
+        <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
+          <span className="font-sans text-2xl text-[#00C896] tracking-wider">Nueva Batalla</span>
+          <button onClick={onClose} className="text-white hover:text-[#00C896]"><X size={22} /></button>
         </div>
         <div className="overflow-y-auto flex-1 p-4 space-y-4">
           {error && <div className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3 text-base">{error}</div>}
@@ -116,7 +116,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
               {matches.map(m => (
                 <button key={m.id} onClick={() => { setSelectedMatch(m); setPrediction('') }}
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all text-left ${
-                    selectedMatch?.id === m.id ? 'border-[#FFD700] bg-[#FFD700]/10' : 'border-[#2A2A4A] bg-[#0D0D0D] hover:border-[#FFD700]/40'
+                    selectedMatch?.id === m.id ? 'border-[#00C896] bg-[#00C896]/10' : 'border-white/10 bg-[#080812] hover:border-[#00C896]/40'
                   }`}>
                   <span className="text-base font-bold text-white">{m.home_team} vs {m.away_team}</span>
                   <span className="text-sm text-[#86EFAC]">{formatDate(m.match_date)}</span>
@@ -130,20 +130,20 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
               <div className="flex gap-3">
                 <button onClick={() => setPrediction(selectedMatch.home_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === selectedMatch.home_team ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                    prediction === selectedMatch.home_team ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                   }`}>
                   <FlagImg code={selectedMatch.home_team_code} size={24} />
                   {selectedMatch.home_team}
                 </button>
                 <button onClick={() => setPrediction('empate')}
                   className={`px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#86EFAC]/40'
+                    prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-white/10 bg-[#080812] text-white hover:border-[#86EFAC]/40'
                   }`}>
                   Empate
                 </button>
                 <button onClick={() => setPrediction(selectedMatch.away_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === selectedMatch.away_team ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                    prediction === selectedMatch.away_team ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                   }`}>
                   {selectedMatch.away_team}
                   <FlagImg code={selectedMatch.away_team_code} size={24} />
@@ -158,7 +158,7 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
                 {[5, 10, 20, 50].map(v => (
                   <button key={v} onClick={() => setAmount(String(v))}
                     className={`flex-1 py-2 rounded-xl border text-base font-bold transition-all ${
-                      amount === String(v) ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                      amount === String(v) ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                     }`}>
                     ${v}
                   </button>
@@ -167,14 +167,14 @@ function CreateBattleModal({ onClose, onCreated, userId }: { onClose: () => void
               <input
                 type="number" value={amount} onChange={e => setAmount(e.target.value)}
                 placeholder="Monto personalizado"
-                className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#FFD700]"
+                className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:border-[#00C896]"
               />
             </div>
           )}
         </div>
-        <div className="p-4 border-t border-[#2A2A4A] shrink-0">
+        <div className="p-4 border-t border-white/10 shrink-0">
           <button onClick={handleCreate} disabled={loading || !selectedMatch || !prediction || !amount}
-            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
+            className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
             {loading ? '...' : `Abrir batalla por $${amount || '0'}`}
           </button>
         </div>
@@ -212,16 +212,16 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
 
   return (
     <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
-      <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
-        <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
-          <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">Entrar a la batalla</span>
-          <button onClick={onClose} className="text-white hover:text-[#FFD700]"><X size={22} /></button>
+      <div className="bg-[#0D0D1A] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-white/10 max-h-[90dvh] flex flex-col">
+        <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
+          <span className="font-sans text-2xl text-[#00C896] tracking-wider">Entrar a la batalla</span>
+          <button onClick={onClose} className="text-white hover:text-[#00C896]"><X size={22} /></button>
         </div>
         <div className="p-4 space-y-4">
           {error && <div className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3 text-base">{error}</div>}
-          <div className="bg-[#0D0D0D] rounded-xl p-4">
+          <div className="bg-[#080812] rounded-xl p-4">
             <p className="text-base font-bold text-white mb-1">{battle.title}</p>
-            <p className="text-base text-[#FFD700] font-bold">Monto: ${battle.bet_amount}</p>
+            <p className="text-base text-[#00C896] font-bold">Monto: ${battle.bet_amount}</p>
             <p className="text-sm text-[#86EFAC]">Pozo: ${battle.pot_total}</p>
           </div>
           {match && (
@@ -230,19 +230,19 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
               <div className="flex gap-3">
                 <button onClick={() => setPrediction(match.home_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === match.home_team ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                    prediction === match.home_team ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                   }`}>
                   <FlagImg code={match.home_team_code} size={24} />{match.home_team}
                 </button>
                 <button onClick={() => setPrediction('empate')}
                   className={`px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white'
+                    prediction === 'empate' ? 'border-[#86EFAC] bg-[#86EFAC]/10 text-[#86EFAC]' : 'border-white/10 bg-[#080812] text-white'
                   }`}>
                   Empate
                 </button>
                 <button onClick={() => setPrediction(match.away_team)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-base font-bold transition-all ${
-                    prediction === match.away_team ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                    prediction === match.away_team ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]' : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                   }`}>
                   {match.away_team}<FlagImg code={match.away_team_code} size={24} />
                 </button>
@@ -250,9 +250,9 @@ function JoinModal({ battle, onClose, onJoined, userId }: { battle: Battle; onCl
             </div>
           )}
         </div>
-        <div className="p-4 border-t border-[#2A2A4A] shrink-0">
+        <div className="p-4 border-t border-white/10 shrink-0">
           <button onClick={handleJoin} disabled={loading || !prediction}
-            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40">
+            className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40">
             {loading ? 'Uniéndose...' : `⚡ Apostar $${battle.bet_amount} por ${prediction || '...'}`}
           </button>
         </div>
@@ -267,7 +267,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
 
   return (
     <>
-      <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4 mb-3">
+      <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4 mb-3">
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -277,7 +277,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
                 </span>
               )}
               {battle.status === 'active' && (
-                <span className="text-xs font-bold text-[#FFD700] bg-[#FFD700]/10 border border-[#FFD700]/20 px-2 py-0.5 rounded-full">EN CURSO</span>
+                <span className="text-xs font-bold text-[#00C896] bg-[#00C896]/10 border border-[#00C896]/20 px-2 py-0.5 rounded-full">EN CURSO</span>
               )}
               {battle.status === 'closed' && (
                 <span className="text-xs font-bold text-gray-400 bg-gray-400/10 border border-gray-400/20 px-2 py-0.5 rounded-full">CERRADA</span>
@@ -291,16 +291,16 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2 mb-3">
-          <div className="bg-[#0D0D0D] rounded-xl p-3 text-center">
-            <p className="text-xl font-bebas text-[#FFD700]">${battle.bet_amount}</p>
+          <div className="bg-[#080812] rounded-xl p-3 text-center">
+            <p className="text-xl font-sans text-[#00C896]">${battle.bet_amount}</p>
             <p className="text-xs font-semibold text-white">Por lado</p>
           </div>
-          <div className="bg-[#0D0D0D] rounded-xl p-3 text-center">
-            <p className="text-xl font-bebas text-[#22C55E]">${battle.pot_total}</p>
+          <div className="bg-[#080812] rounded-xl p-3 text-center">
+            <p className="text-xl font-sans text-[#22C55E]">${battle.pot_total}</p>
             <p className="text-xs font-semibold text-white">Pozo</p>
           </div>
-          <div className="bg-[#0D0D0D] rounded-xl p-3 text-center">
-            <p className="text-xl font-bebas text-white">{battle.current_participants}</p>
+          <div className="bg-[#080812] rounded-xl p-3 text-center">
+            <p className="text-xl font-sans text-white">{battle.current_participants}</p>
             <p className="text-xs font-semibold text-white">Jugadores</p>
           </div>
         </div>
@@ -320,7 +320,7 @@ function BattleCard({ battle, userId, onRefresh }: { battle: Battle; userId: str
             </button>
             {battle.status === 'open' && !isCreator && (
               <button onClick={() => setShowJoin(true)}
-                className="flex items-center gap-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-4 py-2 rounded-xl text-base transition-all hover:opacity-90">
+                className="flex items-center gap-1 bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-4 py-2 rounded-xl text-base transition-all hover:opacity-90">
                 <Zap size={16} />Entrar<ChevronRight size={16} />
               </button>
             )}
@@ -358,21 +358,21 @@ export default function BattlesPage() {
   const todasBattles = battles.filter(b => b.status === 'open')
   const misBattles = battles.filter(b => b.created_by === userId)
   const btnBase = 'px-4 py-2 rounded-xl text-base font-bold transition-all'
-  const btnActive = 'bg-[#FFD700] text-black'
-  const btnInactive = 'bg-[#1A1A2E] text-white border border-[#2A2A4A] hover:border-[#FFD700]'
+  const btnActive = 'bg-[#00C896] text-black'
+  const btnInactive = 'bg-[#0D0D1A] text-white border border-white/10 hover:border-[#00C896]'
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto md:max-w-4xl">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
         <ArrowLeft size={20} />Volver
       </Link>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-bebas text-5xl text-white tracking-wider">BATALLAS</h1>
+          <h1 className="font-sans text-5xl text-white tracking-wider">BATALLAS</h1>
           <p className="text-sm font-semibold text-[#86EFAC]">Desafiá a la familia</p>
         </div>
         <button onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-4 py-3 rounded-xl text-base hover:opacity-90 transition-all">
+          className="flex items-center gap-2 bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-4 py-3 rounded-xl text-base hover:opacity-90 transition-all">
           <Plus size={20} />Nueva
         </button>
       </div>
@@ -389,11 +389,11 @@ export default function BattlesPage() {
       ) : tab === 'todas' ? (
         todasBattles.length === 0 ? (
           <div className="text-center py-16">
-            <Zap size={40} className="text-[#FFD700] mx-auto mb-3" />
+            <Zap size={40} className="text-[#00C896] mx-auto mb-3" />
             <p className="text-xl font-bold text-white mb-2">No hay batallas abiertas</p>
             <p className="text-base text-white mb-4">¡Sé el primero en desafiar!</p>
             <button onClick={() => setShowCreate(true)}
-              className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-6 py-3 rounded-xl text-base">
+              className="bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-6 py-3 rounded-xl text-base">
               + Nueva batalla
             </button>
           </div>
@@ -403,10 +403,10 @@ export default function BattlesPage() {
       ) : (
         misBattles.length === 0 ? (
           <div className="text-center py-16">
-            <Trophy size={40} className="text-[#FFD700] mx-auto mb-3" />
+            <Trophy size={40} className="text-[#00C896] mx-auto mb-3" />
             <p className="text-xl font-bold text-white mb-2">No tenés batallas todavía</p>
             <button onClick={() => setShowCreate(true)}
-              className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold px-6 py-3 rounded-xl text-base mt-2">
+              className="bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-6 py-3 rounded-xl text-base mt-2">
               + Nueva batalla
             </button>
           </div>

@@ -54,7 +54,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex flex-col w-56 bg-[#0D0D1A] border-r border-white/10 fixed h-full z-40">
         <div className="px-4 py-4 border-b border-white/10">
           <div className="flex items-center justify-between mb-1">
-            <p className="font-bebas text-2xl text-[#00C896] tracking-wider">POOLZONE</p>
+            <p className="font-sans text-2xl text-[#00C896] tracking-wider">POOLZONE</p>
             <LanguageSwitcher />
           </div>
           <p className="text-xs text-gray-500">WORLD CUP 2026</p>

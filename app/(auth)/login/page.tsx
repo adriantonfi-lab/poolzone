@@ -53,22 +53,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-[#0D0D0D] flex items-center justify-center p-4">
+    <div className="min-h-dvh bg-[#080812] flex items-center justify-center p-4">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#FFD700]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00C896]/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#7C3AED]/5 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-sm relative">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#FFD700]/10 border border-[#FFD700]/20 mb-4">
-            <Trophy size={32} className="text-[#FFD700]" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#00C896]/10 border border-[#00C896]/20 mb-4">
+            <Trophy size={32} className="text-[#00C896]" />
           </div>
-          <h1 className="font-bebas text-4xl text-[#FFD700] tracking-wider">POOLZONE</h1>
+          <h1 className="font-sans text-4xl text-[#00C896] tracking-wider">POOLZONE</h1>
           <p className="text-gray-400 text-sm mt-1">WORLD CUP 2026 🏆</p>
         </div>
 
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-6">
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-6">
           <h2 className="text-xl font-semibold text-white mb-1">Bienvenido de vuelta</h2>
           <p className="text-gray-400 text-sm mb-6">Ingresá a tu cuenta para seguir la acción</p>
 
@@ -91,7 +91,7 @@ export default function LoginPage() {
                 required
                 autoComplete="off"
                 name="email-login"
-                className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base"
+                className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#00C896] text-base"
               />
             </div>
 
@@ -106,7 +106,7 @@ export default function LoginPage() {
                   required
                   autoComplete="new-password"
                   name="password-login"
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base"
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:border-[#00C896] text-base"
                 />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -119,7 +119,7 @@ export default function LoginPage() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <div
                   onClick={() => setRememberMe(!rememberMe)}
-                  className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer ${rememberMe ? 'bg-[#FFD700] border-[#FFD700]' : 'border-[#2A2A4A] bg-[#0D0D0D]'}`}
+                  className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all cursor-pointer ${rememberMe ? 'bg-[#00C896] border-[#00C896]' : 'border-white/10 bg-[#080812]'}`}
                 >
                   {rememberMe && (
                     <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
@@ -129,7 +129,7 @@ export default function LoginPage() {
                 </div>
                 <span className="text-sm text-gray-400">Recordar mi email</span>
               </label>
-              <Link href="/forgot-password" className="text-sm text-[#FFD700] hover:underline">
+              <Link href="/forgot-password" className="text-sm text-[#00C896] hover:underline">
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
@@ -137,14 +137,14 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
+              className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
             >
               {loading ? <><Loader2 size={18} className="animate-spin" />Ingresando...</> : '¡Dale, entrá!'}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-400 mt-5">
-            ¿No tenés cuenta? <Link href="/register" className="text-[#FFD700] hover:underline font-medium">Registrate acá</Link>
+            ¿No tenés cuenta? <Link href="/register" className="text-[#00C896] hover:underline font-medium">Registrate acá</Link>
           </p>
         </div>
 

@@ -26,9 +26,9 @@ function getWinner(match: Match): string | null {
 
 function MatchCard({ match, highlight = false }: { match: Match | null; highlight?: boolean }) {
   if (!match) return (
-    <div className={`rounded-xl border ${highlight ? 'border-[#FFD700]/40 bg-[#1A1A2E]' : 'border-[#2A2A4A] bg-[#111111]'} p-2 w-full`}>
+    <div className={`rounded-xl border ${highlight ? 'border-[#00C896]/40 bg-[#0D0D1A]' : 'border-white/10 bg-[#111111]'} p-2 w-full`}>
       <div className="flex items-center gap-1.5 py-0.5"><div className="w-5 h-3.5 bg-[#2A2A4A] rounded-sm flex-shrink-0" /><span className="text-[11px] text-gray-600 flex-1">TBD</span></div>
-      <div className="border-t border-[#2A2A4A] my-0.5" />
+      <div className="border-t border-white/10 my-0.5" />
       <div className="flex items-center gap-1.5 py-0.5"><div className="w-5 h-3.5 bg-[#2A2A4A] rounded-sm flex-shrink-0" /><span className="text-[11px] text-gray-600 flex-1">TBD</span></div>
     </div>
   )
@@ -36,18 +36,18 @@ function MatchCard({ match, highlight = false }: { match: Match | null; highligh
   const isFinished = match.status === 'finished' || match.status === 'FT'
   const isLive = match.status === 'live' || match.status === '1H' || match.status === '2H' || match.status === 'HT'
   return (
-    <div className={`rounded-xl border ${highlight ? 'border-[#FFD700]/60 bg-[#1A1A2E] shadow-[0_0_12px_rgba(255,215,0,0.1)]' : 'border-[#2A2A4A] bg-[#111111]'} p-2 w-full relative`}>
+    <div className={`rounded-xl border ${highlight ? 'border-[#00C896]/60 bg-[#0D0D1A] shadow-[0_0_12px_rgba(255,215,0,0.1)]' : 'border-white/10 bg-[#111111]'} p-2 w-full relative`}>
       {isLive && <div className="absolute -top-2 right-2 flex items-center gap-1 bg-[#22C55E] rounded-full px-1.5 py-0.5"><span className="w-1 h-1 rounded-full bg-white animate-pulse" /><span className="text-[9px] text-white font-bold">EN VIVO</span></div>}
       <div className={`flex items-center gap-1.5 py-0.5 ${winner && winner !== match.home_team ? 'opacity-35' : ''}`}>
         <FlagImg code={match.home_team_code} />
-        <span className={`text-[11px] flex-1 truncate ${winner === match.home_team ? 'text-[#FFD700] font-bold' : 'text-white font-medium'}`}>{match.home_team}</span>
-        {(isFinished||isLive) && <span className={`text-[11px] font-bold ${winner === match.home_team ? 'text-[#FFD700]' : 'text-gray-400'}`}>{match.home_score??0}</span>}
+        <span className={`text-[11px] flex-1 truncate ${winner === match.home_team ? 'text-[#00C896] font-bold' : 'text-white font-medium'}`}>{match.home_team}</span>
+        {(isFinished||isLive) && <span className={`text-[11px] font-bold ${winner === match.home_team ? 'text-[#00C896]' : 'text-gray-400'}`}>{match.home_score??0}</span>}
       </div>
-      <div className="border-t border-[#2A2A4A]/60 my-0.5" />
+      <div className="border-t border-white/10/60 my-0.5" />
       <div className={`flex items-center gap-1.5 py-0.5 ${winner && winner !== match.away_team ? 'opacity-35' : ''}`}>
         <FlagImg code={match.away_team_code} />
-        <span className={`text-[11px] flex-1 truncate ${winner === match.away_team ? 'text-[#FFD700] font-bold' : 'text-white font-medium'}`}>{match.away_team}</span>
-        {(isFinished||isLive) && <span className={`text-[11px] font-bold ${winner === match.away_team ? 'text-[#FFD700]' : 'text-gray-400'}`}>{match.away_score??0}</span>}
+        <span className={`text-[11px] flex-1 truncate ${winner === match.away_team ? 'text-[#00C896] font-bold' : 'text-white font-medium'}`}>{match.away_team}</span>
+        {(isFinished||isLive) && <span className={`text-[11px] font-bold ${winner === match.away_team ? 'text-[#00C896]' : 'text-gray-400'}`}>{match.away_score??0}</span>}
       </div>
     </div>
   )
@@ -56,12 +56,12 @@ function MatchCard({ match, highlight = false }: { match: Match | null; highligh
 function MobileStage({ title, matches, color }: { title: string; matches: (Match|null)[]; color: string }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden mb-3">
+    <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden mb-3">
       <button onClick={() => setOpen(o=>!o)} className="w-full flex items-center justify-between px-4 py-3">
-        <span className={`font-bebas text-lg tracking-wider ${color}`}>{title}</span>
+        <span className={`font-sans text-lg tracking-wider ${color}`}>{title}</span>
         <span className="text-gray-500 text-xs">{open?'▲':'▼'}</span>
       </button>
-      {open && <div className="px-3 pb-3 grid grid-cols-1 gap-2 border-t border-[#2A2A4A]">{matches.map((m,i)=><div key={i} className="mt-2"><MatchCard match={m} /></div>)}</div>}
+      {open && <div className="px-3 pb-3 grid grid-cols-1 gap-2 border-t border-white/10">{matches.map((m,i)=><div key={i} className="mt-2"><MatchCard match={m} /></div>)}</div>}
     </div>
   )
 }
@@ -85,7 +85,7 @@ export default function BracketPage() {
 
   if (!mounted || loading) return (
     <div className="flex items-center justify-center h-64">
-      <Loader2 size={32} className="animate-spin text-[#FFD700]" />
+      <Loader2 size={32} className="animate-spin text-[#00C896]" />
     </div>
   )
 
@@ -108,17 +108,17 @@ export default function BracketPage() {
     <div className="px-4 py-6 max-w-full mx-auto">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mb-5"><ArrowLeft size={16}/>Volver</Link>
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-[#FFD700]/20 flex items-center justify-center"><Trophy size={20} className="text-[#FFD700]" /></div>
-        <div><h1 className="font-bebas text-3xl text-white tracking-wider leading-none">CUADRO ELIMINATORIO</h1><p className="text-xs text-[#86EFAC] font-semibold">FIFA World Cup 2026™</p></div>
-        <Link href="/grupos" className="ml-auto flex items-center gap-2 bg-[#1A1A2E] border border-[#2A2A4A] text-gray-300 font-bold px-3 py-2 rounded-xl text-xs hover:border-[#FFD700]/50 hover:text-white transition-all"><Users size={14}/>Grupos</Link>
+        <div className="w-10 h-10 rounded-xl bg-[#00C896]/20 flex items-center justify-center"><Trophy size={20} className="text-[#00C896]" /></div>
+        <div><h1 className="font-sans text-3xl text-white tracking-wider leading-none">CUADRO ELIMINATORIO</h1><p className="text-xs text-[#86EFAC] font-semibold">FIFA World Cup 2026™</p></div>
+        <Link href="/grupos" className="ml-auto flex items-center gap-2 bg-[#0D0D1A] border border-white/10 text-gray-300 font-bold px-3 py-2 rounded-xl text-xs hover:border-[#00C896]/50 hover:text-white transition-all"><Users size={14}/>Grupos</Link>
       </div>
       <div className="hidden md:block overflow-x-auto pb-6">
         <div className="relative" style={{width:TW,height:TH}}>
           {[{l:'OCTAVOS',x:cx(0)},{l:'CUARTOS',x:cx(1)},{l:'SEMI',x:cx(2)},{l:'SEMI',x:cx(4)},{l:'CUARTOS',x:cx(5)},{l:'OCTAVOS',x:cx(6)}].map(({l,x})=>(
-            <div key={x} className="absolute font-bebas text-base tracking-wider text-center text-[#FFD700]" style={{left:x,top:56,width:CW}}>{l}</div>
+            <div key={x} className="absolute font-sans text-base tracking-wider text-center text-[#00C896]" style={{left:x,top:56,width:CW}}>{l}</div>
           ))}
-          <div className="absolute font-bebas text-2xl tracking-wider text-center text-[#FFD700]" style={{left:cx(3)-20,top:48,width:CW+40}}>🏆 GRAN FINAL</div>
-          <div className="absolute font-bebas text-xs tracking-wider text-center text-gray-500" style={{left:cx(3),top:tY-16,width:CW}}>3° PUESTO</div>
+          <div className="absolute font-sans text-2xl tracking-wider text-center text-[#00C896]" style={{left:cx(3)-20,top:48,width:CW+40}}>🏆 GRAN FINAL</div>
+          <div className="absolute font-sans text-xs tracking-wider text-center text-gray-500" style={{left:cx(3),top:tY-16,width:CW}}>3° PUESTO</div>
           <svg className="absolute inset-0 pointer-events-none" width={TW} height={TH} style={{overflow:'visible'}}>
             {octavos.slice(0,4).map((_,i)=>{ const pair=Math.floor(i/2); const x1=cx(0)+CW,y1=oY(i)+CH/2,x2=cx(1),y2=qY(pair); return <path key={`ol${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/> })}
             {octavos.slice(4,8).map((_,i)=>{ const pair=Math.floor(i/2); const x1=cx(6),y1=oY(i)+CH/2,x2=cx(5)+CW,y2=qY(pair+2); return <path key={`or${i}`} d={`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}`} stroke={lc} strokeWidth="1" opacity="0.4" fill="none"/> })}
@@ -144,7 +144,7 @@ export default function BracketPage() {
         <MobileStage title="CUARTOS DE FINAL" matches={cuartos} color="text-[#A855F7]"/>
         <MobileStage title="SEMIFINAL" matches={semis} color="text-[#A855F7]"/>
         <MobileStage title="TERCER PUESTO" matches={tercero} color="text-gray-400"/>
-        <MobileStage title="🏆 GRAN FINAL" matches={final} color="text-[#FFD700]"/>
+        <MobileStage title="🏆 GRAN FINAL" matches={final} color="text-[#00C896]"/>
       </div>
     </div>
   )

@@ -27,7 +27,7 @@ function getIcon(type: string) {
   if (type.includes('oracle') || type.includes('oraculo')) return <Sparkles size={16} className="text-[#A855F7]" />
   if (type.includes('inscription') || type.includes('inscripcion')) return <DollarSign size={16} className="text-blue-400" />
   if (type.includes('referral') || type.includes('referido')) return <Gift size={16} className="text-[#22C55E]" />
-  if (type.includes('prize') || type.includes('premio')) return <Trophy size={16} className="text-[#FFD700]" />
+  if (type.includes('prize') || type.includes('premio')) return <Trophy size={16} className="text-[#00C896]" />
   if (type.includes('reenganche')) return <RefreshCw size={16} className="text-[#A855F7]" />
   if (type.includes('late_fee')) return <TrendingDown size={16} className="text-orange-400" />
   if (type.includes('win') || type.includes('ganancia')) return <TrendingUp size={16} className="text-[#22C55E]" />
@@ -164,35 +164,35 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
   return (
     <div className="px-4 py-6 max-w-2xl mx-auto pb-24 md:pb-6">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
         <ArrowLeft size={20} />Volver
       </Link>
 
-      <h1 className="font-bebas text-5xl text-white tracking-wider mb-1">WALLET</h1>
+      <h1 className="font-sans text-5xl text-white tracking-wider mb-1">WALLET</h1>
       <p className="text-sm font-semibold text-[#86EFAC] mb-6">@{profile?.username} · Tus créditos y movimientos</p>
 
       {/* Saldo principal */}
-      <div className="bg-gradient-to-br from-[#1A1A2E] to-[#0D0D1A] border border-[#FFD700]/30 rounded-2xl p-6 mb-6">
+      <div className="bg-gradient-to-br from-[#1A1A2E] to-[#0D0D1A] border border-[#00C896]/30 rounded-2xl p-6 mb-6">
         <p className="text-sm font-bold text-white uppercase tracking-wider mb-1">Saldo disponible</p>
-        <p className="font-bebas text-7xl text-[#FFD700] leading-none">{credits}</p>
+        <p className="font-sans text-7xl text-[#00C896] leading-none">{credits}</p>
         <p className="text-base font-bold text-white mt-1">créditos · ${(credits / 10).toFixed(2)}</p>
-        <div className="grid grid-cols-3 gap-3 mt-5 border-t border-[#2A2A4A] pt-5">
+        <div className="grid grid-cols-3 gap-3 mt-5 border-t border-white/10 pt-5">
           <div className="text-center">
-            <p className="font-bebas text-3xl text-[#22C55E]">+{totalIn.toFixed(0)}</p>
+            <p className="font-sans text-3xl text-[#22C55E]">+{totalIn.toFixed(0)}</p>
             <p className="text-xs font-bold text-white">Ingresos</p>
           </div>
           <div className="text-center">
-            <p className="font-bebas text-3xl text-red-400">-{totalOut.toFixed(0)}</p>
+            <p className="font-sans text-3xl text-red-400">-{totalOut.toFixed(0)}</p>
             <p className="text-xs font-bold text-white">Gastos</p>
           </div>
           <div className="text-center">
-            <p className="font-bebas text-3xl text-[#A855F7]">{battlesCount}</p>
+            <p className="font-sans text-3xl text-[#A855F7]">{battlesCount}</p>
             <p className="text-xs font-bold text-white">Batallas</p>
           </div>
         </div>
         <button
           onClick={() => setShowDeposit(true)}
-          className="w-full mt-4 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base hover:opacity-90 transition-all flex items-center justify-center gap-2"
+          className="w-full mt-4 bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base hover:opacity-90 transition-all flex items-center justify-center gap-2"
         >
           <DollarSign size={18} />Cargar Créditos
         </button>
@@ -201,20 +201,20 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
       {/* MODAL CARGA DE CRÉDITOS */}
       {showDeposit && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-end md:items-center justify-center p-0 md:p-4">
-          <div className="bg-[#1A1A2E] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-[#2A2A4A] max-h-[90dvh] flex flex-col">
-            <div className="flex items-center justify-between px-4 py-4 border-b border-[#2A2A4A] shrink-0">
-              <span className="font-bebas text-2xl text-[#FFD700] tracking-wider">Cargar Créditos</span>
+          <div className="bg-[#0D0D1A] w-full md:max-w-lg md:rounded-2xl rounded-t-2xl border border-white/10 max-h-[90dvh] flex flex-col">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 shrink-0">
+              <span className="font-sans text-2xl text-[#00C896] tracking-wider">Cargar Créditos</span>
               <button onClick={() => { setShowDeposit(false); setDepositSuccess(false); setDepositMsg(''); setProofImage(null) }}
-                className="text-white hover:text-[#FFD700] text-xl font-bold">✕</button>
+                className="text-white hover:text-[#00C896] text-xl font-bold">✕</button>
             </div>
 
             {depositSuccess ? (
               <div className="p-8 text-center">
                 <CheckCircle size={48} className="text-[#22C55E] mx-auto mb-4" />
-                <p className="font-bebas text-2xl text-white mb-2">¡Comprobante enviado!</p>
+                <p className="font-sans text-2xl text-white mb-2">¡Comprobante enviado!</p>
                 <p className="text-sm text-gray-400">El admin lo revisará y acreditará los créditos en breve. Te llegará una notificación cuando esté listo.</p>
                 <button onClick={() => { setShowDeposit(false); setDepositSuccess(false); setProofImage(null) }}
-                  className="mt-6 bg-[#FFD700] text-black font-bold px-6 py-3 rounded-xl">
+                  className="mt-6 bg-[#00C896] text-black font-bold px-6 py-3 rounded-xl">
                   Cerrar
                 </button>
               </div>
@@ -228,8 +228,8 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                       <button key={a} onClick={() => { setDepositAmount(a); setCustomAmount('') }}
                         className={`flex-1 py-2.5 rounded-xl border text-base font-bold transition-all ${
                           depositAmount === a && !customAmount
-                            ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]'
-                            : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                            ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]'
+                            : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                         }`}>
                         ${a}
                       </button>
@@ -240,7 +240,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                     value={customAmount}
                     onChange={e => setCustomAmount(e.target.value)}
                     placeholder="Otro monto"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#FFD700]"
+                    className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-[#00C896]"
                   />
                   <p className="text-xs text-gray-400 mt-1">
                     = {((customAmount ? parseFloat(customAmount) : depositAmount) * 10).toFixed(0)} créditos
@@ -255,8 +255,8 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                       <button key={m.id} onClick={() => setSelectedMethod(m.id)}
                         className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-bold transition-all ${
                           selectedMethod === m.id
-                            ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]'
-                            : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                            ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]'
+                            : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                         }`}>
                         <span>{m.flag}</span>{m.label}
                       </button>
@@ -266,9 +266,9 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
                 {/* Datos para pagar */}
                 {selectedMethodData && (
-                  <div className="bg-[#0D0D0D] border border-[#FFD700]/20 rounded-xl p-3">
+                  <div className="bg-[#080812] border border-[#00C896]/20 rounded-xl p-3">
                     <p className="text-xs text-gray-400 mb-1">Enviá el pago a:</p>
-                    <p className="text-base font-bold text-[#FFD700]">{selectedMethodData.label}</p>
+                    <p className="text-base font-bold text-[#00C896]">{selectedMethodData.label}</p>
                     <p className="text-sm text-white font-mono mt-1">{selectedMethodData.detail}</p>
                     <p className="text-xs text-gray-400 mt-2">
                       Monto: <span className="text-white font-bold">${customAmount || depositAmount}</span>
@@ -297,7 +297,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                     </div>
                   ) : (
                     <button onClick={() => fileRef.current?.click()}
-                      className="w-full border-2 border-dashed border-[#2A2A4A] hover:border-[#FFD700]/40 rounded-xl p-6 flex flex-col items-center gap-2 transition-all">
+                      className="w-full border-2 border-dashed border-white/10 hover:border-[#00C896]/40 rounded-xl p-6 flex flex-col items-center gap-2 transition-all">
                       <Camera size={24} className="text-gray-500" />
                       <p className="text-sm text-gray-400">Tocá para subir la foto del comprobante</p>
                       <p className="text-xs text-gray-600">JPG, PNG — máx 5MB</p>
@@ -313,7 +313,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                     value={depositNotes}
                     onChange={e => setDepositNotes(e.target.value)}
                     placeholder="Ej: Transferencia del 25/05"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFD700]"
+                    className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]"
                   />
                 </div>
 
@@ -326,11 +326,11 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             )}
 
             {!depositSuccess && (
-              <div className="p-4 border-t border-[#2A2A4A] shrink-0">
+              <div className="p-4 border-t border-white/10 shrink-0">
                 <button
                   onClick={handleDeposit}
                   disabled={depositLoading || !proofImage || !selectedMethod}
-                  className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all flex items-center justify-center gap-2"
                 >
                   {depositLoading
                     ? <><Loader2 size={18} className="animate-spin" />Enviando...</>
@@ -344,19 +344,19 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
       {/* Resumen rápido */}
       <div className="grid grid-cols-2 gap-3 mb-6">
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-4">
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-2">
             <Sparkles size={16} className="text-[#A855F7]" />
             <p className="text-xs font-bold text-white">Oráculo gastado</p>
           </div>
-          <p className="font-bebas text-3xl text-[#A855F7]">${oracleSpent.toFixed(0)}</p>
+          <p className="font-sans text-3xl text-[#A855F7]">${oracleSpent.toFixed(0)}</p>
         </div>
-        <div className="bg-[#1A1A2E] border border-[#FFD700]/20 rounded-2xl p-4">
+        <div className="bg-[#0D0D1A] border border-[#00C896]/20 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Trophy size={16} className="text-[#FFD700]" />
+            <Trophy size={16} className="text-[#00C896]" />
             <p className="text-xs font-bold text-white">Premio estimado 1°</p>
           </div>
-          <p className="font-bebas text-3xl text-[#FFD700]">${Math.round(estimatedPot * 0.6)}</p>
+          <p className="font-sans text-3xl text-[#00C896]">${Math.round(estimatedPot * 0.6)}</p>
           <p className="text-xs text-gray-400">60% del pozo</p>
         </div>
       </div>
@@ -365,7 +365,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
       <div className={`rounded-2xl p-4 mb-6 border ${
         profile?.inscription_status === 'paid' || profile?.inscription_status === 'approved'
           ? 'bg-[#22C55E]/10 border-[#22C55E]/30'
-          : 'bg-[#FFD700]/10 border-[#FFD700]/30'
+          : 'bg-[#00C896]/10 border-[#00C896]/30'
       }`}>
         <div className="flex items-center justify-between">
           <div>
@@ -377,7 +377,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs text-gray-400">Fee: ${profile?.inscription_fee || 25}</p>
           </div>
           {profile?.inscription_status !== 'paid' && profile?.inscription_status !== 'approved' && (
-            <Link href="/join" className="bg-[#FFD700] text-black font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#FFA500] transition-all">
+            <Link href="/join" className="bg-[#00C896] text-black font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#FFA500] transition-all">
               Pagar
             </Link>
           )}
@@ -395,7 +395,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <RefreshCw size={20} className="text-[#A855F7]" />
           </div>
           <div>
-            <p className="font-bebas text-xl text-white tracking-wider">RE-ENGANCHE</p>
+            <p className="font-sans text-xl text-white tracking-wider">RE-ENGANCHE</p>
             <p className="text-xs text-[#A855F7] font-semibold">Fase Eliminatoria — Una sola vez</p>
           </div>
         </div>
@@ -408,11 +408,11 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
           <>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="bg-black/30 rounded-xl p-3 text-center">
-                <p className="font-bebas text-2xl text-[#FFD700]">$25</p>
+                <p className="font-sans text-2xl text-[#00C896]">$25</p>
                 <p className="text-xs font-bold text-white">Costo</p>
               </div>
               <div className="bg-black/30 rounded-xl p-3 text-center">
-                <p className="font-bebas text-2xl text-[#A855F7]">+50</p>
+                <p className="font-sans text-2xl text-[#A855F7]">+50</p>
                 <p className="text-xs font-bold text-white">Puntos al ranking</p>
               </div>
             </div>
@@ -439,9 +439,9 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
       </div>
 
       {/* Historial */}
-      <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl overflow-hidden">
-        <div className="px-4 py-3 border-b border-[#2A2A4A]">
-          <p className="font-bebas text-xl text-white tracking-wider">Historial</p>
+      <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl overflow-hidden">
+        <div className="px-4 py-3 border-b border-white/10">
+          <p className="font-sans text-xl text-white tracking-wider">Historial</p>
         </div>
         {transactions.length === 0 ? (
           <div className="px-4 py-12 text-center">
@@ -460,7 +460,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                   <p className="text-xs text-gray-400">{formatDate(tx.created_at)}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className={`font-bebas text-xl ${tx.amount > 0 ? 'text-[#22C55E]' : 'text-red-400'}`}>
+                  <p className={`font-sans text-xl ${tx.amount > 0 ? 'text-[#22C55E]' : 'text-red-400'}`}>
                     {tx.amount > 0 ? '+' : ''}{tx.amount} CR
                   </p>
                   <p className="text-xs text-gray-500">Saldo: {tx.balance_after}</p>

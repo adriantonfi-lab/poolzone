@@ -156,8 +156,8 @@ function MatchPredictionCard({
   }
 
   return (
-    <div className={`bg-[#1A1A2E] border-2 rounded-2xl overflow-hidden mb-3 ${
-      isSaved ? 'border-[#22C55E]/60' : window.locked ? 'border-red-500/30' : 'border-[#2A2A4A]'
+    <div className={`bg-[#0D0D1A] border-2 rounded-2xl overflow-hidden mb-3 ${
+      isSaved ? 'border-[#22C55E]/60' : window.locked ? 'border-red-500/30' : 'border-white/10'
     }`}>
       {/* Header */}
       <button onClick={() => !window.locked && setOpen(o => !o)}
@@ -168,7 +168,7 @@ function MatchPredictionCard({
         <div className="flex items-center gap-3 flex-1">
           <FlagImg code={match.home_team_code} size={24} />
           <span className="text-base font-bold text-white">{translateTeam(match.home_team, locale)}</span>
-          <span className="text-[#FFD700] font-bebas text-lg">vs</span>
+          <span className="text-[#00C896] font-sans text-lg">vs</span>
           <span className="text-base font-bold text-white">{translateTeam(match.away_team, locale)}</span>
           <FlagImg code={match.away_team_code} size={24} />
         </div>
@@ -191,7 +191,7 @@ function MatchPredictionCard({
             window.fee <= 2 ? 'bg-yellow-500/20 text-yellow-400' :
             'bg-red-500/20 text-red-400'
           }`}>{window.label}</span>
-          <span className="text-xs text-[#FFD700] font-bold">+{earnablePoints} {locale === 'en' ? 'possible pts' : 'pts posibles'}</span>
+          <span className="text-xs text-[#00C896] font-bold">+{earnablePoints} {locale === 'en' ? 'possible pts' : 'pts posibles'}</span>
         </div>
       )}
 
@@ -205,20 +205,20 @@ function MatchPredictionCard({
 
       {/* Formulario */}
       {open && !window.locked && (
-        <div className="px-4 pb-4 space-y-4 border-t border-[#2A2A4A] pt-4">
+        <div className="px-4 pb-4 space-y-4 border-t border-white/10 pt-4">
 
           {/* Nivel 1: Ganador */}
           <div>
             <p className="text-sm font-bold text-white mb-2">
-              Level 1 — Winner <span className="text-[#FFD700]">(+{BASE_POINTS.winner} pts)</span>
+              Level 1 — Winner <span className="text-[#00C896]">(+{BASE_POINTS.winner} pts)</span>
             </p>
             <div className="flex gap-2">
               {[match.home_team, 'Draw', match.away_team].map(opt => (
                 <button key={opt} onClick={() => setWinner(opt)}
                   className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border text-sm font-bold transition-all ${
                     winner === opt
-                      ? 'border-[#FFD700] bg-[#FFD700]/10 text-[#FFD700]'
-                      : 'border-[#2A2A4A] bg-[#0D0D0D] text-white hover:border-[#FFD700]/40'
+                      ? 'border-[#00C896] bg-[#00C896]/10 text-[#00C896]'
+                      : 'border-white/10 bg-[#080812] text-white hover:border-[#00C896]/40'
                   }`}>
                   {opt === match.home_team && <FlagImg code={match.home_team_code} size={18} />}
                   {opt === match.away_team && <FlagImg code={match.away_team_code} size={18} />}
@@ -238,14 +238,14 @@ function MatchPredictionCard({
                 <p className="text-xs text-gray-400 mb-1 text-center">{translateTeam(match.home_team, locale)}</p>
                 <input type="number" min="0" max="20" value={homeScore}
                   onChange={e => setHomeScore(e.target.value)}
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-xl font-bebas text-white focus:outline-none focus:border-[#A855F7]" />
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-xl font-sans text-white focus:outline-none focus:border-[#A855F7]" />
               </div>
-              <span className="font-bebas text-2xl text-white">-</span>
+              <span className="font-sans text-2xl text-white">-</span>
               <div className="flex-1">
                 <p className="text-xs text-gray-400 mb-1 text-center">{translateTeam(match.away_team, locale)}</p>
                 <input type="number" min="0" max="20" value={awayScore}
                   onChange={e => setAwayScore(e.target.value)}
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-xl font-bebas text-white focus:outline-none focus:border-[#A855F7]" />
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-xl font-sans text-white focus:outline-none focus:border-[#A855F7]" />
               </div>
             </div>
           </div>
@@ -260,13 +260,13 @@ function MatchPredictionCard({
                 <p className="text-xs text-gray-400 mb-1">First half</p>
                 <input type="number" min="0" max="20" value={firstHalf}
                   onChange={e => setFirstHalf(e.target.value)}
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-lg font-bebas text-white focus:outline-none focus:border-orange-400" />
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-lg font-sans text-white focus:outline-none focus:border-orange-400" />
               </div>
               <div className="flex-1">
                 <p className="text-xs text-gray-400 mb-1">Second half</p>
                 <input type="number" min="0" max="20" value={secondHalf}
                   onChange={e => setSecondHalf(e.target.value)}
-                  className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2 text-center text-lg font-bebas text-white focus:outline-none focus:border-orange-400" />
+                  className="w-full bg-[#080812] border border-white/10 rounded-xl px-3 py-2 text-center text-lg font-sans text-white focus:outline-none focus:border-orange-400" />
               </div>
             </div>
           </div>
@@ -283,7 +283,7 @@ function MatchPredictionCard({
                     className={`flex-1 py-2.5 rounded-xl border text-sm font-bold transition-all ${
                       penalties === v
                         ? 'border-red-400 bg-red-400/10 text-red-400'
-                        : 'border-[#2A2A4A] bg-[#0D0D0D] text-white'
+                        : 'border-white/10 bg-[#080812] text-white'
                     }`}>
                     {v ? 'Sí' : 'No'}
                   </button>
@@ -294,7 +294,7 @@ function MatchPredictionCard({
 
           {/* Guardar */}
           <button onClick={handleSave} disabled={!winner || saving}
-            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
+            className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all">
             {saving ? 'Guardando...' : window.fee > 0
               ? `💰 $Save picks — $${window.fee} — +${earnablePoints} pts`
               : `$Save picks — +${earnablePoints} pts`}
@@ -412,51 +412,51 @@ export default function PredictionsPage() {
 
   if (loading) return (
     <div className="flex items-center justify-center h-64">
-      <div className="text-white font-bebas text-2xl animate-pulse">{locale === 'en' ? 'Loading...' : 'Cargando...'}</div>
+      <div className="text-white font-sans text-2xl animate-pulse">{locale === 'en' ? 'Loading...' : 'Cargando...'}</div>
     </div>
   )
 
   return (
     <div className="px-4 py-6 max-w-3xl mx-auto pb-24 md:pb-6">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#00C896] transition-colors mb-4">
         <ArrowLeft size={20} />Back
       </Link>
 
       {/* Header */}
-      <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-5 mb-6">
+      <div className="bg-[#0D0D1A] border border-[#00C896]/30 rounded-2xl p-5 mb-6">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             {avatarUrl ? (
               <img src={avatarUrl} alt={username}
-                className="w-16 h-16 rounded-2xl object-cover border-2 border-[#FFD700]/40 shrink-0" />
+                className="w-16 h-16 rounded-2xl object-cover border-2 border-[#00C896]/40 shrink-0" />
             ) : (
-              <div className="w-16 h-16 rounded-2xl bg-[#FFD700]/20 border-2 border-[#FFD700]/30 flex items-center justify-center shrink-0">
-                <span className="font-bebas text-3xl text-[#FFD700]">{username?.[0]?.toUpperCase() || '?'}</span>
+              <div className="w-16 h-16 rounded-2xl bg-[#00C896]/20 border-2 border-[#00C896]/30 flex items-center justify-center shrink-0">
+                <span className="font-sans text-3xl text-[#00C896]">{username?.[0]?.toUpperCase() || '?'}</span>
               </div>
             )}
             <div>
-              <h1 className="font-bebas text-3xl text-[#FFD700] tracking-wider leading-none">MI POLLA</h1>
+              <h1 className="font-sans text-3xl text-[#00C896] tracking-wider leading-none">MI POLLA</h1>
               <p className="text-base text-white font-semibold">@{username}</p>
               <p className="text-xs text-[#86EFAC] font-bold">FIFA World Cup 2026™</p>
             </div>
           </div>
           <div className="text-right shrink-0">
-            <p className="font-bebas text-5xl text-[#FFD700]">{totalPoints}</p>
+            <p className="font-sans text-5xl text-[#00C896]">{totalPoints}</p>
             <p className="text-xs font-bold text-white uppercase tracking-wider">Puntos</p>
           </div>
         </div>
-        <div className="flex gap-4 mt-4 border-t border-[#2A2A4A] pt-3">
+        <div className="flex gap-4 mt-4 border-t border-white/10 pt-3">
           <div>
-            <p className="font-bebas text-2xl text-[#22C55E]">{savedCount}</p>
+            <p className="font-sans text-2xl text-[#22C55E]">{savedCount}</p>
             <p className="text-xs text-white font-bold">Completadas</p>
           </div>
           <div>
-            <p className="font-bebas text-2xl text-white">{matches.length - savedCount}</p>
+            <p className="font-sans text-2xl text-white">{matches.length - savedCount}</p>
             <p className="text-xs text-white font-bold">Pendientes</p>
           </div>
           <div className="ml-auto">
             <div className="w-32 h-2 bg-[#2A2A4A] rounded-full overflow-hidden">
-              <div className="h-full bg-[#FFD700] rounded-full transition-all"
+              <div className="h-full bg-[#00C896] rounded-full transition-all"
                 style={{ width: `${matches.length > 0 ? (savedCount / matches.length) * 100 : 0}%` }} />
             </div>
             <p className="text-xs text-white font-bold mt-1 text-right">
@@ -464,7 +464,7 @@ export default function PredictionsPage() {
             </p>
           </div>
         </div>
-        <div className="mt-4 border-t border-[#2A2A4A] pt-4">
+        <div className="mt-4 border-t border-white/10 pt-4">
           {oracleMsg && (
             <p className={`text-sm font-bold mb-3 ${oracleMsg.startsWith('✅') ? 'text-[#22C55E]' : 'text-red-400'}`}>{oracleMsg}</p>
           )}
@@ -481,18 +481,18 @@ export default function PredictionsPage() {
       </div>
 
       {/* Sistema de puntos — sin nivel 3 goleador */}
-      <div className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-2xl p-4 mb-6">
-        <p className="font-bebas text-lg text-white tracking-wider mb-3">SISTEMA DE PUNTOS</p>
+      <div className="bg-[#080812] border border-white/10 rounded-2xl p-4 mb-6">
+        <p className="font-sans text-lg text-white tracking-wider mb-3">SISTEMA DE PUNTOS</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
           {[
-            { label: 'Ganador', pts: 10, color: 'text-[#FFD700]' },
+            { label: 'Ganador', pts: 10, color: 'text-[#00C896]' },
             { label: 'Marcador exacto', pts: 15, color: 'text-[#A855F7]' },
             { label: 'Goles por tiempo', pts: 5, color: 'text-orange-400' },
             { label: 'Penales', pts: 10, color: 'text-red-400' },
           ].map(({ label, pts, color }) => (
-            <div key={label} className="flex items-center justify-between bg-[#1A1A2E] rounded-xl px-3 py-2">
+            <div key={label} className="flex items-center justify-between bg-[#0D0D1A] rounded-xl px-3 py-2">
               <span className="text-white text-xs">{label}</span>
-              <span className={`font-bebas text-lg ${color}`}>+{pts}</span>
+              <span className={`font-sans text-lg ${color}`}>+{pts}</span>
             </div>
           ))}
         </div>
@@ -501,7 +501,7 @@ export default function PredictionsPage() {
       {/* Grupos */}
       {Object.keys(groups).sort().map(group => (
         <div key={group} className="mb-6">
-          <h2 className="font-bebas text-2xl text-[#FFD700] tracking-wider mb-3">{locale === 'en' ? 'Group' : 'Grupo'} {group}</h2>
+          <h2 className="font-sans text-2xl text-[#00C896] tracking-wider mb-3">{locale === 'en' ? 'Group' : 'Grupo'} {group}</h2>
           {groups[group].map(m => (
             <MatchPredictionCard key={m.id} match={m}
               prediction={predictions[m.id] || null}
@@ -513,7 +513,7 @@ export default function PredictionsPage() {
       {/* Eliminatorias */}
       {knockoutMatches.length > 0 && (
         <div className="mb-6">
-          <h2 className="font-bebas text-2xl text-[#A855F7] tracking-wider mb-3">{locale === 'en' ? 'Knockout Stage' : 'Eliminatorias'}</h2>
+          <h2 className="font-sans text-2xl text-[#A855F7] tracking-wider mb-3">{locale === 'en' ? 'Knockout Stage' : 'Eliminatorias'}</h2>
           {knockoutMatches.map(m => (
             <MatchPredictionCard key={m.id} match={m}
               prediction={predictions[m.id] || null}

@@ -32,22 +32,22 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-[#0D0D0D] flex items-center justify-center p-4">
+    <div className="min-h-dvh bg-[#080812] flex items-center justify-center p-4">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#FFD700]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00C896]/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#7C3AED]/5 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-sm relative">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#FFD700]/10 border border-[#FFD700]/20 mb-4">
-            <Trophy size={32} className="text-[#FFD700]" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#00C896]/10 border border-[#00C896]/20 mb-4">
+            <Trophy size={32} className="text-[#00C896]" />
           </div>
-          <h1 className="font-bebas text-4xl text-[#FFD700] tracking-wider">POOLZONE</h1>
+          <h1 className="font-sans text-4xl text-[#00C896] tracking-wider">POOLZONE</h1>
           <p className="text-gray-400 text-sm mt-1">WORLD CUP 2026 🏆</p>
         </div>
 
-        <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-6">
+        <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-6">
 
           {sent ? (
             /* Estado: email enviado */
@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
               <p className="text-gray-400 text-sm mb-6">
                 Te mandamos un link a <span className="text-white font-medium">{email}</span> para resetear tu contraseña. Revisá también el spam.
               </p>
-              <Link href="/login" className="inline-flex items-center gap-2 text-[#FFD700] hover:underline text-sm font-medium">
+              <Link href="/login" className="inline-flex items-center gap-2 text-[#00C896] hover:underline text-sm font-medium">
                 <ArrowLeft size={16} />
                 Volver al login
               </Link>
@@ -89,21 +89,21 @@ export default function ForgotPasswordPage() {
                     placeholder="tu@email.com"
                     required
                     autoComplete="off"
-                    className="w-full bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#FFD700] text-base"
+                    className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#00C896] text-base"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
+                  className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
                 >
                   {loading ? <><Loader2 size={18} className="animate-spin" />Enviando...</> : 'Mandar link de reset'}
                 </button>
               </form>
 
               <p className="text-center text-sm text-gray-400 mt-5">
-                <Link href="/login" className="inline-flex items-center gap-1 text-[#FFD700] hover:underline font-medium">
+                <Link href="/login" className="inline-flex items-center gap-1 text-[#00C896] hover:underline font-medium">
                   <ArrowLeft size={14} />
                   Volver al login
                 </Link>
