@@ -201,7 +201,7 @@ export default function OraclePage() {
             <div className="bg-[#0D0D1A] border border-[#7C3AED]/30 rounded-2xl px-4 py-3">
               <div className="flex items-center gap-2 text-white">
                 <Loader2 size={16} className="animate-spin text-[#A855F7]" />
-                <span className="text-base">{locale === 'en' ? 'Analyzing...' : 'Analizando...'}</span>
+                <span className="text-base">{'Analyzing...'}</span>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function OraclePage() {
       ) : (
         <div className="flex gap-2">
           <input value={question} onChange={e => setQuestion(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAsk()}
-            placeholder={locale === 'en' ? 'Ask about the World Cup...' : 'Preguntá sobre el Mundial...'}
+            placeholder={'Ask about the World Cup...'}
             className="flex-1 bg-[#0D0D1A] border border-white/10 focus:border-[#A855F7] rounded-xl px-4 py-3 text-base text-white font-medium focus:outline-none placeholder:text-gray-500 transition-all"
           />
           <button onClick={() => handleAsk()} disabled={loading || !question.trim()}
