@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
 
-  // Cargar email guardado si el usuario eligió recordar
+  // Load saved email
   useEffect(() => {
     const savedEmail = localStorage.getItem('rememberedEmail')
     const savedRemember = localStorage.getItem('rememberMe') === 'true'
@@ -65,12 +65,12 @@ export default function LoginPage() {
             <Trophy size={32} className="text-[#00C896]" />
           </div>
           <h1 className="font-sans text-4xl text-[#00C896] tracking-wider">POOLZONE</h1>
-          <p className="text-gray-400 text-sm mt-1">WORLD CUP 2026 🏆</p>
+          <p className="text-gray-400 text-sm mt-1">WORLD CUP 2026</p>
         </div>
 
         <div className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-6">
-          <h2 className="text-xl font-semibold text-white mb-1">Bienvenido de vuelta</h2>
-          <p className="text-gray-400 text-sm mb-6">Ingresá a tu cuenta para seguir la acción</p>
+          <h2 className="text-xl font-semibold text-white mb-1">Welcome back</h2>
+          <p className="text-gray-400 text-sm mb-6">Sign in to your account</p>
 
           {error && (
             <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl p-3 mb-4">
@@ -96,7 +96,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1.5">Contraseña</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -127,28 +127,28 @@ export default function LoginPage() {
                     </svg>
                   )}
                 </div>
-                <span className="text-sm text-gray-400">Recordar mi email</span>
+                <span className="text-sm text-gray-400">Remember my email</span>
               </label>
               <Link href="/forgot-password" className="text-sm text-[#00C896] hover:underline">
-                ¿Olvidaste tu contraseña?
+                Forgot password?
               </Link>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
+              className="w-full bg-[#00C896] text-black font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-base"
             >
-              {loading ? <><Loader2 size={18} className="animate-spin" />Ingresando...</> : '¡Dale, entrá!'}
+              {loading ? <><Loader2 size={18} className="animate-spin" />Ingresando...</> : 'Sign In'}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-400 mt-5">
-            ¿No tenés cuenta? <Link href="/register" className="text-[#00C896] hover:underline font-medium">Registrate acá</Link>
+            Don't have an account? <Link href="/register" className="text-[#00C896] hover:underline font-medium">Sign up here</Link>
           </p>
         </div>
 
-        <p className="text-center text-xs text-gray-600 mt-4">La app de apuestas del grupo familiar 🤣</p>
+        <p className="text-center text-xs text-gray-600 mt-4">World Cup 2026 Prediction Pool 🤣</p>
       </div>
     </div>
   )
