@@ -24,15 +24,19 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const { pathname } = request.nextUrl
 
-  const publicRoutes = ['/', '/login', '/register', '/api', '/how-to-play', '/forgot-password', '/reset-password', '/terms']
-  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
+  const publicRoutes = ['/', '/login', '/register', '/api', '/how-to-play', '/forgot-password', '/reset-password', '/terms', '/join/success']
+  const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route))
 
   if (!user && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
   }
 
-  if (user && isPublicRoute && !pathname.startsWith('/api')) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+  if (user && (pathname === '/login' || pathname === '/register')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse
