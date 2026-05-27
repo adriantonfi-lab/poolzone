@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import NewsSection from './NewsSection'
 import Link from 'next/link'
 import { Zap, Calendar, Sparkles, Users, MessageCircle, Trophy, BarChart2, BookOpen } from 'lucide-react'
 
@@ -306,8 +305,6 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
           </div>
         )}
 
-        {/* NOTICIAS */}
-        <NewsSection />
 
       </div>
     </div>
