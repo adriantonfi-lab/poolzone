@@ -173,8 +173,8 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
     <div className="w-full pb-24 md:pb-6">
 
       {/* HERO */}
-      <div className="relative w-full bg-[#0D0D0D] mb-4" style={{aspectRatio:'1200/400'}}>
-        <img src="/poolzone_logo_.png" alt="PoolZone"
+      <div className="relative w-full bg-[#0D0D0D] mb-4" style={{aspectRatio:'1200/400', maxHeight:'300px'}}>
+        <img src="/poolzone-banner.png" alt="PoolZone World Cup 2026"
           className="w-full h-full object-contain"
           onError={(e) => { (e.target as HTMLImageElement).style.display='none' }} />
       </div>
@@ -186,7 +186,7 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
 
           {/* Reloj Mundial */}
           <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-3">
-            <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">PRÓXIMO MUNDIAL</p>
+            <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">WORLD CUP 2026</p>
             <BigClock targetDate="2026-06-11T20:00:00Z" />
           </div>
 
@@ -197,7 +197,7 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
                 <img src="https://flagcdn.com/40x30/ar.png" alt="ARG" width={40} height={30} className="rounded-sm" />
                 <div>
                   <p className="text-sm font-bold text-white">Argentina</p>
-                  <p className="text-[10px] text-[#74C0FC]">Próximo partido</p>
+                  <p className="text-[10px] text-[#74C0FC]">Next match</p>
                 </div>
               </div>
               <SmallClock targetDate={getNextDate(ARG_MATCHES)} color="text-[#74C0FC]" />
@@ -207,7 +207,7 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
                 <img src="https://flagcdn.com/40x30/co.png" alt="COL" width={40} height={30} className="rounded-sm" />
                 <div>
                   <p className="text-sm font-bold text-white">Colombia</p>
-                  <p className="text-[10px] text-[#FCD34D]">Próximo partido</p>
+                  <p className="text-[10px] text-[#FCD34D]">Next match</p>
                 </div>
               </div>
               <SmallClock targetDate={getNextDate(COL_MATCHES)} color="text-[#FCD34D]" />
@@ -241,13 +241,13 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
                 <img src={`https://flagcdn.com/40x30/${teamCode}.png`} alt="" width={46} height={34} className="rounded-sm border border-white/20" />
                 <div>
                   <p className="text-sm text-white font-bold">{profile?.favorite_team||'-'}</p>
-                  <p className="text-xs text-gray-400">Mi equipo</p>
+                  <p className="text-xs text-gray-400">My team</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="text-center">
                   <p className="font-bebas text-4xl text-orange-400">{openBattles.length}</p>
-                  <p className="text-xs text-white font-bold">Batallas</p>
+                  <p className="text-xs text-white font-bold">Challenges</p>
                 </div>
                 <div className="text-center">
                   <p className="font-bebas text-4xl text-[#22C55E]">{onlineCount}</p>
@@ -262,32 +262,32 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
           </div>
         </div>
 
-        {/* TICKER PARTIDOS */}
+        {/* TICKER MATCHES */}
         {matchItems.length > 0 && (
-          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label="PARTIDOS" />
+          <JSTicker items={matchItems} fast={false} bgLabel="bg-blue-700" label="MATCHES" />
         )}
 
         {/* BOTONES NAV — 7 botones con Reglas */}
         <div className="grid grid-cols-7 gap-2 mb-4">
-          <NavBtn href="/schedule" icon={Calendar} label="Fixture" iconColor="text-blue-400" glow="#60A5FA" />
-          <NavBtn href="/ai-picks" icon={Sparkles} label="Oráculo" iconColor="text-[#A855F7]" glow="#A855F7" />
-          <NavBtn href="/my-picks" icon={Trophy} label="Mi Polla" iconColor="text-[#FFD700]" glow="#FFD700" />
-          <NavBtn href="/leaderboard" icon={BarChart2} label="Ranking" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/challenges" icon={Zap} label="Batallas" iconColor="text-orange-400" glow="#FB923C" />
+          <NavBtn href="/schedule" icon={Calendar} label="Schedule" iconColor="text-blue-400" glow="#60A5FA" />
+          <NavBtn href="/ai-picks" icon={Sparkles} label="Oracle" iconColor="text-[#A855F7]" glow="#A855F7" />
+          <NavBtn href="/my-picks" icon={Trophy} label="My Picks" iconColor="text-[#FFD700]" glow="#FFD700" />
+          <NavBtn href="/leaderboard" icon={BarChart2} label="Leaderboard" iconColor="text-[#22C55E]" glow="#22C55E" />
+          <NavBtn href="/challenges" icon={Zap} label="Challenges" iconColor="text-orange-400" glow="#FB923C" />
           <NavBtn href="/chat" icon={MessageCircle} label="Chat" iconColor="text-[#22C55E]" glow="#22C55E" />
-          <NavBtn href="/how-to-play" icon={BookOpen} label="Reglas" iconColor="text-pink-400" glow="#F472B6" />
+          <NavBtn href="/how-to-play" icon={BookOpen} label="Rules" iconColor="text-pink-400" glow="#F472B6" />
         </div>
 
-        {/* BATALLAS ABIERTAS */}
+        {/* OPEN CHALLENGES */}
         {openBattles.length > 0 && (
           <div className="mb-4 bg-[#1A1A2E] border border-[#FFD700]/20 rounded-2xl overflow-hidden">
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#2A2A4A]">
               <div className="flex items-center gap-2">
                 <Zap size={14} className="text-[#FFD700]" />
-                <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">BATALLAS ABIERTAS</h2>
+                <h2 className="font-bebas text-lg text-[#FFD700] tracking-wider">OPEN CHALLENGES</h2>
                 <span className="bg-[#FFD700] text-black text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">{openBattles.length}</span>
               </div>
-              <Link href="/challenges" className="text-xs font-bold text-[#FFD700] hover:underline">Ver todas</Link>
+              <Link href="/challenges" className="text-xs font-bold text-[#FFD700] hover:underline">See all</Link>
             </div>
             <div className="divide-y divide-[#2A2A4A]">
               {openBattles.slice(0,3).map((b: any) => (
@@ -298,7 +298,7 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
                   </div>
                   <div className="text-right ml-3">
                     <p className="font-bebas text-lg text-[#FFD700]">${b.pot_total}</p>
-                    <p className="text-[10px] font-bold text-white">en el pozo</p>
+                    <p className="text-[10px] font-bold text-white">in the pot</p>
                   </div>
                 </Link>
               ))}
