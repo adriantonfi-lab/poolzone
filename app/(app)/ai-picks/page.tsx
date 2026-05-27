@@ -10,12 +10,12 @@ import Link from 'next/link'
 type Message = { role: 'user' | 'oracle'; content: string }
 
 const SUGGESTED_QUESTIONS_ES = [
-  '¿Quién tiene más chances de ganar el Grupo A?',
-  '¿Argentina puede llegar a la final?',
-  '¿Qué selección tiene el mejor ataque del torneo?',
-  '¿Brasil vs Francia, quién gana y con qué marcador?',
-  '¿Cuál es la selección más peligrosa del torneo?',
-  '¿Qué equipos sorpresa pueden llegar lejos?',
+  'Who has the best chances to win Group A?',
+  'Can Argentina make it to the final?',
+  'Which team has the best attack in the tournament?',
+  'Brazil vs France, who wins and what score?',
+  'Which is the most dangerous team in the tournament?',
+  'Which surprise teams could go far?',
 ]
 
 const SUGGESTED_QUESTIONS_EN = [
@@ -163,7 +163,7 @@ export default function OraclePage() {
                 <span className="text-base font-bold text-[#A855F7]">El Oracle</span>
               </div>
               <p className="text-base text-white leading-relaxed">
-                {locale === 'en' ? 'Welcome! Ask me anything about the World Cup. You have' : '¡Bienvenido! Preguntame lo que quieras sobre el Mundial. Tenés'}{' '}
+                {locale === 'en' ? 'Welcome! Ask me anything about the World Cup. You have' : 'Welcome! Ask me anything about the World Cup. You have'}{' '}
                 <span className="font-bold text-[#00C896]">{queriesLeft} {locale === 'en' ? 'queries' : 'consultas'}</span>{' '}
                 {locale === 'en' ? 'available.' : 'disponibles.'}
               </p>

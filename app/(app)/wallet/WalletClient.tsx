@@ -150,7 +150,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
       } else {
         setReengancheUsed(true)
         setCredits((c: number) => c - 250)
-        setReengancheMsg('¡Re-enganche activado! +50 puntos sumados al ranking 🎉')
+        setReengancheMsg('Re-entry activated! +50 points added to your ranking 🎉')
       }
     } catch {
       setReengancheMsg('Error de conexión')
@@ -222,7 +222,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
               <div className="overflow-y-auto flex-1 p-4 space-y-4">
                 {/* Monto */}
                 <div>
-                  <p className="text-sm font-bold text-white mb-2">¿Cuánto querés cargar?</p>
+                  <p className="text-sm font-bold text-white mb-2">How much do you want to add?</p>
                   <div className="flex gap-2 mb-2">
                     {AMOUNTS.map(a => (
                       <button key={a} onClick={() => { setDepositAmount(a); setCustomAmount('') }}
@@ -267,7 +267,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
                 {/* Datos para pagar */}
                 {selectedMethodData && (
                   <div className="bg-[#080812] border border-[#00C896]/20 rounded-xl p-3">
-                    <p className="text-xs text-gray-400 mb-1">Enviá el pago a:</p>
+                    <p className="text-xs text-gray-400 mb-1">Send payment to:</p>
                     <p className="text-base font-bold text-[#00C896]">{selectedMethodData.label}</p>
                     <p className="text-sm text-white font-mono mt-1">{selectedMethodData.detail}</p>
                     <p className="text-xs text-gray-400 mt-2">
@@ -417,7 +417,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
               </div>
             </div>
             <p className="text-xs text-gray-400 mb-4">
-              ¿Quedaste lejos en el ranking? Pagá $25 y sumá 50 puntos para meterte en la pelea durante la fase eliminatoria.
+              Fell behind in the rankings? Pay $25 and add 50 points during the knockout phase.
             </p>
             {reengancheMsg && (
               <div className={`rounded-xl p-3 mb-3 text-sm font-semibold text-center ${

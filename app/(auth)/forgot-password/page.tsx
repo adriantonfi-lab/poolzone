@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
                 <CheckCircle size={28} className="text-green-400" />
               </div>
-              <h2 className="text-xl font-semibold text-white mb-2">¡Email enviado!</h2>
+              <h2 className="text-xl font-semibold text-white mb-2">Email sent!</h2>
               <p className="text-gray-400 text-sm mb-6">
                 Te mandamos un link a <span className="text-white font-medium">{email}</span> para resetear tu contraseña. Revisá también el spam.
               </p>
@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
           ) : (
             /* Estado: formulario */
             <>
-              <h2 className="text-xl font-semibold text-white mb-1">¿Forgot password?</h2>
+              <h2 className="text-xl font-semibold text-white mb-1">Forgot password?</h2>
               <p className="text-gray-400 text-sm mb-6">
                 Sign in tu email y te mandamos un link para resetearla.
               </p>

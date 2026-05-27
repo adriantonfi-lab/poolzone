@@ -457,7 +457,7 @@ export default function LockerRoomPage() {
                             <button onClick={() => reportMessage(msg.id)}
                               className="w-full flex items-center gap-2 px-3 py-2 text-sm text-orange-400 hover:bg-orange-500/10 rounded-lg transition-colors">
                               <Flag size={14} />
-                              {wasReported ? '¡Reported!' : 'Report message'}
+                              {wasReported ? 'Reported!' : 'Report message'}
                             </button>
                           )}
                           {(isAdmin || isMe) && (
@@ -533,7 +533,7 @@ export default function LockerRoomPage() {
                   </button>
                 ))}
                 {gifs.length === 0 && (
-                  <p className="col-span-4 text-center text-gray-400 text-sm py-4">Buscá algo para ver GIFs ⚽</p>
+                  <p className="col-span-4 text-center text-gray-400 text-sm py-4">Search for GIFs ⚽</p>
                 )}
               </div>
             )}

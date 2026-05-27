@@ -54,7 +54,7 @@ function SuccessContent() {
     <div className="min-h-screen bg-[#0D0D1A] flex items-center justify-center p-4">
       <div className="text-center max-w-sm">
         <CheckCircle size={64} className="text-[#00C896] mx-auto mb-6" />
-        <h1 className="text-3xl font-black text-white mb-2">¡Estás adentro! 🎉</h1>
+        <h1 className="text-3xl font-black text-white mb-2">You're in! 🎉</h1>
         <p className="text-gray-400 mb-4">Tu inscripción al Mundial 2026 está confirmada.</p>
         <div className="bg-[#00C896]/10 border border-[#00C896]/20 rounded-xl p-4 mb-4">
           <p className="text-[#00C896] font-bold text-lg">+50 créditos acreditados</p>

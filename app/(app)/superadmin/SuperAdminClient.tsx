@@ -68,7 +68,7 @@ export default function SuperAdminClient({
   }
 
   async function handleCreateChallenge() {
-    if (!challengeTitle || !challengeMatch) { setMsg('❌ Completá el título y el partido'); return }
+    if (!challengeTitle || !challengeMatch) { setMsg('❌ Please fill in the title and match'); return }
     setSaving(true)
     const res = await fetch('/api/superadmin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'create_challenge', matchId: challengeMatch, title: challengeTitle, description: challengeDesc, prizeAmount: parseFloat(challengePrize || '0'), bonusPoints: parseInt(challengePoints || '0') }) })
     const data = await res.json()
@@ -314,7 +314,7 @@ export default function SuperAdminClient({
                   {matches.filter(m => m.status === 'scheduled').map(m => <option key={m.id} value={m.id}>{m.home_team} vs {m.away_team}</option>)}
                 </select>
               </div>
-              <div><p className="text-sm font-bold text-white mb-1.5">Título</p><input value={challengeTitle} onChange={e => setChallengeTitle(e.target.value)} placeholder="Ej: ¡$100 para quien acierte el marcador!" className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]" /></div>
+              <div><p className="text-sm font-bold text-white mb-1.5">Título</p><input value={challengeTitle} onChange={e => setChallengeTitle(e.target.value)} placeholder="Ej: $100 for the correct score!" className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]" /></div>
               <div><p className="text-sm font-bold text-white mb-1.5">Descripción (opcional)</p><textarea value={challengeDesc} onChange={e => setChallengeDesc(e.target.value)} rows={2} placeholder="Detalles..." className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896] resize-none" /></div>
               <div className="grid grid-cols-2 gap-3">
                 <div><p className="text-sm font-bold text-white mb-1.5">Premio USD</p><input type="number" value={challengePrize} onChange={e => setChallengePrize(e.target.value)} placeholder="100" className="w-full bg-[#080812] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#00C896]" /></div>
@@ -348,7 +348,7 @@ export default function SuperAdminClient({
       {tab === 'resultados' && (
         <div className="text-center py-12">
           <Zap size={48} className="text-[#00C896] mx-auto mb-4 opacity-60" />
-          <p className="text-white font-bold mb-2">Cargá los resultados desde el panel de manager</p>
+          <p className="text-white font-bold mb-2">Load results from the manager panel</p>
           <p className="text-gray-400 text-sm mb-6">El sistema calcula puntos automáticamente.</p>
           <Link href="/admin" className="inline-flex items-center gap-2 bg-[#00C896] text-black font-bold px-6 py-3 rounded-xl text-sm hover:bg-[#FFA500] transition-all">
             <Zap size={16} /> Ir al Panel de Resultados

@@ -113,7 +113,7 @@ export default function RegisterPage() {
 
   async function handleStep1(e: React.FormEvent) {
     e.preventDefault()
-    if (!email || !password || !username) { setError('Completá todos los campos'); return }
+    if (!email || !password || !username) { setError('Please fill in all fields'); return }
     setError('')
     setStep(2)
   }
@@ -127,7 +127,7 @@ export default function RegisterPage() {
 
   async function handlePayment(e: React.FormEvent) {
     e.preventDefault()
-    if (!agreed) { setError('Aceptá los términos y condiciones'); return }
+    if (!agreed) { setError('Please accept the terms and conditions'); return }
 
     setPaymentLoading(true)
     setError('')
@@ -238,7 +238,7 @@ export default function RegisterPage() {
                 Next →
               </button>
               <p className="text-center text-sm text-gray-400">
-                ¿Ya tenés cuenta? <Link href="/login" className="text-[#00C896] hover:underline">Entrá acá</Link>
+                Already have an account? <Link href="/login" className="text-[#00C896] hover:underline">Sign in here</Link>
               </p>
             </form>
           )}
@@ -265,7 +265,7 @@ export default function RegisterPage() {
                   ) : (
                     <>
                       <Camera size={28} className="text-gray-500 mb-2" />
-                      <p className="text-gray-400 text-sm">Tocá para subir tu foto</p>
+                      <p className="text-gray-400 text-sm">Tap to upload your photo</p>
                     </>
                   )}
                 </div>
@@ -281,7 +281,7 @@ export default function RegisterPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">Equipo del corazón *</label>
                 <select value={favoriteTeam} onChange={e => setFavoriteTeam(e.target.value)} required className={inputClass}>
-                  <option value="">¿A quién bancás?</option>
+                  <option value="">Who do you support?</option>
                   {TEAMS.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>

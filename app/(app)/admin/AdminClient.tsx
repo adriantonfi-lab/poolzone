@@ -369,7 +369,7 @@ export default function AdminClient({ currentUser, users, matches, predictions }
       {/* TAB: RESULTADOS */}
       {tab === 'resultados' && (
         <div className="space-y-3">
-          <p className="text-sm font-bold text-white mb-3">Cargá el resultado final — el sistema calcula los puntos automáticamente.</p>
+          <p className="text-sm font-bold text-white mb-3">Enter the final result — the system calculates points automatically.</p>
           {upcomingMatches.map(m => (
             <div key={m.id} className="bg-[#0D0D1A] border border-white/10 rounded-2xl p-4">
               <div className="flex items-center gap-2 mb-3">

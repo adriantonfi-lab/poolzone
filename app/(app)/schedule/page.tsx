@@ -156,7 +156,7 @@ function StatsPanel({ homeTeam, awayTeam, homeTeamCode, awayTeamCode, onClose }:
           )}
           {!loading && !chatMode && (
             <div className="border-t border-white/10 pt-4">
-              <p className="text-base font-bold text-white mb-3">¿Querés saber más de algún equipo?</p>
+              <p className="text-base font-bold text-white mb-3">Want to know more about a team?</p>
               <div className="flex gap-3 mb-4">
                 <button onClick={() => handleTeamSelect(homeTeam)}
                   className="flex-1 flex items-center justify-center gap-2 bg-[#080812] border border-white/10 hover:border-[#00C896] rounded-xl px-3 py-3 text-base font-bold text-white transition-all">

@@ -21,7 +21,7 @@ export function PushNotificationButton({ variant = 'full', className = '' }: Pro
       const ok = await subscribe()
       if (ok) {
         // Pequeña notificación de bienvenida
-        new Notification('¡PoolZone activado! 🏆', {
+        new Notification('PoolZone activated! 🏆', {
           body: 'Te vamos a avisar de goles, challenges y todo lo importante',
           icon: '/icon-192.png',
         })

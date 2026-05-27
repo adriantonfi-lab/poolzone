@@ -391,7 +391,7 @@ export default function BattlesPage() {
           <div className="text-center py-16">
             <Zap size={40} className="text-[#00C896] mx-auto mb-3" />
             <p className="text-xl font-bold text-white mb-2">No open challenges yet</p>
-            <p className="text-base text-white mb-4">¡Sé el primero en desafiar!</p>
+            <p className="text-base text-white mb-4">Be the first to challenge!</p>
             <button onClick={() => setShowCreate(true)}
               className="bg-gradient-to-r from-[#00C896] to-[#00b085] text-black font-bold px-6 py-3 rounded-xl text-base">
               + Nueva challenge
