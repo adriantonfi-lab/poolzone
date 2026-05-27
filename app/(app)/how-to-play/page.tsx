@@ -1,285 +1,14 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-
 import Link from 'next/link'
-import {
-  ArrowLeft, Trophy, DollarSign, Users, Star, Clock, RefreshCw,
-  Sparkles, Zap, MessageCircle, Crown, HelpCircle, ExternalLink,
-  Wallet, Calendar, BarChart2, BookOpen, Gift, CreditCard,
-  AlertTriangle, CheckCircle, Lock, Info, Home, FileText
-} from 'lucide-react'
-
-export default function RulesPage() {
-  return (
-    <div className="px-4 py-6 max-w-3xl mx-auto pb-24 md:pb-6">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-base font-bold text-white hover:text-[#FFD700] transition-colors mb-4">
-        <ArrowLeft size={20} />Volver al Dashboard
-      </Link>
-
-      {/* Header */}
-      <div className="bg-gradient-to-r from-[#FFD700]/10 to-[#FFA500]/10 border border-[#FFD700]/30 rounded-2xl p-6 mb-6 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#FFD700]/20 border border-[#FFD700]/30 mb-4">
-          <Trophy size={32} className="text-[#FFD700]" />
-        </div>
-        <h1 className="font-bebas text-5xl text-[#FFD700] tracking-wider mb-2">Reglas del Juego</h1>
-        <p className="text-white font-bold text-lg">PoolZone — Mundial 2026</p>
-        <p className="text-gray-400 text-sm mt-1">Todo lo que necesitás saber para jugar y ganar</p>
-      </div>
-
-      {/* ¿Qué es? */}
-      <Section icon={<Star size={22} className="text-[#FFD700]" />} title="¿Qué es PoolZone?" color="text-[#FFD700]">
-        <p className="text-white text-base leading-relaxed">
-          PoolZone es la sports pool del Mundial 2026. Cada participante predice los resultados de los <strong className="text-[#FFD700]">103 partidos</strong> del torneo y acumula puntos según sus aciertos. Al final, el que más puntos tenga se lleva el primer premio. Simple, divertido y competitivo.
-        </p>
-      </Section>
-
-      {/* Inscripción */}
-      <Section icon={<DollarSign size={22} className="text-green-400" />} title="Inscripción y costos" color="text-green-400">
-        <div className="space-y-3">
-          <Row icon={<Users size={18} className="text-[#FFD700]" />} label="Familia" value="$25" color="text-[#FFD700]" />
-          <Row icon={<Users size={18} className="text-[#FFD700]" />} label="Invitados" value="$25" color="text-[#FFD700]" />
-          <Row icon={<RefreshCw size={18} className="text-[#A855F7]" />} label="Re-enganche (solo en Octavos)" value="$25" color="text-[#A855F7]" />
-        </div>
-        <div className="mt-3 flex items-start gap-2 bg-green-500/10 border border-green-500/20 rounded-xl p-3">
-          <CheckCircle size={16} className="text-green-400 shrink-0 mt-0.5" />
-          <p className="text-green-400 text-sm font-bold">El 100% de las inscripciones va al pozo de premios. Nada se queda en la casa.</p>
-        </div>
-      </Section>
-
-      {/* Referidos */}
-      <Section icon={<Gift size={22} className="text-[#22C55E]" />} title="Sistema de referidos" color="text-[#22C55E]">
-        <p className="text-white text-base leading-relaxed mb-3">
-          Por cada persona que traés al juego recibís <strong className="text-[#22C55E]">$5 en créditos (50 créditos)</strong> como bonificación.
-        </p>
-        <div className="space-y-2">
-          {[
-            { n: 1, value: '$5 créditos' },
-            { n: 2, value: '$10 créditos' },
-            { n: 3, value: '$15 créditos' },
-            { n: 4, value: '$20 créditos' },
-            { n: 5, value: '$25 créditos' },
-            { n: 6, value: '$30 créditos (máximo)' },
-          ].map(({ n, value }) => (
-            <div key={n} className="flex items-center justify-between bg-[#0D0D0D] rounded-xl px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-[#22C55E]/20 flex items-center justify-center">
-                  <span className="text-xs font-bold text-[#22C55E]">{n}</span>
-                </div>
-                <span className="text-white font-bold">{n === 1 ? '1 referido' : `${n} referidos`}</span>
-              </div>
-              <span className={`font-bebas text-xl ${n === 6 ? 'text-[#FFD700]' : 'text-[#22C55E]'}`}>{value}</span>
-            </div>
-          ))}
-        </div>
-        <div className="mt-3 flex items-start gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3">
-          <AlertTriangle size={16} className="text-yellow-400 shrink-0 mt-0.5" />
-          <p className="text-yellow-400 text-sm font-bold">A partir del 7mo referido no se otorgan más créditos. El máximo es $30 en créditos por referidos.</p>
-        </div>
-      </Section>
-
-      {/* Créditos */}
-      <Section icon={<CreditCard size={22} className="text-blue-400" />} title="Sistema de créditos" color="text-blue-400">
-        <Row icon={<DollarSign size={18} className="text-blue-400" />} label="1 dólar" value="10 créditos" color="text-blue-400" />
-        <p className="text-gray-400 text-sm mt-3">Los créditos se usan para pagar cambios tardíos, El Oráculo y las batallas. Se cargan manualmente enviando el comprobante al admin.</p>
-        <div className="mt-3 flex items-start gap-2 bg-blue-500/10 border border-blue-500/30 rounded-xl p-3">
-          <Info size={16} className="text-blue-400 shrink-0 mt-0.5" />
-          <p className="text-blue-400 text-sm font-bold">Podés cargar los créditos que quieras en cualquier momento desde tu Wallet.</p>
-        </div>
-      </Section>
-
-      {/* Premios */}
-      <Section icon={<Trophy size={22} className="text-[#FFD700]" />} title="Premios" color="text-[#FFD700]">
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { place: '1° lugar', pct: '60%', color: 'text-[#FFD700]', border: 'border-[#FFD700]/30', bg: 'bg-[#FFD700]/5' },
-            { place: '2° lugar', pct: '30%', color: 'text-gray-300', border: 'border-gray-500/30', bg: 'bg-gray-500/5' },
-            { place: '3° lugar', pct: '10%', color: 'text-amber-600', border: 'border-amber-600/30', bg: 'bg-amber-600/5' },
-          ].map(({ place, pct, color, border, bg }) => (
-            <div key={place} className={`${bg} border ${border} rounded-xl p-4 text-center`}>
-              <Trophy size={24} className={`${color} mx-auto mb-2`} />
-              <p className={`font-bebas text-3xl ${color}`}>{pct}</p>
-              <p className="text-xs font-bold text-white mt-1">{place}</p>
-              <p className="text-xs text-gray-400">Del pozo total</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Sistema de puntos */}
-      <Section icon={<Star size={22} className="text-[#A855F7]" />} title="Sistema de puntos" color="text-[#A855F7]">
-        <div className="space-y-2">
-          <PuntosRow nivel="Nivel 1" desc="Acertás el ganador o empate" pts={20} color="text-[#FFD700]" />
-          <PuntosRow nivel="Nivel 2" desc="Acertás el marcador exacto" pts={25} color="text-[#A855F7]" />
-          <PuntosRow nivel="Nivel 3" desc="Acertás los goles por tiempo (1er y 2do)" pts={15} color="text-orange-400" />
-          <PuntosRow nivel="Nivel 4" desc="Acertás si va a penales (solo eliminatorias)" pts={10} color="text-red-400" />
-        </div>
-        <div className="mt-3 flex items-start gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3">
-          <AlertTriangle size={16} className="text-yellow-400 shrink-0 mt-0.5" />
-          <p className="text-yellow-400 text-sm font-bold">Caso especial 0-0: Si el partido termina 0-0 y pusiste empate con marcador 0-0, solo cobrás el Nivel 1 (20 pts). No suma Nivel 2.</p>
-        </div>
-        <div className="mt-2 flex items-start gap-2 bg-[#22C55E]/10 border border-[#22C55E]/30 rounded-xl p-3">
-          <Info size={16} className="text-[#22C55E] shrink-0 mt-0.5" />
-          <p className="text-[#22C55E] text-sm font-bold">Los niveles son acumulativos — podés sumar hasta 70 puntos por partido en eliminatorias.</p>
-        </div>
-      </Section>
-
-      {/* Fees */}
-      <Section icon={<Clock size={22} className="text-orange-400" />} title="Cuándo podés hacer las predicciones" color="text-orange-400">
-        <div className="space-y-2">
-          <FeeRow icon={<CheckCircle size={16} className="text-[#22C55E]" />} tiempo="Más de 24hs antes" fee="Gratis" mult="100% de los puntos" color="text-[#22C55E]" />
-          <FeeRow icon={<Clock size={16} className="text-yellow-400" />} tiempo="Entre 1 y 24hs antes" fee="$2 · 20 créditos" mult="75% de los puntos" color="text-yellow-400" />
-          <FeeRow icon={<Clock size={16} className="text-orange-400" />} tiempo="15 minutos antes" fee="$3 · 30 créditos" mult="50% de los puntos" color="text-orange-400" />
-          <FeeRow icon={<Clock size={16} className="text-red-400" />} tiempo="5 minutos antes" fee="$5 · 50 créditos" mult="25% de los puntos" color="text-red-400" />
-          <FeeRow icon={<Lock size={16} className="text-gray-500" />} tiempo="Partido empezado" fee="Bloqueado" mult="No se puede modificar" color="text-gray-500" />
-        </div>
-        <p className="text-gray-400 text-xs mt-3">Los fees se descuentan automáticamente de tus créditos.</p>
-      </Section>
-
-      {/* Re-enganche */}
-      <Section icon={<RefreshCw size={22} className="text-[#A855F7]" />} title="Re-enganche" color="text-[#A855F7]">
-        <p className="text-white text-base leading-relaxed mb-3">
-          ¿Quedaste muy atrás en el ranking de grupos? Podés re-engancharte al inicio de cada etapa eliminatoria pagando <strong className="text-[#A855F7]">$25</strong>. Todos pagan lo mismo.
-        </p>
-        <div className="space-y-2">
-          {[
-            { etapa: 'Octavos de Final' },
-            { etapa: 'Cuartos de Final' },
-            { etapa: 'Semifinales' },
-          ].map(({ etapa }) => (
-            <div key={etapa} className="flex items-center justify-between bg-[#0D0D0D] rounded-xl px-4 py-3">
-              <div className="flex items-center gap-2">
-                <RefreshCw size={16} className="text-[#A855F7]" />
-                <span className="text-white font-bold">{etapa}</span>
-              </div>
-              <span className="font-bebas text-2xl text-[#A855F7]">$25</span>
-            </div>
-          ))}
-        </div>
-        <div className="mt-3 flex items-start gap-2 bg-[#A855F7]/10 border border-[#A855F7]/30 rounded-xl p-3">
-          <Info size={16} className="text-[#A855F7] shrink-0 mt-0.5" />
-          <p className="text-[#A855F7] text-sm font-bold">Al re-engancharte sumás 50 puntos base a tu ranking actual. Los que jugaron bien desde el principio mantienen su ventaja — los 50 puntos son el precio de haber entrado tarde.</p>
-        </div>
-      </Section>
-
-      {/* El Oráculo */}
-      <Section icon={<Sparkles size={22} className="text-[#A855F7]" />} title="El Oráculo — IA para llenar tu polla" color="text-[#A855F7]">
-        <p className="text-white text-base leading-relaxed mb-3">
-          El Oráculo llena automáticamente todos los partidos por <strong className="text-[#A855F7]">$5 (50 créditos)</strong>.
-          Cada usuario recibe <strong className="text-[#FFD700]">predicciones únicas</strong> basadas en su perfil.
-        </p>
-        <div className="space-y-2">
-          {[
-            { icon: <Trophy size={16} className="text-[#FFD700]" />, text: 'Tu equipo favorito siempre gana en tu polla' },
-            { icon: <Users size={16} className="text-blue-400" />, text: 'Tu país de residencia genera un sesgo cultural único' },
-            { icon: <BarChart2 size={16} className="text-green-400" />, text: 'Tu historial de predicciones define tu estilo' },
-            { icon: <Star size={16} className="text-[#A855F7]" />, text: 'Se te asigna una personalidad futbolística exclusiva' },
-          ].map(({ icon, text }) => (
-            <div key={text} className="flex items-center gap-3 bg-[#0D0D0D] rounded-xl px-3 py-2.5">
-              <div className="shrink-0">{icon}</div>
-              <p className="text-gray-300 text-sm">{text}</p>
-            </div>
-          ))}
-        </div>
-        <p className="text-gray-400 text-xs mt-3">Podés modificar cualquier predicción del Oráculo después de que las genere.</p>
-      </Section>
-
-      {/* Batallas */}
-      <Section icon={<Zap size={22} className="text-orange-400" />} title="Batallas" color="text-orange-400">
-        <p className="text-white text-base leading-relaxed mb-3">
-          Apuestas directas entre dos participantes. Elegís un partido, tu predicción y el monto. Otro participante acepta apostando lo contrario.
-        </p>
-        <div className="flex items-start gap-2 bg-orange-500/10 border border-orange-500/30 rounded-xl p-3">
-          <Zap size={16} className="text-orange-400 shrink-0 mt-0.5" />
-          <p className="text-orange-400 text-sm font-bold">El ganador se lleva todo el pozo de la batalla. Es aparte del ranking general.</p>
-        </div>
-      </Section>
-
-      {/* El Chat */}
-      <Section icon={<MessageCircle size={22} className="text-[#22C55E]" />} title="Chat del Quilombo" color="text-[#22C55E]">
-        <p className="text-white text-base leading-relaxed">
-          El espacio para hablar de fútbol, bardear amigos y festejar goles. Mensajes, fotos, GIFs y reacciones con emojis. <strong className="text-[#22C55E]">Respeto ante todo</strong> — hay moderación automática y manual.
-        </p>
-        <div className="mt-3 flex items-start gap-2 bg-red-500/10 border border-red-500/30 rounded-xl p-3">
-          <AlertTriangle size={16} className="text-red-400 shrink-0 mt-0.5" />
-          <p className="text-red-400 text-sm font-bold">Insultos, política y contenido inapropiado están prohibidos. Los moderadores pueden silenciar o banear usuarios.</p>
-        </div>
-      </Section>
-
-      {/* Roles */}
-      <Section icon={<Crown size={22} className="text-[#FFD700]" />} title="Roles" color="text-[#FFD700]">
-        <div className="space-y-2">
-          <RolRow icon={<Crown size={16} className="text-[#FFD700]" />} rol="Super Admin" desc="Control total del sistema" color="text-[#FFD700]" />
-          <RolRow icon={<Star size={16} className="text-blue-400" />} rol="Admin" desc="Carga resultados y ayuda a usuarios" color="text-blue-400" />
-          <RolRow icon={<Users size={16} className="text-[#22C55E]" />} rol="Familia" desc="Participantes — inscripción $25" color="text-[#22C55E]" />
-          <RolRow icon={<Users size={16} className="text-gray-400" />} rol="Invitado" desc="Participantes — inscripción $25" color="text-gray-400" />
-        </div>
-      </Section>
-
-      {/* FAQ */}
-      <Section icon={<HelpCircle size={22} className="text-blue-400" />} title="Preguntas frecuentes" color="text-blue-400">
-        <div className="space-y-3">
-          {[
-            { q: '¿Qué pasa si no lleno un partido?', a: 'No sumás puntos en ese partido. Te recomendamos tener al menos el Nivel 1 (ganador) para todos los partidos.' },
-            { q: '¿Puedo modificar mis predicciones?', a: 'Sí, gratis hasta 24hs antes. Después podés pagar para modificar pero con menos puntos.' },
-            { q: '¿Cuándo se calculan los puntos?', a: 'El admin carga el resultado final y el sistema calcula automáticamente los puntos de cada participante.' },
-            { q: '¿Cómo se paga el premio?', a: 'Se coordina directamente con el organizador una vez terminado el torneo.' },
-            { q: '¿Cómo cargo créditos?', a: 'Desde tu Wallet — mandás el comprobante de pago y el admin te acredita. 1 dólar = 10 créditos.' },
-            { q: '¿Qué pasa con el 0-0?', a: 'Si pusiste empate y marcador 0-0 y el resultado es 0-0, solo cobrás el Nivel 1 (20 pts). No suma Nivel 2.' },
-            { q: '¿Qué es el re-enganche?', a: 'Al inicio de la fase de Octavos podés pagar $25 y sumar 50 puntos al ranking. Disponible una sola vez por persona.' },
-            { q: '¿Cuántos créditos gano por referidos?', a: '$5 en créditos por cada persona que traés. Máximo hasta 6 referidos = $30 en créditos.' },
-          ].map(({ q, a }) => (
-            <div key={q} className="bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl p-3">
-              <div className="flex items-start gap-2 mb-1">
-                <HelpCircle size={14} className="text-blue-400 shrink-0 mt-0.5" />
-                <p className="text-white font-bold text-sm">{q}</p>
-              </div>
-              <p className="text-gray-400 text-sm pl-5">{a}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Links rápidos */}
-      <Section icon={<ExternalLink size={22} className="text-gray-400" />} title="Accesos rápidos" color="text-gray-400">
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            { href: '/dashboard', label: 'Dashboard', icon: <Home size={16} className="text-[#FFD700]" /> },
-            { href: '/schedule', label: 'Fixture', icon: <Calendar size={16} className="text-blue-400" /> },
-            { href: '/my-picks', label: 'Mi Polla', icon: <Trophy size={16} className="text-[#FFD700]" /> },
-            { href: '/leaderboard', label: 'Ranking', icon: <BarChart2 size={16} className="text-[#22C55E]" /> },
-            { href: '/challenges', label: 'Batallas', icon: <Zap size={16} className="text-orange-400" /> },
-            { href: '/chat', label: 'Chat del Quilombo', icon: <MessageCircle size={16} className="text-[#22C55E]" /> },
-            { href: '/ai-picks', label: 'El Oráculo', icon: <Sparkles size={16} className="text-[#A855F7]" /> },
-            { href: '/wallet', label: 'Wallet', icon: <Wallet size={16} className="text-blue-400" /> },
-            { href: '/join', label: 'Inscripción', icon: <FileText size={16} className="text-gray-400" /> },
-          ].map(({ href, label, icon }) => (
-            <Link key={href} href={href}
-              className="flex items-center gap-2 bg-[#0D0D0D] border border-[#2A2A4A] rounded-xl px-3 py-2.5 hover:border-[#FFD700]/40 transition-all">
-              {icon}
-              <span className="text-white text-sm font-bold">{label}</span>
-            </Link>
-          ))}
-        </div>
-      </Section>
-
-      <div className="text-center mt-6 py-4 border-t border-[#2A2A4A]">
-        <p className="text-gray-400 text-sm">¿Tenés más preguntas? Escribí en el Chat del Quilombo</p>
-        <Link href="/chat" className="inline-flex items-center gap-2 mt-3 bg-[#22C55E] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#16A34A] transition-all">
-          <MessageCircle size={18} />
-          Ir al Chat del Quilombo
-        </Link>
-      </div>
-    </div>
-  )
-}
+import { ArrowLeft, Trophy, DollarSign, Star, Clock, RefreshCw, Sparkles, Zap, CheckCircle, Info } from 'lucide-react'
 
 function Section({ icon, title, color, children }: { icon: React.ReactNode; title: string; color: string; children: React.ReactNode }) {
   return (
-    <div className="bg-[#1A1A2E] border border-[#2A2A4A] rounded-2xl p-5 mb-4">
-      <div className="flex items-center gap-2 mb-4">
-        {icon}
-        <h2 className={`font-bebas text-2xl tracking-wider ${color}`}>{title}</h2>
+    <div className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-4">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: `${color}15`}}>{icon}</div>
+        <h2 className="font-black text-xl text-white">{title}</h2>
       </div>
       {children}
     </div>
@@ -288,52 +17,102 @@ function Section({ icon, title, color, children }: { icon: React.ReactNode; titl
 
 function Row({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string; color: string }) {
   return (
-    <div className="flex items-center justify-between bg-[#0D0D0D] rounded-xl px-4 py-3">
+    <div className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0">
       <div className="flex items-center gap-2">
         {icon}
-        <span className="text-white font-bold">{label}</span>
+        <span className="text-sm text-white/70">{label}</span>
       </div>
-      <span className={`font-bebas text-2xl ${color}`}>{value}</span>
+      <span className="text-sm font-bold" style={{color}}>{value}</span>
     </div>
   )
 }
 
-function PuntosRow({ nivel, desc, pts, color }: { nivel: string; desc: string; pts: number; color: string }) {
+export default function HowToPlayPage() {
   return (
-    <div className="flex items-center justify-between bg-[#0D0D0D] rounded-xl px-4 py-3">
-      <div>
-        <p className={`text-sm font-bold ${color}`}>{nivel}</p>
-        <p className="text-xs text-gray-400">{desc}</p>
-      </div>
-      <span className={`font-bebas text-3xl ${color}`}>+{pts}</span>
-    </div>
-  )
-}
+    <div className="px-4 py-6 max-w-3xl mx-auto pb-24 md:pb-6" style={{background:'#080812', minHeight:'100vh'}}>
+      <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-white/60 hover:text-white mb-6">
+        <ArrowLeft size={18} />Back to Dashboard
+      </Link>
 
-function FeeRow({ icon, tiempo, fee, mult, color }: { icon: React.ReactNode; tiempo: string; fee: string; mult: string; color: string }) {
-  return (
-    <div className="flex items-center justify-between bg-[#0D0D0D] rounded-xl px-4 py-3">
-      <div className="flex items-center gap-2">
-        {icon}
-        <div>
-          <p className="text-sm font-bold text-white">{tiempo}</p>
-          <p className={`text-xs font-bold ${color}`}>{mult}</p>
+      <div className="text-center mb-8 p-6 rounded-2xl" style={{background:'rgba(0,200,150,0.06)', border:'1px solid rgba(0,200,150,0.2)'}}>
+        <Trophy size={40} className="text-[#00C896] mx-auto mb-3" />
+        <h1 className="text-4xl font-black text-white mb-2">How to Play</h1>
+        <p className="text-white/50">PoolZone · World Cup 2026 · Everything you need to know</p>
+      </div>
+
+      <Section icon={<Info size={20} style={{color:'#00C896'}} />} title="What is PoolZone?" color="#00C896">
+        <p className="text-white/60 text-sm leading-relaxed">PoolZone is a skill-based prediction game for the FIFA World Cup 2026. Predict match results, earn points, and compete for real cash prizes. The top 3 players split the prize pool at the end of the tournament.</p>
+      </Section>
+
+      <Section icon={<DollarSign size={20} style={{color:'#00C896'}} />} title="Entry & Prizes" color="#00C896">
+        <Row icon={<DollarSign size={16} className="text-[#00C896]" />} label="Entry fee" value="$30 one-time" color="#00C896" />
+        <Row icon={<Trophy size={16} style={{color:'#FFD700'}} />} label="1st Place" value="60% of the pot" color="#FFD700" />
+        <Row icon={<Trophy size={16} className="text-gray-400" />} label="2nd Place" value="30% of the pot" color="#C0C0C0" />
+        <Row icon={<Trophy size={16} style={{color:'#CD7F32'}} />} label="3rd Place" value="10% of the pot" color="#CD7F32" />
+        <Row icon={<DollarSign size={16} className="text-[#00C896]" />} label="Welcome credits" value="$5 (50 credits)" color="#00C896" />
+        <div className="mt-3 p-3 rounded-xl text-xs text-white/40" style={{background:'rgba(255,255,255,0.03)'}}>
+          *Credits are for in-platform use only (Oracle, late modifications, Challenges) and cannot be withdrawn as cash.
         </div>
-      </div>
-      <span className={`font-bebas text-xl ${color}`}>{fee}</span>
-    </div>
-  )
-}
+      </Section>
 
-function RolRow({ icon, rol, desc, color }: { icon: React.ReactNode; rol: string; desc: string; color: string }) {
-  return (
-    <div className="flex items-center gap-3 bg-[#0D0D0D] rounded-xl px-4 py-3">
-      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-        {icon}
-      </div>
-      <div className="flex-1">
-        <p className={`text-sm font-bold ${color}`}>{rol}</p>
-        <p className="text-xs text-gray-400">{desc}</p>
+      <Section icon={<Star size={20} style={{color:'#FFD700'}} />} title="Scoring System" color="#FFD700">
+        <Row icon={<Star size={16} style={{color:'#FFD700'}} />} label="Level 1 — Correct winner" value="20 pts" color="#FFD700" />
+        <Row icon={<Star size={16} style={{color:'#FFD700'}} />} label="Level 2 — Exact score" value="+25 pts" color="#FFD700" />
+        <Row icon={<Star size={16} style={{color:'#FFD700'}} />} label="Level 3 — Goals by half" value="+15 pts" color="#FFD700" />
+        <Row icon={<Star size={16} style={{color:'#FFD700'}} />} label="Level 4 — Penalty winner (knockout)" value="+10 pts" color="#FFD700" />
+        <Row icon={<Info size={16} className="text-white/40" />} label="Starting points" value="100 pts base" color="white" />
+        <div className="mt-3 p-3 rounded-xl text-xs text-white/40" style={{background:'rgba(255,255,255,0.03)'}}>
+          Special rule: If a match ends 0-0, only Level 1 points apply.
+        </div>
+      </Section>
+
+      <Section icon={<Clock size={20} style={{color:'#FB923C'}} />} title="Late Modification Fees" color="#FB923C">
+        <p className="text-white/50 text-sm mb-3">You can change your predictions before each match. Late changes incur a fee and reduce your points multiplier:</p>
+        <Row icon={<CheckCircle size={16} className="text-[#00C896]" />} label="More than 24hrs before" value="Free · 100% points" color="#00C896" />
+        <Row icon={<Clock size={16} style={{color:'#FB923C'}} />} label="Less than 24hrs before" value="$2 · 75% points" color="#FB923C" />
+        <Row icon={<Clock size={16} className="text-red-400" />} label="Less than 15 minutes" value="$3 · 50% points" color="#f87171" />
+        <Row icon={<Clock size={16} className="text-red-600" />} label="Less than 5 minutes" value="$5 · 25% points" color="#ef4444" />
+      </Section>
+
+      <Section icon={<RefreshCw size={20} style={{color:'#A855F7'}} />} title="Re-entry" color="#A855F7">
+        <p className="text-white/50 text-sm mb-3">Available once per player during the Round of 16 phase only.</p>
+        <Row icon={<DollarSign size={16} style={{color:'#A855F7'}} />} label="Re-entry cost" value="$25" color="#A855F7" />
+        <Row icon={<Star size={16} style={{color:'#A855F7'}} />} label="Points added" value="+50 base points" color="#A855F7" />
+        <p className="text-xs text-white/30 mt-3">Re-entry adds 50 points to your current score. New players who join during re-entry also receive 50 base points (not 100).</p>
+      </Section>
+
+      <Section icon={<Sparkles size={20} style={{color:'#A855F7'}} />} title="AI Oracle" color="#A855F7">
+        <Row icon={<Sparkles size={16} style={{color:'#A855F7'}} />} label="Free queries included" value="12 per day" color="#A855F7" />
+        <Row icon={<DollarSign size={16} style={{color:'#A855F7'}} />} label="Additional queries" value="$5 each" color="#A855F7" />
+        <p className="text-white/50 text-sm mt-3">The Oracle AI analyzes match data and gives you insights to help make better predictions. Use it wisely!</p>
+      </Section>
+
+      <Section icon={<Zap size={20} style={{color:'#FB923C'}} />} title="Challenges" color="#FB923C">
+        <p className="text-white/50 text-sm mb-3">Bet against other players on specific match outcomes.</p>
+        <Row icon={<Zap size={16} style={{color:'#FB923C'}} />} label="PoolZone fee" value="10% of pot" color="#FB923C" />
+        <Row icon={<Trophy size={16} className="text-[#00C896]" />} label="Winner receives" value="90% of pot" color="#00C896" />
+      </Section>
+
+      <Section icon={<Info size={20} className="text-white/50" />} title="Important Rules" color="#ffffff">
+        {[
+          'Predictions must be made before the match starts.',
+          'During halftime (45-65 min), modifications are allowed.',
+          'No bots or automated tools — immediate disqualification.',
+          'Offensive language in chat results in account suspension.',
+          'Prizes paid via Zelle (USA) or Wise (international) within 48hrs of the final.',
+          'PoolZone is a skill-based game, not regulated sports betting.',
+        ].map((rule, i) => (
+          <div key={i} className="flex items-start gap-2 py-2 border-b border-white/5 last:border-0">
+            <CheckCircle size={14} className="text-[#00C896] shrink-0 mt-0.5" />
+            <p className="text-sm text-white/60">{rule}</p>
+          </div>
+        ))}
+      </Section>
+
+      <div className="text-center mt-6">
+        <Link href="/dashboard" className="inline-flex items-center gap-2 bg-[#00C896] text-black font-black px-8 py-4 rounded-2xl text-base">
+          Start Playing →
+        </Link>
       </div>
     </div>
   )
