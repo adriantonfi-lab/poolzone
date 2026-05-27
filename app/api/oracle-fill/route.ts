@@ -104,7 +104,7 @@ export async function POST(req: Request) {
     if (!userId) return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
 
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zjlaabrqfjtvbtbvoaic.supabase.co',
+      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
       process.env.SUPABASE_SERVICE_ROLE_KEY || ''
     )
 
