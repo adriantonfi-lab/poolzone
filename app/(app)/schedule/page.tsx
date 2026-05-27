@@ -348,11 +348,11 @@ export default function SchedulePage() {
         <ArrowLeft size={20} />Back
       </Link>
       <h1 className="font-sans text-5xl text-white tracking-wider mb-1">FIXTURE</h1>
-      <p className="text-sm font-semibold text-[#86EFAC] mb-5">Horarios ARG 🇦🇷 · COL 🇨🇴 · ET 🇺🇸 · CT · PT</p>
+      <p className="text-sm font-semibold text-[#86EFAC] mb-5">Match times in ET · CT · PT</p>
       <div className="flex gap-2 mb-6">
-        <button className={`${btnBase} ${view === 'dia' ? btnActive : btnInactive}`} onClick={() => setView('dia')}>Por Día</button>
-        <button className={`${btnBase} ${view === 'grupo' ? btnActive : btnInactive}`} onClick={() => setView('grupo')}>Por Grupo</button>
-        <button className={`${btnBase} ${view === 'ciudad' ? btnActive : btnInactive}`} onClick={() => setView('ciudad')}>Por Ciudad</button>
+        <button className={`${btnBase} ${view === 'dia' ? btnActive : btnInactive}`} onClick={() => setView('dia')}>By Day</button>
+        <button className={`${btnBase} ${view === 'grupo' ? btnActive : btnInactive}`} onClick={() => setView('grupo')}>By Group</button>
+        <button className={`${btnBase} ${view === 'ciudad' ? btnActive : btnInactive}`} onClick={() => setView('ciudad')}>By City</button>
       </div>
 
       {view === 'grupo' && (
