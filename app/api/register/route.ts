@@ -84,7 +84,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Error al guardar perfil' }, { status: 500 })
     }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true, userId })
 
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Error interno'
