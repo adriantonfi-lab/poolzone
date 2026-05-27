@@ -42,9 +42,9 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
   oracleSpent: number
   estimatedPot: number
 }) {
-  const [re-entryLoading, setRe-entryLoading] = useState(false)
-  const [re-entryMsg, setRe-entryMsg] = useState('')
-  const [re-entryUsed, setRe-entryUsed] = useState(profile?.re-entry_used || false)
+  const [reengancheLoading, setReengancheLoading] = useState(false)
+  const [reengancheMsg, setReengancheMsg] = useState('')
+  const [reengancheUsed, setReengancheUsed] = useState(profile?.reenganche_used || false)
   const [credits, setCredits] = useState(profile?.credits || 0)
 
   // Carga de créditos
@@ -136,8 +136,8 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
   async function handleRe-entry() {
     if (!profile?.id) return
-    setRe-entryLoading(true)
-    setRe-entryMsg('')
+    setReengancheLoading(true)
+    setReengancheMsg('')
     try {
       const res = await fetch('/api/re-entry', {
         method: 'POST',
@@ -146,16 +146,16 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
       })
       const data = await res.json()
       if (data.error) {
-        setRe-entryMsg(data.error)
+        setReengancheMsg(data.error)
       } else {
-        setRe-entryUsed(true)
+        setReengancheUsed(true)
         setCredits((c: number) => c - 250)
-        setRe-entryMsg('¡Re-enganche activado! +50 puntos sumados al ranking 🎉')
+        setReengancheMsg('¡Re-enganche activado! +50 puntos sumados al ranking 🎉')
       }
     } catch {
-      setRe-entryMsg('Error de conexión')
+      setReengancheMsg('Error de conexión')
     }
-    setRe-entryLoading(false)
+    setReengancheLoading(false)
   }
 
   const totalIn = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0)
@@ -386,7 +386,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
 
       {/* RE-ENGANCHE */}
       <div className={`rounded-2xl p-5 mb-6 border ${
-        re-entryUsed
+        reengancheUsed
           ? 'bg-[#A855F7]/10 border-[#A855F7]/30'
           : 'bg-gradient-to-br from-[#1A1A2E] to-[#1A0A2E] border-[#A855F7]/40'
       }`}>
@@ -399,7 +399,7 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs text-[#A855F7] font-semibold">Fase Eliminatoria — Una sola vez</p>
           </div>
         </div>
-        {re-entryUsed ? (
+        {reengancheUsed ? (
           <div className="bg-[#A855F7]/10 rounded-xl p-3 text-center">
             <p className="text-base font-bold text-[#A855F7]">✅ Re-enganche activado</p>
             <p className="text-xs text-gray-400 mt-1">+50 puntos sumados a tu ranking</p>
@@ -419,16 +419,16 @@ export default function WalletClient({ profile, transactions, battlesCount, orac
             <p className="text-xs text-gray-400 mb-4">
               ¿Quedaste lejos en el ranking? Pagá $25 y sumá 50 puntos para meterte en la pelea durante la fase eliminatoria.
             </p>
-            {re-entryMsg && (
+            {reengancheMsg && (
               <div className={`rounded-xl p-3 mb-3 text-sm font-semibold text-center ${
-                re-entryMsg.includes('activado') ? 'bg-[#22C55E]/10 text-[#22C55E]' : 'bg-red-500/10 text-red-400'
+                reengancheMsg.includes('activado') ? 'bg-[#22C55E]/10 text-[#22C55E]' : 'bg-red-500/10 text-red-400'
               }`}>
-                {re-entryMsg}
+                {reengancheMsg}
               </div>
             )}
-            <button onClick={handleRe-entry} disabled={re-entryLoading || credits < 250}
+            <button onClick={handleRe-entry} disabled={reengancheLoading || credits < 250}
               className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-bold py-3 rounded-xl text-base disabled:opacity-40 transition-all hover:opacity-90 flex items-center justify-center gap-2">
-              {re-entryLoading
+              {reengancheLoading
                 ? <><Loader2 size={18} className="animate-spin" />Procesando...</>
                 : credits < 250
                 ? `Necesitás $25 — Tenés $${(credits/10).toFixed(2)}`
