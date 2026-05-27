@@ -4,42 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Zap, Calendar, Sparkles, Users, MessageCircle, Trophy, BarChart2, BookOpen } from 'lucide-react'
 
-const ARG_MATCHES = [
-  '2026-06-13T02:00:00Z','2026-06-22T22:00:00Z','2026-06-27T23:00:00Z',
-  '2026-07-01T00:00:00Z','2026-07-05T00:00:00Z','2026-07-09T00:00:00Z',
-  '2026-07-14T22:00:00Z','2026-07-19T20:00:00Z',
-]
-const COL_MATCHES = [
-  '2026-06-18T03:00:00Z','2026-06-23T03:00:00Z','2026-06-28T03:00:00Z',
-  '2026-07-01T00:00:00Z','2026-07-05T00:00:00Z','2026-07-09T00:00:00Z',
-  '2026-07-15T00:00:00Z','2026-07-19T20:00:00Z',
-]
 
-function getNextDate(dates: string[]): string {
-  const now = Date.now()
-  const future = dates.map(d => new Date(d).getTime()).filter(t => t > now).sort((a,b)=>a-b)
-  return future.length > 0 ? new Date(future[0]).toISOString() : dates[dates.length-1]
-}
-
-function useCountdown(targetDate: string) {
-  const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-  useEffect(() => {
-    function calc() {
-      const diff = new Date(targetDate).getTime() - Date.now()
-      if (diff <= 0) { setT({ days: 0, hours: 0, minutes: 0, seconds: 0 }); return }
-      setT({
-        days: Math.floor(diff / 86400000),
-        hours: Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000) / 60000),
-        seconds: Math.floor((diff % 60000) / 1000),
-      })
-    }
-    calc()
-    const id = setInterval(calc, 1000)
-    return () => clearInterval(id)
-  }, [targetDate])
-  return t
-}
 
 function BigClock({ targetDate }: { targetDate: string }) {
   const t = useCountdown(targetDate)
@@ -187,30 +152,6 @@ export default function DashboardClient({ profile, matches, onlineCount, registe
           <div className="bg-[#1A1A2E] border border-[#FFD700]/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-3">
             <p className="font-bebas text-base text-[#FFD700] tracking-widest text-center">WORLD CUP 2026</p>
             <BigClock targetDate="2026-06-11T20:00:00Z" />
-          </div>
-
-          {/* ARG + COL */}
-          <div className="flex flex-col gap-3">
-            <div className="bg-[#0D1B2E] border border-[#74C0FC]/40 rounded-xl p-3 flex items-center justify-between flex-1">
-              <div className="flex items-center gap-2">
-                <img src="https://flagcdn.com/40x30/ar.png" alt="ARG" width={40} height={30} className="rounded-sm" />
-                <div>
-                  <p className="text-sm font-bold text-white">Argentina</p>
-                  <p className="text-[10px] text-[#74C0FC]">Next match</p>
-                </div>
-              </div>
-              <SmallClock targetDate={getNextDate(ARG_MATCHES)} color="text-[#74C0FC]" />
-            </div>
-            <div className="bg-[#1A1500] border border-[#FCD34D]/40 rounded-xl p-3 flex items-center justify-between flex-1">
-              <div className="flex items-center gap-2">
-                <img src="https://flagcdn.com/40x30/co.png" alt="COL" width={40} height={30} className="rounded-sm" />
-                <div>
-                  <p className="text-sm font-bold text-white">Colombia</p>
-                  <p className="text-[10px] text-[#FCD34D]">Next match</p>
-                </div>
-              </div>
-              <SmallClock targetDate={getNextDate(COL_MATCHES)} color="text-[#FCD34D]" />
-            </div>
           </div>
 
           {/* Usuario + Stats */}
