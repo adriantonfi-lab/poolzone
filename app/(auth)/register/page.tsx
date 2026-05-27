@@ -154,7 +154,12 @@ export default function RegisterPage() {
 
       const userId = regData.userId
 
-      // 2. Crear sesión de pago Stripe
+      // 2. Login automático
+      const { createClient } = await import('@supabase/supabase-js')
+      const supabase = (await import('@/lib/supabase/client')).createClient()
+      await supabase.auth.signInWithPassword({ email, password })
+
+      // 3. Crear sesión de pago Stripe
       if (paymentMethod === 'card') {
         const stripeRes = await fetch('/api/payments/checkout', {
           method: 'POST',
